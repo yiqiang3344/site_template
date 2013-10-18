@@ -62,15 +62,23 @@ class Controller extends CController {
                 $ret .= urlencode ( $k ) . "=" . urlencode ( $v ) . "&";
             }
         }else{
-            if(preg_match('{^js/|^template/}', $c) && !preg_match('{^js/(jquery|main|url)\.}',$c)){
-                $c = Yii::app()->language.'/'.$c;
+            //非开发环境中的css和js都是压缩过的,开发环境中则不压缩
+            $not_translate = preg_match('{^(js/(jquery|main|url)\.|css)}',$c);
+            if(Yii::app()->language=='dev'){
+                if(!$not_translate){
+                    //开发语言中需要翻译的
+                    $c = Yii::app()->language.'/'.$c;
+                }
+            }else{
+                $min_name = str_replace(array('.js','.css'),array('.min.js','.min.css'),$c);
+                if($not_translate){
+                    //非开发语言中不需要翻译的
+                    $c = 'script/'.basename($min_name);
+                }else{
+                    //非开发语言中需要翻译的
+                    $c = Yii::app()->language.'/'.$min_name;
+                }
             }
-
-            //非开发中 自动判断是否有压缩过的文件
-            if(Yii::app()->language!='dev' && preg_match('{^('.Yii::app()->language.'/js'.'|js|css)/.*?[^\.min\.js$|^\.min\.css$]}', $c) && is_file(($n_c=str_replace(array('.js','.css'),array('.min.js','.min.css'),$c)))){
-                $c = $n_c;
-            }
-
             $md5 = @md5_file ($c);
             $ret = Yii::app()->getBaseUrl().'/'.$c.($md5 ? '?v=' . substr ( $md5, 0, 8 ) : '');
         }

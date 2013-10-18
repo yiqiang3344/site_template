@@ -18,9 +18,19 @@
                 <include pattern="protected/config/*.php.mustache" />
                 <include pattern="protected/config/*/*.php.mustache" />
                 <include pattern="*.php.mustache" />
-                <include pattern="translator/*.php.mustache" />
+                <include pattern="build/*.php.mustache" />
+                <include pattern="build/*/*.php.mustache" />
             </fileset>
             <mapper type="glob" from="*.php.mustache" to="*.php" />
+            <filterchain>
+                <filterreader classpath="build/filters" classname="MustacheRender" />
+            </filterchain>
+        </copy>
+        <copy todir="${project.basedir}" overwrite="true">
+            <fileset dir="${project.basedir}">
+                <include pattern="build/*.js.mustache" />
+            </fileset>
+            <mapper type="glob" from="*.js.mustache" to="*.js" />
             <filterchain>
                 <filterreader classpath="build/filters" classname="MustacheRender" />
             </filterchain>
@@ -85,22 +95,22 @@
     </target>
 
     <target name="translate" description="translate" depends="config">
-        <exec dir="protected" command="php ../build/translate.php ${site.langs}" outputProperty="msg.out"/>
+        <exec dir="protected" command="php ../build/translate.php" outputProperty="msg.out"/>
         <echo msg="message: ${msg.out}" />
     </target>
 
     <target name="generateJsFiles" description="generate js files" depends="translate">
-        <exec dir="protected" command="node ../build/generateJsFiles.js ${site.langs}" outputProperty="msg.out"/>
+        <exec dir="protected" command="node ../build/generateJsFiles.js" outputProperty="msg.out"/>
         <echo msg="message: ${msg.out}" />
     </target>
 
      <target name="compressJsCss" description="compress js and css" depends="generateJsFiles">
-        <exec dir="protected" command="php ../build/compressJsCss.php ${site.langs}" outputProperty="msg.out"/>
+        <exec dir="protected" command="php ../build/compressJsCss.php" outputProperty="msg.out"/>
         <echo msg="message: ${msg.out}" />
     </target>
 
     <target name="setCacheCode" description="set cache code" depends="compressJsCss">
-        <exec dir="protected" command="php ../build/setCacheCode.php ${site.cssList}" outputProperty="msg.out"/>
+        <exec dir="protected" command="php ../build/setCacheCode.php" outputProperty="msg.out"/>
         <echo msg="message: ${msg.out}" />
     </target>
     

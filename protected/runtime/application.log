@@ -1,0 +1,11 @@
+2013/10/18 18:48:25 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "index" 动作.' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:3668
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(3550): CController->missingAction('')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1746): CController->run('')
+#2 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('')
+#3 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#4 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#5 {main}
+REQUEST_URI=/site1/
+HTTP_REFERER=http://localhost:2012/
+---

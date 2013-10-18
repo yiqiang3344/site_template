@@ -1,13 +1,9 @@
 <?php
-$cssFiles = array();
-foreach($argv[1]?explode(',', $argv[1]):array() as $v){
-    $cssFiles[] = $v.'.css';
-}
-
-setCacheCode($cssFiles);
+require('helper.php');
+setCacheCode();
 echo "patch md5, generate url.js success";
 //处理一个语言目录
-function setCacheCode($cssFiles){
+function setCacheCode(){
     $arr=array();   
     //处理语言所对应目录
     //处理根目录下面的img目录
@@ -37,6 +33,9 @@ function setCacheCode($cssFiles){
     
     //处理CSS文件给图片加MD5后缀
     $rep=new ReplaceCss('..');
+    $cssFiles  = array(
+        'page.css',
+    );
     foreach($cssFiles as $css){
         $file='../css/'.$css;
         $content=@file_get_contents($file);
@@ -77,19 +76,4 @@ class ReplaceCss{
         $file=$m[1];
         return "url(".$m[1]."?v=".substr(md5_file($file),0,8).")";
     }   
-}
-
-//遍历一个文件夹下面的所有文件
-function scan_dir($dir,&$file_list,$recursive=true){
-    foreach(scandir($dir) as $file){
-        if($file=="." || $file==".." || $file==".svn"){
-            continue;
-        }else if(is_file($dir."/".$file)){
-            $file_list[]=$dir."/".$file;
-        }else if($recursive && is_dir($dir."/".$file)){
-            scan_dir($dir."/".$file,$file_list);
-        }else{
-            continue;
-        }
-    }       
 }

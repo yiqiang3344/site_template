@@ -1,5 +1,8 @@
 <?php
-$lang_list = explode(',', $argv[1]);
+$lang_list = array(
+        'zh_cn',
+);
 // 翻译
-chdir("../translator");
+require_once 'helper.php';
+chdir("../build/translator");
 require_once 'run.php';

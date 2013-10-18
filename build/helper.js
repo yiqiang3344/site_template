@@ -1,5 +1,11 @@
 var fs = require('fs');
 
+//压缩js文件
+exports.compressJs = compressJs =  function(orig_code){
+  var UglifyJS = require("uglify-js");
+  return UglifyJS.minify(orig_code, {fromString: true}).code;
+}
+
 //判断是不是目录
 exports.isDir = isDir =  function(path){
   var ret = false;
