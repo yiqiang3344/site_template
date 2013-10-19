@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="tank" basedir="../" default="help">
+<project name="site1" basedir="../" default="help">
     <property file="build/default.properties" />
     <if>
         <isset property="build.env" />
@@ -34,6 +34,32 @@
             <filterchain>
                 <filterreader classpath="build/filters" classname="MustacheRender" />
             </filterchain>
+        </copy>
+    </target>
+
+    <target name="product" description="get product site">
+        <if>
+            <isset property="product.dir" />
+            <then>
+                <mkdir dir="${product.dir}" />
+            </then>
+            <else>
+                <property name="product.dir" value="../product_site" />
+                <mkdir dir="${product.dir}" />
+            </else>
+        </if>
+        <copy todir="${project.basedir}/${product.dir}" overwrite="true">
+            <fileset dir="${project.basedir}">
+                <include pattern="protected/**" />
+                <include pattern="img/**" />
+                <include pattern="images/**" />
+                <include pattern="script/**" />
+                <include pattern="vendor/*.*" />
+                <include pattern="vendor/yiisoft/**" />
+                <include pattern="zh_cn/**" />
+                <include pattern="assets/**" />
+                <include pattern="index.php" />
+            </fileset>
         </copy>
     </target>
 

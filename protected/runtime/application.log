@@ -9,3 +9,258 @@ Stack trace:
 REQUEST_URI=/site1/
 HTTP_REFERER=http://localhost:2012/
 ---
+2013/10/19 06:45:14 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin
+---
+2013/10/19 06:45:42 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin
+---
+2013/10/19 06:46:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin
+---
+2013/10/19 06:51:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin
+---
+2013/10/19 06:54:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin
+---
+2013/10/19 06:54:25 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin
+---
+2013/10/19 06:56:58 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin
+---
+2013/10/19 06:57:39 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin
+---
+2013/10/19 06:58:04 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin
+---
+2013/10/19 07:06:43 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin
+---
+2013/10/19 07:06:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin
+---
+2013/10/19 07:07:15 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin
+---
+2013/10/19 07:12:04 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin/css"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin/css')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin/css
+---
+2013/10/19 07:14:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin/css"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin/css')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin/css
+---
+2013/10/19 07:17:38 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin/css"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin/css')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin/css
+---
+2013/10/19 07:18:09 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin/css"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin/css')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin/css
+---
+2013/10/19 07:23:08 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin/css"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin/css')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin/css
+---
+2013/10/19 07:24:55 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin/css"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin/css')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin/css
+---
+2013/10/19 07:24:58 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin/css"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin/css')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin/css
+---
+2013/10/19 07:24:59 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin/css"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin/css')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin/css
+---
+2013/10/19 07:27:55 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin/css"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin/css')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin/css
+---
+2013/10/19 07:27:56 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin/css"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin/css')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin/css
+---
+2013/10/19 07:29:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin/css"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin/css')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin/css
+---
+2013/10/19 07:32:24 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin/css"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin/css')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin/css
+---
+2013/10/19 07:34:18 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin/css"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin/css')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin/css
+---
+2013/10/19 07:37:49 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admin/css"。' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:1750
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin/css')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#2 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#3 {main}
+REQUEST_URI=/site1/index.php/admin/css
+---
+2013/10/19 07:41:56 [error] [exception.CException] exception 'CException' with message 'SiteController 无法找到请求的视图 "index".' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:3831
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(3790): CController->renderPartial('index', Array, true)
+#1 /Library/WebServer/www/webroot/site1/protected/modules/admin/components/Controller.php(71): CController->render('index', Array, true)
+#2 /Library/WebServer/www/webroot/site1/protected/modules/admin/controllers/SiteController.php(14): Controller->render('index', Array)
+#3 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(4058): SiteController->actionLogin()
+#4 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(3570): CInlineAction->runWithParams(Array)
+#5 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(3555): CController->runAction(Object(CInlineAction))
+#6 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(3545): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1746): CController->run('login')
+#8 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin/site/logi...')
+#9 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#10 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#11 {main}
+REQUEST_URI=/site1/index.php/admin/site/login
+---
+2013/10/19 07:47:34 [error] [exception.CException] exception 'CException' with message 'SiteController and its behaviors do not have a method or closure named "getAssetUrl".' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:704
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/protected/modules/admin/components/Controller.php(84): CComponent->__call('getAssetUrl', Array)
+#1 /Library/WebServer/www/webroot/site1/protected/modules/admin/components/Controller.php(84): SiteController->getAssetUrl()
+#2 /Library/WebServer/www/webroot/site1/protected/views/layouts/zh_cn/main.php(7): Controller->url('css/base.css')
+#3 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(3419): require('/Library/WebSer...')
+#4 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(3398): CBaseController->renderInternal('/Library/WebSer...', Array, true)
+#5 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(3792): CBaseController->renderFile('/Library/WebSer...', Array, true)
+#6 /Library/WebServer/www/webroot/site1/protected/modules/admin/components/Controller.php(71): CController->render('login', Array, true)
+#7 /Library/WebServer/www/webroot/site1/protected/modules/admin/controllers/SiteController.php(14): Controller->render('login', Array)
+#8 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(4058): SiteController->actionLogin()
+#9 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(3570): CInlineAction->runWithParams(Array)
+#10 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(3555): CController->runAction(Object(CInlineAction))
+#11 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(3545): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1746): CController->run('login')
+#13 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin/site/logi...')
+#14 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#15 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#16 {main}
+REQUEST_URI=/site1/index.php/admin/site/login
+---
+2013/10/19 08:05:36 [error] [exception.CException] exception 'CException' with message '属性 "SiteController.layoutPath" 未被定义.' in /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php:638
+Stack trace:
+#0 /Library/WebServer/www/webroot/site1/protected/modules/admin/components/Controller.php(32): CComponent->__set('layoutPath', '/Library/WebSer...')
+#1 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1745): Controller->init()
+#2 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1666): CWebApplication->runController('admin/site/logi...')
+#3 /Library/WebServer/www/webroot/site1/vendor/yiisoft/yii/framework/yiilite.php(1191): CWebApplication->processRequest()
+#4 /Library/WebServer/www/webroot/site1/index.php(16): CApplication->run()
+#5 {main}
+REQUEST_URI=/site1/index.php/admin/site/login
+---
