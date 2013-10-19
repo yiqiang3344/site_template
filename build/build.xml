@@ -48,7 +48,7 @@
                 <mkdir dir="${product.dir}" />
             </else>
         </if>
-        <copy todir="${project.basedir}/${product.dir}" overwrite="true">
+        <copy todir="${product.dir}" overwrite="true">
             <fileset dir="${project.basedir}">
                 <include pattern="protected/**" />
                 <include pattern="img/**" />
@@ -61,6 +61,12 @@
                 <include pattern="index.php" />
             </fileset>
         </copy>
+        <!-- 删除所有mustache文件 -->
+        <delete>
+            <fileset dir="${product.dir}">
+                <include name="**/*.mustache" />
+            </fileset>
+        </delete>
     </target>
 
     <target name="db-init" depends="config" description="Initiate database">
