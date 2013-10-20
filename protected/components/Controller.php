@@ -84,4 +84,28 @@ class Controller extends CController {
         }
         return $ret;
     }
+
+    public function actions(){
+        return array( 
+            // captcha action renders the CAPTCHA image displayed on the contact page
+            'captcha'=>array(
+                    'class'=>'CCaptchaAction',
+                    'backColor'=>0xFFFFFF, 
+                    'maxLength'=>'6',       // 最多生成几个字符
+                    'minLength'=>'5',       // 最少生成几个字符
+                    'height'=>'40',
+                    'width'=>'230',
+            ), 
+        ); 
+        
+    }
+
+    public function accessRules(){
+        return array(
+            array('allow',
+                'actions'=>array('captcha'),
+                'users'=>array('*'),
+            ),
+        );
+    }
 }

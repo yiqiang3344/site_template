@@ -15,11 +15,9 @@
     <target name="config" description="Replace config files">
         <copy todir="${project.basedir}" overwrite="true">
             <fileset dir="${project.basedir}">
-                <include pattern="protected/config/*.php.mustache" />
-                <include pattern="protected/config/*/*.php.mustache" />
+                <include pattern="protected/**/*.php.mustache" />
+                <include pattern="build/**/*.php.mustache" />
                 <include pattern="*.php.mustache" />
-                <include pattern="build/*.php.mustache" />
-                <include pattern="build/*/*.php.mustache" />
             </fileset>
             <mapper type="glob" from="*.php.mustache" to="*.php" />
             <filterchain>
@@ -79,6 +77,10 @@
 
     <target name="db-migrate" depends="db-init" description="Migrate database">
         <exec command="./yiic migrate --interactive=0" dir="${project.basedir}/protected/" />
+    </target>
+
+    <target name="message" depends="config" description="generate messages">
+        <exec command="./yiic message ./messages/config.php" dir="${project.basedir}/protected/" />
     </target>
 
     <target name='eol' description="Replace all windows eol to unix eol">
