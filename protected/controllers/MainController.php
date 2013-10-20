@@ -6,7 +6,7 @@ class MainController extends Controller
 
         #start
         $params = array(
-            'test'=>$this->createAction('captcha')->getVerifyCode(),
+            'test'=>Yii::app()->user->isGuest,
         );
 
         END:

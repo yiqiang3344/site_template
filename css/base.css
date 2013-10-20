@@ -6,7 +6,7 @@ h1, h2, h3, h4, h5, h6{ font-size:12px; }
 body{
 	zoom:1;
 	font-size:24px; font-family:Arial,Helvetica,sans-serif; height:100%; color:#000; background:transparent;
-	-webkit-text-size-adjust:none; -webkit-user-select:none; -webkit-tap-highlight-color:rgba(0,0,0,0); 
+	-webkit-text-size-adjust:none; -webkit-tap-highlight-color:rgba(0,0,0,0); 
 }
 table{ border-collapse:collapse; border-spacing:0; }
 samp{ font-family:Arial,Helvetica,sans-serif; }

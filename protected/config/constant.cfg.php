@@ -4,6 +4,8 @@ class S{
     const USE_TEMPLATE = 1;
     const NOT_USE_TEMPLATE = 2;
     const DEV_USE_TEMPLATE = 3;
+
+    const MAX_LOGIN_ERROR_TIME = 3;//验证错误多少次会显示验证码
 }
 //项目常量
 class A{

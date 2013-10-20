@@ -8,31 +8,30 @@
         <link href="<?php echo $this->url("css/page.css");?>" rel="stylesheet" type="text/css" media="screen" />
         <script type="text/javascript" src="<?php echo $this->url("js/jquery.js");?>"></script>
         <script type="text/javascript">
-            var STATIC_BASE_URL=<?php echo json_encode(Yii::app()->getBaseUrl());?>;
-            var CODE_BASE_URL=<?php echo json_encode(Yii::app()->getBaseUrl() . "/index.php");?>;
+            var CONTROLLER=<?php echo json_encode($this->getId());?>;
+            var BASEURL=<?php echo json_encode(Yii::app()->getBaseUrl());?>;
+            var BASEURI=<?php echo json_encode(Yii::app()->getBaseUrl() . "/index.php");?>;
             var LANG=<?php echo json_encode(Yii::app()->language);?>;
             var STIME=<?php echo Y::getTime();?>;
             var CTIME=new Date().getTime();
             var TEST_SERVER_FLAG=<?php echo YII_DEBUG;?>;
             var VERSION=<?php echo json_encode(A::VERSION);?>;
+            var UD = <?php echo json_encode($this->getUD());?>
         </script>
         <script type="text/javascript" src="<?php echo $this->url("js/main.js");?>"></script>
         <script type="text/javascript" src="<?php echo $this->url('js/url.js');?>"></script>
         <script type="text/javascript" src="<?php echo $this->url('js/helper.js');?>"></script>
     </head>
     <body>
-        <div class="user_info">
-            <?php $this->widget('CCaptcha',array(
-                'showRefreshButton'=>false,
-                'clickableImage'=>true,
-                'imageOptions'=>array(
-                    'alt'=>'点击换图',
-                    'title'=>'点击换图',
-                    'style'=>'cursor:pointer',
-                )
-            )); ?>
+        <div id="maindiv">
+            <?php echo $content;?>
         </div>
-        <?php echo $content;?>
+         <script type="text/javascript">
+            $(function(){
+                showRegisterPop();
+                showLoginPop();
+            });
+        </script>
     </body>
 </html>
 

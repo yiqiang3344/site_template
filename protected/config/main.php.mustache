@@ -74,6 +74,16 @@ return array(
         //     'cookieMode' => 'only',
         //     'timeout' => 86400,
         // ),
+
+        //使用数据库保存session
+        'session' => array (
+            'class' => 'CDbHttpSession',  
+            'autoStart' => true,  
+            'sessionTableName'=>'YiiSession',  
+            'autoCreateSessionTable'=> false, 
+            'connectionID' => 'db',
+        ),
+
         // uncomment the following to use a MySQL database
         'db'=>array(
             'class' => 'CDbConnection',

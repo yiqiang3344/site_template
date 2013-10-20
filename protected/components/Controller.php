@@ -42,14 +42,13 @@ class Controller extends CController {
      */
     public $template;
     public function render( $view='',$data=array(), $template_flag=S::DEV_USE_TEMPLATE){
-        //DEV_USE_TEMPLATE 表示只有开发时才传入模板，因为发布后模板已编译到js文件中; USE_TEMPLATE 表示绝对会传入模板，用于php渲染; false 表示不用模板
-        if($template_flag!=S::NOT_USE_TEMPLATE && ($template_flag==S::USE_TEMPLATE || ($template_flag==S::DEV_USE_TEMPLATE && Yii::app()->language=='dev'))){
-            $this->template = $this->renderFile(Yii::app()->language.'/template/'.$this->getId().'/'.$view.'.php',null,true);
-        }
-
         if(is_array($view)) {
             $output =  json_encode($view);
         }else {
+            //DEV_USE_TEMPLATE 表示只有开发时才传入模板，因为发布后模板已编译到js文件中; USE_TEMPLATE 表示绝对会传入模板，用于php渲染; false 表示不用模板
+            if($template_flag!=S::NOT_USE_TEMPLATE && ($template_flag==S::USE_TEMPLATE || ($template_flag==S::DEV_USE_TEMPLATE && Yii::app()->language=='dev'))){
+                $this->template = $this->renderFile(Yii::app()->language.'/template/'.$this->getId().'/'.$view.'.php',null,true);
+            }
             $output =  parent::render($view,$data,true);
         }
         echo $output;
@@ -89,13 +88,22 @@ class Controller extends CController {
         return array( 
             // captcha action renders the CAPTCHA image displayed on the contact page
             'captcha'=>array(
-                    'class'=>'CCaptchaAction',
-                    'backColor'=>0xFFFFFF, 
-                    'maxLength'=>'6',       // 最多生成几个字符
-                    'minLength'=>'5',       // 最少生成几个字符
-                    'height'=>'40',
-                    'width'=>'230',
+                'class'=>'CCaptchaAction',
+                'backColor'=>0xFFFFFF, 
+                'maxLength'=>'6',       // 最多生成几个字符
+                'minLength'=>'5',       // 最少生成几个字符
+                'height'=>'40',
+                'width'=>'230',
             ), 
+            'register'=>array(
+                'class'=>'RegisterAction',
+            ),
+            'login'=>array(
+                'class'=>'LoginAction',
+            ),
+            'logout'=>array(
+                'class'=>'LogoutAction',
+            ),
         ); 
         
     }
@@ -103,9 +111,36 @@ class Controller extends CController {
     public function accessRules(){
         return array(
             array('allow',
-                'actions'=>array('captcha'),
+                'actions'=>array(
+                    'captcha',
+                    'register',
+                    'login',
+                    'logout',
+                ),
                 'users'=>array('*'),
             ),
         );
+    }
+
+    public function getUser(){
+        if(Yii::app()->user->isGuest){
+            return false;
+        }else{
+            $user = User::model()->find('username=:username',array(':username'=>Yii::app()->user->getId()));
+            return $user;
+        }
+    }
+
+    public function getUD(){
+        $info = array();
+        $info['login_error_time'] = intval(Yii::app()->session['login_error_time']);
+        $info['max_login_error_time'] = S::MAX_LOGIN_ERROR_TIME;
+        if(Yii::app()->user->isGuest){
+            $info['user'] = false;
+        }else{
+            $user = Y::cp($this->getUser(),array('id','username'));
+            $info['user'] = $user;
+        }
+        return $info;
     }
 }
