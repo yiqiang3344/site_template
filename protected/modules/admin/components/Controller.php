@@ -33,7 +33,16 @@ class Controller extends CController {
 
     public function filters() {
         return array (
+            'checkLogin',
         );
+    }
+
+    public function filterCheckLogin($filterChain) {
+        if(!in_array($this->getId(),array('site')) && Yii::app()->user->isGuest){
+            $this->redirect($this->url('Site','Login'));
+            return false;
+        }
+        $filterChain->run();
     }
 
     private $_basePath;
@@ -63,22 +72,25 @@ class Controller extends CController {
      */
     public $template;
     public function render( $view='',$data=array(), $template_flag=S::USE_TEMPLATE){
-        //DEV_USE_TEMPLATE 表示只有开发时才传入模板，因为发布后模板已编译到js文件中; USE_TEMPLATE 表示绝对会传入模板，用于php渲染; false 表示不用模板
-        if($template_flag!=S::NOT_USE_TEMPLATE && ($template_flag==S::USE_TEMPLATE || ($template_flag==S::DEV_USE_TEMPLATE && Yii::app()->language=='dev'))){
-            $this->template = $this->renderFile($this->getPath().'/template/'.$this->getId().'/'.$view.'.php',null,true);
-        }
-
         if(is_array($view)) {
             $output =  json_encode($view);
         }else {
+            //DEV_USE_TEMPLATE 表示只有开发时才传入模板，因为发布后模板已编译到js文件中; USE_TEMPLATE 表示绝对会传入模板，用于php渲染; false 表示不用模板
+            if($template_flag!=S::NOT_USE_TEMPLATE && ($template_flag==S::USE_TEMPLATE || ($template_flag==S::DEV_USE_TEMPLATE && Yii::app()->language=='dev'))){
+                $this->template = $this->renderFile($this->getPath().'/template/'.$this->getId().'/'.$view.'.php',null,true);
+            }
             $output =  parent::render($view,$data,true);
         }
         echo $output;
     }
 
+    public function getBaseUrl(){
+        return Yii::app()->getBaseUrl().'/index.php/'.$this->module->getName();
+    }
+
     public function url($c,$a=null,$p=array()){
         if($a){
-            $ret = Yii::app()->getBaseUrl().'/index.php/'.$this->module->getName().$c.'/'.$a.'?';
+            $ret = $this->getBaseUrl().'/'.$c.'/'.$a.($p?'?':'');
             foreach($p as $k=>$v){
                 $ret .= urlencode ( $k ) . "=" . urlencode ( $v ) . "&";
             }

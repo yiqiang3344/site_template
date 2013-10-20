@@ -56,7 +56,7 @@ class Controller extends CController {
 
     public function url($c,$a=null,$p=array()){
         if($a){
-            $ret = Yii::app()->getBaseUrl().'/index.php/'.$c.'/'.$a.'?';
+            $ret = Yii::app()->getBaseUrl().'/index.php/'.$c.'/'.$a.($p?'?':'');
             foreach($p as $k=>$v){
                 $ret .= urlencode ( $k ) . "=" . urlencode ( $v ) . "&";
             }
