@@ -43,7 +43,7 @@ class DicItem{
 			$dic_item->ja=trim(@$words[2]);
 			if($dic_item->ja==""){
 				echo "warning some words not translate to ja ".$dic_item->dev."\n<br/>";
-			}			
+			}
 			$dic_item->zh_cn=trim(@$words[3]);
 			
 			$dic_item->zh_tw=trim(@$words[4]);
@@ -51,6 +51,7 @@ class DicItem{
 				$dic_item->zh_tw=STConvertor::s2t($dic_item->zh_cn?$dic_item->zh_cn:$dic_item->dev);//trim(@$words[4]);
 			}
 			$dic_item->en=trim(@$words[5]);
+			
 		}
 		return $dic_item;
 	}

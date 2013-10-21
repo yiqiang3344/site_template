@@ -11,7 +11,7 @@ return array(
         'zh_cn',
     ),
     'fileTypes'=>array('php'),
-    'overwrite'=>true,
+    'overwrite'=>false,
     'exclude'=>array(
         '.svn',
         '.gitignore',

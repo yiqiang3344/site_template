@@ -11,6 +11,34 @@ helper.scanDir('./views',false,true).forEach(function(file){
         generateJsFiles(file);
     }
 });
+//从dev/template中读取子模板编译为js方法后保存为js文件：公用模板保存到[lang]/js/helper.min.js 局部模板保存为[lang]/js/[controller]_sub_template.min.js
+process.chdir('../');
+lang_list.forEach(function(lang){
+    var made_js_map = {};
+    helper.scanDir(lang+'/template',true).forEach(function(file){
+        var basename=helper.baseName(file,true);
+        if(helper.isFile(file) && basename.indexOf('_')==0){//子模板命名都以下划线开头
+            //读取文件编译为字符串
+            var ss ='var '+basename.substring(1)+'=new Hogan.Template();'+basename.substring(1)+'.r ='+hogan.compile(fs.readFileSync(file,'utf8'),{asString:true})+';',
+                dir = file.match(new RegExp('^'+lang+'/template/(.*)/'))[1],
+                mode;
+            if(dir == 'public_sub_template'){
+                fd = fs.openSync(lang+'/js/'+'helper.min.js', 'a+');
+            }else{
+                if(!made_js_map[dir]){
+                    mode = 'w';//覆盖方式写文件
+                }else{
+                    made_js_map[dir] = 1;
+                    mode = 'a+';//添加方式写文件
+                }
+                fd = fs.openSync(lang+'/js/'+dir+'_sub_template.min.js', mode);
+            }
+            fs.writeSync(fd, ss);
+            fs.closeSync(fd);
+        }
+    });
+});
+
 console.log('finish generate js files.');
 
 //从views文件夹的翻译视图中提取js文件码,压缩后生成js文件

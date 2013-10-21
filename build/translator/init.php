@@ -6,6 +6,7 @@ $input=array(
     array('protected/views/layouts','./{lang}'),
     array('protected/views/main','./{lang}'),
     array('dev/template/main','../../../{lang}/template/main'),
+    array('dev/template/public_sub_template','../../../{lang}/template/public_sub_template'),
 );
 
 $ignore=array(

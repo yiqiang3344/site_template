@@ -1,5 +1,14 @@
 var fs = require('fs');
 
+//获取文件名
+exports.baseName = baseName =  function(str,no_ext){
+  no_ext = no_ext || false;
+  var base = new String(str).substring(str.lastIndexOf('/') + 1); 
+  if(no_ext && base.lastIndexOf(".") != -1)
+     base = base.substring(0, base.lastIndexOf("."));
+  return base;
+}
+
 //压缩js文件
 exports.compressJs = compressJs =  function(orig_code){
   var UglifyJS = require("uglify-js");
