@@ -1,5 +1,5 @@
 <?php
-class User extends CActiveRecord
+class User extends YActiveRecord
 {
 	//注册
     public $passwordConfirm;

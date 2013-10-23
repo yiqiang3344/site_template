@@ -19,6 +19,7 @@
  * @version $Id: $
  */
 return array (
-  'password error' => '密码错误.',
-  'one month one comment' => '一个月只能对一家公司评论一次.',
+  'transaction already open.' => '事务已开启。',
+  'transaction not open.' => '事物没开启.',
+  'no login' => '请先登陆.',
 );
