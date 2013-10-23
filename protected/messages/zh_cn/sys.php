@@ -21,4 +21,5 @@
 return array (
   'transaction already open.' => '事务已开启。',
   'transaction not open.' => '事物没开启.',
+  'no login' => '请先登陆.',
 );

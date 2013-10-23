@@ -21,5 +21,5 @@
 return array (
   'transaction already open.' => 'transaction already open.',
   'transaction not open.' => 'transaction not open.',
-);
+  'no login' => 'no login.',
 );

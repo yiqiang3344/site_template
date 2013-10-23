@@ -20,4 +20,5 @@
  */
 return array (
   'password error' => '密码错误.',
+  'one month one comment' => '一个月只能对一家公司评论一次.',
 );

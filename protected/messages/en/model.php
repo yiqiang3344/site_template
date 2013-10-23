@@ -20,4 +20,5 @@
  */
 return array (
   'password error' => 'password error.',
+  'one month one comment' => 'one month one comment.',
 );

@@ -1,5 +1,5 @@
 <?php
-class Company extends YActiveRecord
+class Comment extends YActiveRecord
 {
     /**
      * Returns the static model of the specified AR class.
@@ -16,7 +16,7 @@ class Company extends YActiveRecord
      */
     public function tableName()
     {
-        return 'company';
+        return 'comment';
     }
 
     /**
@@ -27,16 +27,27 @@ class Company extends YActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('name, openedTime', 'required'),
-            array('openedTime', 'type', 'type' => 'date', 'message' => '{attribute}: is not a date!', 'dateFormat' => 'yyyy-MM-dd'),
+            array('userId, username, companyId, content, totalScore, scoreA, scoreB, scoreC', 'required'),
+            array('totalScore, scoreA, scoreB, scoreC', 'numerical', 'integerOnly'=>true),
+            array('content', 'length', 'min' =>1, 'max'=> 512),
+            array('content', 'checkContent'),
         );
+    }
+
+    public function checkContent(){
+        if(($m = self::model()->find(array(
+            'select'=>'recordTime',
+            'condition'=>'userId=:userId and companyId=:companyId',
+            'params'=>array(':userId'=>$this->userId,':companyId'=>$this->companyId),
+            'order'=>'id desc',
+            'limit'=>1,
+            ))) && Y::getTime()-$m->recordTime<30*24*3600){//同一个人对同一家公司一个月只能评论一次
+            $this->addError('error',Yii::t('model','one month one comment'));
+        }
     }
 
     protected function beforeSave() {
         if($this->isNewRecord) {
-            if($this->nameFirstLetter==''){
-                $this->nameFirstLetter = Y::getFirstLetter($this->name);
-            }
             $this->recordTime = Y::getTime();
         }
         return parent::beforeSave();
@@ -51,14 +62,6 @@ class Company extends YActiveRecord
         // class name for the relations automatically generated below.
         return array(
         );
-    }
-
-    public function addCommentCount(){
-        $this->updateCounters(array('commentCount'=>1));
-    }
-
-    public static function updateByIds($ids, $attributes){
-        return Y::updateByIds(__CLASS__,$ids, $attributes);
     }
 
     public static function create($attributes){

@@ -154,7 +154,7 @@ class Controller extends CController {
 
     public function getUser(){
         if(Yii::app()->user->isGuest){
-            return false;
+            Y::end(Yii::t('sys','no login'));
         }else{
             $user = User::model()->find('username=:username',array(':username'=>Yii::app()->user->getId()));
             return $user;
