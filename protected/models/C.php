@@ -78,4 +78,5 @@ class Company extends YActiveRecord
     public static function getListByPage($select, $condition, $order, $params, $page, $page_size, $require_all, $include_delete=false){
         return Y::getListByPage(__CLASS__,$select, $condition, $order, $params, $page, $page_size, $require_all, $include_delete);
     }
+
 }
