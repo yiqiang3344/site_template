@@ -56,3 +56,30 @@ CREATE TABLE company (
     `recordTime` int(10) UNSIGNED NOT NULL COMMENT '',
     PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='' AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS information;
+CREATE TABLE information (
+    `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '',
+    `title` varchar(128) NOT NULL COMMENT '',
+    `abstract` varchar(256) NOT NULL DEFAULT '' COMMENT '',
+    `hasPicture` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否有插图',
+    `content` text NOT NULL COMMENT '',
+    `updateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '',
+    `deleteFlag` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '',
+    `recordTime` int(10) UNSIGNED NOT NULL COMMENT '',
+    PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='' AUTO_INCREMENT=1 ;
+
+
+DROP TABLE IF EXISTS activity;
+CREATE TABLE activity (
+    `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '',
+    `title` varchar(128) NOT NULL COMMENT '',
+    `abstract` varchar(256) NOT NULL DEFAULT '' COMMENT '',
+    `hasPicture` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否有插图',
+    `content` text NOT NULL COMMENT '',
+    `updateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '',
+    `deleteFlag` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '',
+    `recordTime` int(10) UNSIGNED NOT NULL COMMENT '',
+    PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='' AUTO_INCREMENT=1 ;

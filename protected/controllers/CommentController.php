@@ -45,6 +45,32 @@ class CommentController extends Controller
         //     $m->addCommentCount();
         //  }
 
+        // $info = Information::create(array(
+        //     'title'=>'活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动1活动12',
+        //     'abstract'=>'简介1',
+        //     'hasPicture'=>1,
+        //     'content'=>'活动内容1',
+        // ));
+        // $info = Information::deleteByIds(array(1,2));
+        // $info = Information::getList('id','1=1','id desc');
+        // $info = Information::getListByPage('id', '1=1', '', array(), 1, 2, false);
+        //  foreach(Information::getList('*','id=1') as $m){
+        //     $m->addCommentCount();
+        //  }
+
+        // $info = Activity::create(array(
+        //     'title'=>'活动1活动1活动1活动1活动1活动1活动1',
+        //     'abstract'=>'简介1简介1简介1简介1简介1简介1简介1简介1',
+        //     // 'hasPicture'=>1,
+        //     'content'=>'活动内容1',
+        // ));
+        // $info = Activity::deleteByIds(array(1,2));
+        // $info = Activity::getList('id','1=1','id desc');
+        // $info = Activity::getListByPage('id', '1=1', '', array(), 1, 2, false);
+        //  foreach(Activity::getList('*','id=1') as $m){
+        //     $m->addCommentCount();
+        //  }
+
         print_r($info);
         die;
 
