@@ -10,9 +10,14 @@
     }
 
     function content_refresh(){
+        State.setDic({
+            'main/index':'首页',
+            'comment/index':'评论',
+        });
+        State.setDefaultPosition('main/index',{});
         var html = template.render(params);
+        html += State.getPositionHtml();
         $('.maincontent').html(html);
-        console.log(test_template.render({test:'测试一下共用模板'}),main_partials_1.render({test:'测试一下局部模板'}));
     }
 </script>
 <script type="text/javascript">//php代码只能出现在这个脚本中

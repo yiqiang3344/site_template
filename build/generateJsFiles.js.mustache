@@ -21,7 +21,12 @@ lang_list.forEach(function(lang){
         var basename=helper.baseName(file,true);
         if(helper.isFile(file) && basename.indexOf('_')==0){//子模板命名都以下划线开头
             //读取文件编译为字符串
-            var ss ='var '+basename.substring(1)+'=new Hogan.Template();'+basename.substring(1)+'.r ='+hogan.compile(fs.readFileSync(file,'utf8'),{asString:true})+';',
+            var name = '';
+            basename.substring(1).split('_').forEach(function(v){
+                name += v.substring(0,1).toUpperCase()+v.substring(1);
+            });
+            name = name.substring(0,1).toLowerCase()+name.substring(1);
+            var ss ='var '+name+'=new Hogan.Template();'+name+'.r ='+hogan.compile(fs.readFileSync(file,'utf8'),{asString:true})+';',
                 dir = file.match(new RegExp('^'+lang+'/template/(.*)/'))[1],
                 mode;
             if(dir == 'public_sub_template'){

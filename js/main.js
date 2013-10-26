@@ -1,15 +1,188 @@
+/**
+ * operate Cookie
+ * @param string uniqueN 
+ */
+var YCache = function(uniqueN){
+    var uniqueN = (typeof(uniqueN) != "string") ? "" : "uniqueN_" + uniqueN + "_";
+    setCookie = function(name, value){
+        var Days = 1;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+        document.cookie = name + "=" + escape(this.encode(value)) + ";expires=" + exp.toGMTString();
+    }
+    getCookie = function(name){
+        var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+        if (arr != null)
+            return this.unencode(unescape(arr[2]));
+        return null;
+    }
+    delCookie = function(name){
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        var tem = this.getCookie(name);
+        if (tem != null)
+            document.cookie = "name=" + tem + ";expires=" + exp.toGMTString();
+    }
+    encode = function(str){
+        var temstr = "";
+        var i = str.length - 1;
+        for (i; i >= 0; i--) {
+            temstr += str.charCodeAt(i);
+            if (i)
+                temstr += "a";
+        }
+        return temstr;
+    }
+    unencode = function(str){
+        var strarr = "";
+        var temstr = "";
+        strarr = str.split("a");
+        var i = strarr.length - 1;
+        for (i; i >= 0; i--) {
+            temstr += String.fromCharCode(eval(strarr[i]));
+        }
+        return temstr;
+    }
+    return {
+        set: function(text){
+          setCookie(uniqueN, text);
+        },
+        clear: function(){
+          delCookie(uniqueN);
+        },
+        get: function(){
+          return getCookie(uniqueN);
+        }
+    }
+}
+
+var State = {};
+(function(State){
+    var history = [],
+        //list of url : name
+        Dic = {},
+        Cache = YCache('siteHistory');
+    State.setDic = function(p){
+        if(typeof p != 'object'){
+            return false;
+        }
+        for(var k in p){
+            Dic[k]=p[k];
+        }
+    }
+    State.setDefaultPosition = function(url,params){
+        loadFromCookie();
+        if(history.length==0){
+            history.push({url:url,params:params});
+            saveToCookie();
+        }
+    }
+    //forward and record
+    State.forward = function(url,params){
+        history.push({url:url,params:params});
+        saveToCookie();
+        State.gotoUrl(url,params);
+    }
+    //forward no record
+    State.forwardNoback = function(url,params){
+        State.gotoUrl(url,params);
+    }
+    //back n=0 refresh,n>0 to max-n,n<0 to-n 
+    State.back = function(n){
+        if(!n){
+            n = history.length-1;
+        }else if(n<0){
+            n = (-n>history.length?history.length:-n)-1;
+        }else{
+            n = n>history.length?0:history.length-n;
+        }
+        var h;
+        for(var i=history.length-1;i;i--){
+            h = history.pop();
+            if(i==n){
+                break;
+            }
+        }
+        saveToCookie();
+        State.gotoUrl(h.url,h.params);
+    }
+    State.gotoUrl = function(url,params){
+        // location.href=getUrl(url,params);
+    }
+    State.getPositionHtml = function(){
+        var p = {
+            default:{},
+            list:[]
+        };
+        for(var i=0;i<history.length;i++){
+            if(i==0){
+                p.default = {
+                    url:getUrl(history[i].url,history[i].params),
+                    name:Dic[history[i].url]
+                };
+            }else{
+                p.list.push({
+                    url:getUrl(history[i].url,history[i].params),
+                    name:Dic[history[i].url]
+                });
+            }
+        }
+        return sitePositionTemplate.render(p);
+    }
+
+    function saveToCookie(){
+        var l = [];
+        for(var i=0;i<history.length;i++){
+            var pl = [];
+            for(var j in history[i].params){
+                pl.push(j+'**'+history[i].params[j]);
+            }
+            l.push(history[i].url+'^^'+pl.join('&&'));
+        }
+        var v = l.join('%%');
+        Cache.set(v);
+    }
+
+    function loadFromCookie(){
+        var c = Cache.get();
+        if(!c || c.indexOf('/')==-1){
+            return;
+        }
+        var hl = c.split('%%'),
+            h = [];
+        for(var i=0;i<hl.length;i++){
+            var l = hl[i].split('^^'),
+                p = {};
+            if(l[1]){
+                var pl = l[1].split('&&');
+                for(var ii=0;ii<pl.length;ii++){
+                    var pp = pl[ii].split('**');
+                    p[pp[0]] = pp[1];
+                }
+            }
+            h.push({
+                url:l[0],
+                params:p,
+            });
+        }
+        history = h;
+    }
+})(State);
+
+/**
+*   get the time of server
+*/
 function time(){
     return Math.floor(STIME+(new Date().getTime()-CTIME)/1000);
 }
 
+/**
+*  @param c string controller or controller/action
+*  @param a string or object action
+*  @param p object params
+*/
 function getUrl(c,a,p){
     if(a===undefined){
-        var file;
-        if(c.substr(0,3)=="js/" || c.substr(0,9)=="template/"){
-            file=LANG+"/"+c;
-        }else{
-            file=c;
-        }
         var pieces=c.split("/");
         var arr=URLCACHE;
         for(var i=0;i<pieces.length;i++){
@@ -17,7 +190,7 @@ function getUrl(c,a,p){
                 arr=arr[pieces[i]];
             }
         }
-        return BASEURL+"/"+file+"?v="+arr;
+        return BASEURL+"/"+c+"?v="+arr;
     }else {
         var url,param;
         if(typeof(a)=="string"){
@@ -28,13 +201,43 @@ function getUrl(c,a,p){
             param=a;
         }
         if(param){
-            url+="?";
+            var l = [];
             for(var k in param){
-                url+=encodeURIComponent(k)+"="+encodeURIComponent(param[k])+"&";
+                l.push(encodeURIComponent(k)+"="+encodeURIComponent(param[k]));
             }
+            l.length>0 && (url+='?'+l.join('&'));
         }
         return url;
     }
+}
+
+/**
+* @param time time
+* @param flag number 1 Y-d-m, 2 Y-d-m h:i:s
+*/
+function dateFormat(time,flag){
+    var date = new Date(time*1000);
+    var ret = '';
+    if(!flag || flag==1){
+        ret += date.getFullYear();
+        ret += '-';
+        ret += date.getMonth()+1;
+        ret += '-';
+        ret += date.getDate();
+    }else if(flag==2){
+        ret += date.getFullYear();
+        ret += '-';
+        ret += date.getMonth()+1;
+        ret += '-';
+        ret += date.getDate();
+        ret += ' ';
+        ret += date.getHours();
+        ret += ':';
+        ret += date.getMinutes();
+        ret += ':';
+        ret += date.getSeconds();
+    }
+    return ret;
 }
 
 function yajax(c,a,data,succ_callback,dom){
