@@ -9,7 +9,7 @@ $import = require_once(dirname(__FILE__).'/import.cfg.php');
 return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
     'name'=>'site1',
-    'language' => 'dev',
+    'language' => 'zh_cn',
 
     // preloading 'log' component
     'preload'=>array('log'),
@@ -87,11 +87,11 @@ return array(
                     'levels'=>'error, warning, trace',
                 ),
                 // uncomment the following to show log messages on web pages
-                
-                // array(
-                //     'class'=>'CWebLogRoute',
-                // ),
-                
+                /*
+                array(
+                    'class'=>'CWebLogRoute',
+                ),
+                */
             ),
         ),
     ),
