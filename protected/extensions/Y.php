@@ -97,7 +97,7 @@ class Y{
         $criteria->select=$select;
         $criteria->order=$order;
         $criteria->params=$params;
-        return $model_name::model()->findAll($criteria);
+        return Y::modelsToArray($model_name::model()->findAll($criteria));
     }
 
     //根据条件获取全部信息的列表并分页
@@ -128,13 +128,31 @@ class Y{
             $criteria->offset=$offset;
             $criteria->limit=$limit;
             $criteria->params=$params;
-            $data = $model_name::model()->findAll($criteria);
+            $data = Y::modelsToArray($model_name::model()->findAll($criteria));
         } else {
             $data = array();
         }
         return array(
             "item_count" => $count, "page" => $page, "page_count" => $page_count, "data" => $data, "page_size" => $page_size
         );
+    }
+
+    static public function modelsToArray($models){
+        $arr = array();
+        if(is_object($models)){
+            foreach($models as $k=>$v){
+                $v!==null && ($arr[$k] = $v);
+            }
+        }elseif(is_array($models)){
+            foreach ($models as $m) {
+                $a = array();
+                foreach ($m as $k => $v) {
+                    $v!==null && ($a[$k] = $v);
+                }
+                $arr[] = $a;
+            }
+        }
+        return $arr;
     }
 
 

@@ -17,7 +17,10 @@
         State.setDefaultPosition('main/index',{});
         var html = template.render(params);
         html += State.getPositionHtml();
+        html += '<div id="page"></div>';
         $('.maincontent').html(html);
+
+        Pager($('#page'),'Main','Index',{},params.pager,{className:'main',c:'Main',a:'Index',params:{},callback:function(){}});
     }
 </script>
 <script type="text/javascript">//php代码只能出现在这个脚本中

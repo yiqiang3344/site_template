@@ -1,6 +1,91 @@
 /**
+* Pager
+* @param {object} dom : jquery selector,where to insert html
+* @param {string} c : controller
+* @param {string} a : action
+* @param {object} params : params
+* @param {object} pager : {item_count: count, page : page, page_count : page_count, data : data, page_size : page_size } 
+* @param [option] {object} ajax : {className:'this pager class name',c:'controller', a:'action', params:'params', callback:function(){} } 
+*/
+function Pager(dom,c,a,params,pager,ajax){
+    if(pager.page_count==1){
+        return '';
+    }
+    ajax = ajax || false;
+
+    var className = ajax?('pager_'+ajax.className):false;
+
+    var last = false;
+    if(pager.page>1){
+        params.p = pager.page-1;
+        last = {
+            id : ajax ? (className+params.p) : false,
+            href : getUrl(c,a,params)
+        };
+    }
+    var next = false;
+    if(pager.page<pager.page_count){
+        params.p = pager.page+1;
+        next = {
+            id : ajax ? (className+params.p) : false,
+            href : getUrl(c,a,params)
+        };
+    }
+    var p = {
+        className : className,
+        last : last,
+        next : next,
+        list : []
+    };
+
+    //show 5 links,other is ellipsis
+    var link_count = pager.page_count-pager.page;
+    if(link_count<=5){
+        for(var i=pager.page+1;i<=pager.page_count;i++){
+            params.p = i;
+            var link = {
+                ellipsis : false,
+                id : ajax ? (className+i) : false,
+                href : getUrl(c,a,params),
+                name : i
+            };
+            p.list.push(link);
+        }
+    }else{
+        var c1 = pager.page+3,
+            c2 = pager.page_count-1,
+            link;
+        for(var i=pager.page+1;i<=pager.page_count;i++){
+            link = {
+                ellipsis : true,
+            };
+            if(i<=c1 || i>=c2){
+                params.p = i;
+                link = {
+                    ellipsis : false,
+                    id : ajax ? (className+i) : false,
+                    href : getUrl(c,a,params),
+                    name : i
+                };
+            }
+            p.list.push(link);
+        }
+    }
+    dom.html(pagerTemplate.render(p));
+
+    if(ajax){
+        dom.find('[id^="'+className+'"]').click(function(){
+            var p = this.id.replace(className,'');
+            ajax.params.p = p;
+            yajax(ajax.c,ajax.a,ajax.params,ajax.callback,this);
+            return false;
+        });
+    }
+}
+
+/**
  * operate Cookie
- * @param string uniqueN 
+ * @param {string} uniqueN 
  */
 var YCache = function(uniqueN){
     var uniqueN = (typeof(uniqueN) != "string") ? "" : "uniqueN_" + uniqueN + "_";
@@ -177,9 +262,9 @@ function time(){
 }
 
 /**
-*  @param c string controller or controller/action
-*  @param a string or object action
-*  @param p object params
+*  @param {string} c controller or controller/action
+*  @param {string} a or object action
+*  @param {object} p params
 */
 function getUrl(c,a,p){
     if(a===undefined){
@@ -212,8 +297,8 @@ function getUrl(c,a,p){
 }
 
 /**
-* @param time time
-* @param flag number 1 Y-d-m, 2 Y-d-m h:i:s
+* @param {time} time
+* @param {number} flag 1 Y-d-m, 2 Y-d-m h:i:s
 */
 function dateFormat(time,flag){
     var date = new Date(time*1000);
