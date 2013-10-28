@@ -66,10 +66,10 @@ class Contact extends YActiveRecord
     }
 
     public static function getListBySort(){
-        return self::model()->nodelete()->findAll(array(
+        return Y::modelsToArray(self::model()->nodelete()->findAll(array(
             'select'=>'urlName,name',
             'order'=>'sort',
-        ));
+        )));
     }
 
     public static function updateByIds($ids, $attributes){

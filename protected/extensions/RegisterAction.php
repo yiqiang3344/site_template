@@ -11,7 +11,10 @@ class RegisterAction extends CAction
         $MUser->attributes = $FUser;
         $errors = array();
         $session = Yii::app()->session;
-        if($MUser->save() && $MUser->login()){
+        if($MUser->save()){
+            $MUser = new User('login');
+            $MUser->attributes = $FUser;
+            $MUser->login();
             $code = 1;
             $session['login_error_time']=0;
         }else{

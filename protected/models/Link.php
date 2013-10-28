@@ -62,10 +62,10 @@ class Link extends YActiveRecord
     }
 
     public static function getListBySort(){
-        return self::model()->nodelete()->findAll(array(
+        return Y::modelsToArray(self::model()->nodelete()->findAll(array(
             'select'=>'name,url',
             'order'=>'sort',
-        ));
+        )));
     }
 
     public static function updateByIds($ids, $attributes){

@@ -174,14 +174,15 @@ var State = {};
     }
     //back n=0 refresh,n>0 to max-n,n<0 to-n 
     State.back = function(n){
+        n = n || 0;
+        var h;
         if(!n){
-            n = history.length-1;
+            h = history[history.length-1];
         }else if(n<0){
             n = (-n>history.length?history.length:-n)-1;
         }else{
             n = n>history.length?0:history.length-n;
         }
-        var h;
         for(var i=history.length-1;i;i--){
             h = history.pop();
             if(i==n){
@@ -192,7 +193,7 @@ var State = {};
         State.gotoUrl(h.url,h.params);
     }
     State.gotoUrl = function(url,params){
-        // location.href=getUrl(url,params);
+        location.href=getUrl(url,params);
     }
     State.getPositionHtml = function(){
         var p = {

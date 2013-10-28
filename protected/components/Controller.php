@@ -173,6 +173,7 @@ class Controller extends CController {
         $info = array();
         $info['login_error_time'] = intval(Yii::app()->session['login_error_time']);
         $info['max_login_error_time'] = S::MAX_LOGIN_ERROR_TIME;
+        $info['links'] = Link::model()->getListBySort();
         if(Yii::app()->user->isGuest){
             $info['user'] = false;
         }else{

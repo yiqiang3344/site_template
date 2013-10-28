@@ -39,8 +39,7 @@
             <?php echo $content;?>
         </div>
         <script type="text/javascript">
-            showRegisterPop();
-            showLoginPop();
+            showHeader(UD.user,UD.links);
         </script>
     </body>
 </html>

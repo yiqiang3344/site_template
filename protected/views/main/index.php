@@ -10,13 +10,7 @@
     }
 
     function content_refresh(){
-        State.setDic({
-            'main/index':'首页',
-            'comment/index':'评论',
-        });
-        State.setDefaultPosition('main/index',{});
         var html = template.render(params);
-        html += State.getPositionHtml();
         html += '<div id="page"></div>';
         $('.maincontent').html(html);
 
