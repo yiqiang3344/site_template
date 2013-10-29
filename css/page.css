@@ -1,1 +1,19 @@
 @charset "utf-8";
+.awidth{
+    
+}
+.mheader{
+    height: 200px;
+}
+.maincontent{
+    height: 600px;
+}
+.mfooter{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    min-height: 200px;
+}
+.merror{
+    border: 1px solid red;
+}

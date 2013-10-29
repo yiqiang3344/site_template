@@ -73,11 +73,11 @@ class CommentController extends Controller
 
         // $info  = Search::getCompanyListByName('名字');
 
-        // $info = Contact::create(array(
-        //     'urlName'=>'introduce1',
-        //     'name'=>'自我介绍1',
-        //     'content'=>'自我介绍内容',
-        // ));
+        $info = Contact::create(array(
+            'urlName'=>'joinUs3',
+            'name'=>'加入我们3',
+            'content'=>'加入我们内容',
+        ));
         // $info = Contact::getInfoByUrlName('introduce1');
         // $info = Contact::getListBySort();
 

@@ -39,7 +39,8 @@
             <?php echo $content;?>
         </div>
         <script type="text/javascript">
-            showHeader(UD.user,UD.links);
+            showHeader(UD.user,UD.navLinks);
+            showFooter(UD.contactLinks);
         </script>
     </body>
 </html>

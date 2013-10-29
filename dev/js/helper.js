@@ -1,3 +1,23 @@
+function showFooter(links){
+    links = links || [];
+    var params = {
+            list : []
+        },
+        sublist = [];
+    for(var i=0;i<links.length;i++){
+        sublist.push({
+            name:links[i].name,
+            url:getUrl('Contact','Index',{urlName:links[i].urlName})
+        });
+        if(i==links.length-1 || (i!==0 && (i+1)%5==0)){
+            params.list.push(sublist);
+            sublist = [];
+        }
+    }
+    console.log(params);
+    $('#maindiv').append(footerTemplate.render(params));
+}
+
 function showHeader(user,links){
     user = user || false;
     links = links || [];
@@ -52,7 +72,7 @@ function showHeader(user,links){
 function showRegisterPop(){
     var html = '';
     html+='<div class="user_info">';
-    html+='    <form id="user" class="js_registerForm">';
+    html+='    <form class="js_registerForm">';
     html+='        <div>注册</div>';
     html+='        <div>用户名：<input type="text" name="username"/></div>';
     html+='        <div>密码：<input type="password" name="password"/></div>';
@@ -82,11 +102,14 @@ function showRegisterPop(){
     });
 
     $('.js_registerForm').find('[name="submit"]').click(function(){
+        $('.js_registerForm').find('.merror').removeClass('merror');
         yajax(CONTROLLER,'register',$('.js_registerForm').serialize(),function(obj){
             if(obj.code==1){
                 State.back(0);
             }else if(obj.code==2){
-                alert('注册失败');
+                $.each(obj.errors,function(k,v){
+                    $('.js_registerForm').find('[name='+k+']').addClass('merror');
+                });
             }
         },this);
         return false;
@@ -96,7 +119,7 @@ function showRegisterPop(){
 function showLoginPop(){
     var html = '';
     html+='<div class="user_info">';
-    html+='    <form id="user" class="js_loginForm">';
+    html+='    <form class="js_loginForm">';
     html+='        <div>登陆</div>';
     html+='        <div>用户名：<input type="text" name="username"/></div>';
     html+='        <div>密码：<input type="password" name="password"/></div>';
@@ -125,11 +148,14 @@ function showLoginPop(){
     });
 
     $('.js_loginForm').find('[name="submit"]').click(function(){
+        $('.js_loginForm').find('.merror').removeClass('merror');
         yajax(CONTROLLER,'login',$('.js_loginForm').serialize(),function(obj){
             if(obj.code==1){
                 State.back(0);
             }else if(obj.code==2){
-                alert('登陆失败');
+                $.each(obj.errors,function(k,v){
+                    $('.js_loginForm').find('[name='+k+']').addClass('merror');
+                });
             }
         },this);
         return false;
