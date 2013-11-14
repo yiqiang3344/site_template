@@ -63,8 +63,8 @@ class Link extends YActiveRecord
 
     public static function getListBySort(){
         return Y::modelsToArray(self::model()->nodelete()->findAll(array(
-            'select'=>'name,url',
-            'order'=>'sort',
+            'select'=>'id,name,url',
+            'order'=>'sort desc',
         )));
     }
 

@@ -100,7 +100,7 @@ class Controller extends CController {
             }
         }else{
             //非开发环境中的css和js都是压缩过的,开发环境中则不压缩
-            $not_translate = preg_match('{^(js/(jquery|main|url)\.|css)}',$c);
+            $not_translate = preg_match('{^(js/(jquery|main|url)\.|css|img|images)}',$c);
             if(Yii::app()->language=='dev'){
                 if(!$not_translate){
                     //开发语言中需要翻译的

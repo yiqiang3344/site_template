@@ -100,4 +100,36 @@ class Controller extends CController {
         }
         return $ret;
     }
+
+    
+
+    public function siteUrl($c,$a=null,$p=array()){
+        if($a){
+            $ret = Yii::app()->getBaseUrl().'/index.php/'.$c.'/'.$a.($p?'?':'');
+            foreach($p as $k=>$v){
+                $ret .= urlencode ( $k ) . "=" . urlencode ( $v ) . "&";
+            }
+        }else{
+            //非开发环境中的css和js都是压缩过的,开发环境中则不压缩
+            $not_translate = preg_match('{^(js/(jquery|main|url)\.|css|img|images)}',$c);
+            if(Yii::app()->language=='dev'){
+                if(!$not_translate){
+                    //开发语言中需要翻译的
+                    $c = Yii::app()->language.'/'.$c;
+                }
+            }else{
+                $min_name = str_replace(array('.js','.css'),array('.min.js','.min.css'),$c);
+                if($not_translate){
+                    //非开发语言中不需要翻译的
+                    $c = 'script/'.basename($min_name);
+                }else{
+                    //非开发语言中需要翻译的
+                    $c = Yii::app()->language.'/'.$min_name;
+                }
+            }
+            $md5 = @md5_file ($c);
+            $ret = Yii::app()->getBaseUrl().'/'.$c.($md5 ? '?v=' . substr ( $md5, 0, 8 ) : '');
+        }
+        return $ret;
+    }
 }

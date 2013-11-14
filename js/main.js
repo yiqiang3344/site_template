@@ -326,7 +326,8 @@ function dateFormat(time,flag){
     return ret;
 }
 
-function yajax(c,a,data,succ_callback,dom){
+//send ajax after last one succeeded
+function oneAjax(c,a,data,succ_callback,dom){
     if(dom){
         var k_disable=0;
         $(dom).each(function(){
@@ -340,15 +341,12 @@ function yajax(c,a,data,succ_callback,dom){
             $(dom).data("k_disable",1);
         }
     }
-
-    function show_error(error){
-        alert(error?error:'data load error!');
-    }
-
     var succ=function(obj){
         dom && $(dom).data("k_disable",0);
-        if(obj==null || typeof(obj)!="object" || !obj.code || obj.code==-1){
-            show_error(1);
+        if(obj==null || typeof(obj)!="object" || !obj.code ){
+            fail("","parsererror","");
+        }else if(obj.code=="-1"){
+            fail("","servererror",obj.msg);
         }else{
             succ_callback(obj);
         }
@@ -356,25 +354,16 @@ function yajax(c,a,data,succ_callback,dom){
     var fail=function(jqXHR, textStatus, errorThrown){
         dom && $(dom).data("k_disable",0);
         if (jqXHR.status == 0 && textStatus=="error") {
-            show_error();
+            alert('yajax error: ' + errorThrown);
         } else if(textStatus=="parsererror"){
-            show_error();
+            alert('yajax parsererror');
         }else if(textStatus=="servererror"){
-            show_error();
+            alert('yajax servererror:' + errorThrown);
         }else{
-            show_error();
+            alert('yajax error: other');
         }
     };
-    setTimeout(function(){
-        $.ajax({
-            url:getUrl(c,a),
-            data:data,
-            dataType:"json",
-            type: "POST",
-            success:succ,
-            error:fail
-        });
-    },0);
+    $.ajax({url:getUrl(c,a),data:data,dataType:"json",type: "POST",success:succ,error:fail});
 }
 
 /*
