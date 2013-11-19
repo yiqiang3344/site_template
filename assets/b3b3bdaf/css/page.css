@@ -2,3 +2,18 @@
 .merror{
     border: 1px solid red;
 }
+
+.mlist{
+    font-size: 13px;
+}
+
+.mlist .attr:before{
+    content: ' ';
+    display: inline-block;
+}
+.mlist .attr{
+    float: left;
+    width:80px;
+    overflow: hidden;
+    margin-left: 10px;
+}

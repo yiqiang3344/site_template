@@ -1,3 +1,94 @@
+$(function(){
+  $('.js_cbox_all').click(function(e){
+      var a = $(this).parents('ul').find('.js_cbox,.js_cbox_all');
+      if($(this).filter(':checked').length){
+          $.each(a,function(){
+              this.checked = true;
+          })
+      }else{
+          $.each(a,function(){
+              this.checked = false;
+          })
+      }
+  });
+});
+
+/**
+* Pager
+* @param {object} dom : jquery selector,where to insert html
+* @param {string} c : controller
+* @param {string} a : action
+* @param {object} params : params
+* @param {object} pager : {item_count: count, page : page, page_count : page_count, data : data, page_size : page_size } 
+* @param [option] {object} ajax : {className:'this pager class name',c:'controller', a:'action', params:'params', callback:function(){} } 
+*/
+function Pager(dom,c,a,params,pager,ajax){
+    if(pager.page_count==1){
+        return '';
+    }
+    ajax = ajax || false;
+
+    var className = ajax?('pager_'+ajax.className):false;
+
+    var last = false;
+    if(pager.page>1){
+        params.p = pager.page-1;
+        last = {
+            id : ajax ? (className+params.p) : false,
+            href : getUrl(c,a,params)
+        };
+    }
+    var next = false;
+    if(pager.page<pager.page_count){
+        params.p = pager.page+1;
+        next = {
+            id : ajax ? (className+params.p) : false,
+            href : getUrl(c,a,params)
+        };
+    }
+    var p = {
+        className : className,
+        last : last,
+        next : next,
+        list : []
+    };
+
+    var b2 = pager.page-2,
+        a2 = pager.page+2,
+        link,
+        has_ellipsis = false;
+    for(var i=1;i<=pager.page_count;i++){
+        //alway show first and last page; 
+        //when show first or last not show last or next; 
+        //show tow page before or after now page.
+        if((i>=b2 && i<=a2) || i==1 || i==pager.page_count){
+            params.p = i;
+            link = {
+                ellipsis : false,
+                id : ajax ? (className+i) : false,
+                href : getUrl(c,a,params),
+                name : i,
+                select : i==pager.page
+            };
+        }else{
+            link = has_ellipsis ? false : {ellipsis : true};
+            has_ellipsis = true;
+        }
+        link && p.list.push(link);
+    }
+    var pagerTemplate = Hogan.compile('<div class="mpager {{#className}}{{className}}{{/className}}"> {{#last}} <span class="link"><a href="{{last.href}}" {{#last.id}}id="{{last.id}}"{{/last.id}}>上一页</a></span> {{/last}} {{#list}} <span class="link"> {{#ellipsis}} ... {{/ellipsis}} {{^ellipsis}} <a href="{{href}}" {{#id}}id="{{id}}"{{/id}} {{#select}}style="text-decoration: underline;"{{/select}}>{{name}}</a> {{/ellipsis}} </span> {{/list}} {{#next}} <span class="link"><a href="{{next.href}}" {{#next.id}}id="{{next.id}}"{{/next.id}}>下一页</a></span> {{/next}} </div>');
+    dom.html(pagerTemplate.render(p));
+
+    if(ajax){
+        dom.find('[id^="'+className+'"]').click(function(){
+            var p = this.id.replace(className,'');
+            ajax.params.p = p;
+            oneAjax(ajax.c,ajax.a,ajax.params,ajax.callback,this);
+            return false;
+        });
+    }
+}
+
 function uploader(input, options) {
     var $this = this;
 
@@ -139,9 +230,11 @@ function getUrl(c,a,p){
             param=a;
         }
         if(param){
+            var l = [];
             for(var k in param){
-                url+="&"+encodeURIComponent(k)+"="+encodeURIComponent(param[k]);
+                l.push(encodeURIComponent(k)+"="+encodeURIComponent(param[k]));
             }
+            l.length>0 && (url+='?'+l.join('&'));
         }
         return url;
     }

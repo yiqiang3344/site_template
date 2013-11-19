@@ -44,9 +44,33 @@
         </div>
         <div>
             <input type="submit" id="add_link" value="添加"/>
-        </div>
-        <div>
             <input type="submit" id="delete_link" value="删除"/>
+        </div>
+    </div>
+    <div>
+        <h3>联系我们管理</h3>
+        <ul class="mlist js_contact">
+            <li class="clearfix">
+                <div class="fl w50">
+                     <input type="checkbox" class="js_cbox_all"/>
+                </div>
+                <div class="fl w200">name</div>
+                <div class="fl w300">urlName</div>
+            </li>
+            {{#contacts}}
+            <li  class="clearfix">
+                <div class="fl w50">
+                     <input type="checkbox" class="js_cbox" value="{{id}}"/>
+                </div>
+                <div class="fl w200">{{name}}</div>
+                <div class="fl w300">{{urlName}}</div>
+                <div class="fl w300"><a href="" id="contact_edit_{{id}}">编辑</a></div>
+            </li>
+            {{/contacts}}
+        </ul>
+        <div>
+            <input type="submit" id="contact_add" value="添加"/>
+            <input type="submit" id="contact_delete" value="删除"/>
         </div>
     </div>
 </div>

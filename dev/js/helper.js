@@ -14,7 +14,6 @@ function showFooter(links){
             sublist = [];
         }
     }
-    console.log(params);
     $('#maindiv').append(footerTemplate.render(params));
 }
 
@@ -48,7 +47,7 @@ function showHeader(user,links){
     //绑定事件
     //登出
     $('.js_logout').click(function(){
-        yajax('Main','logout',{},function(obj){
+        oneAjax('Main','logout',{},function(obj){
             if(obj.code==1){
                 State.back(0);
             }
@@ -103,7 +102,7 @@ function showRegisterPop(){
 
     $('.js_registerForm').find('[name="submit"]').click(function(){
         $('.js_registerForm').find('.merror').removeClass('merror');
-        yajax(CONTROLLER,'register',$('.js_registerForm').serialize(),function(obj){
+        oneAjax(CONTROLLER,'register',$('.js_registerForm').serialize(),function(obj){
             if(obj.code==1){
                 State.back(0);
             }else if(obj.code==2){
@@ -149,7 +148,7 @@ function showLoginPop(){
 
     $('.js_loginForm').find('[name="submit"]').click(function(){
         $('.js_loginForm').find('.merror').removeClass('merror');
-        yajax(CONTROLLER,'login',$('.js_loginForm').serialize(),function(obj){
+        oneAjax(CONTROLLER,'login',$('.js_loginForm').serialize(),function(obj){
             if(obj.code==1){
                 State.back(0);
             }else if(obj.code==2){

@@ -37,6 +37,7 @@ class Link extends YActiveRecord
         // will receive user inputs.
         return array(
             array('name, url', 'required'),
+            array('sort', 'safe'),
             array('name, url', 'unique'),
             array('name', 'length', 'max'=>64),
             array('url', 'length', 'max'=>128),

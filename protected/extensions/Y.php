@@ -1,6 +1,13 @@
 <?php
 //自定义常用方法
 class Y{
+    function xexplode($delimiter, $string){
+        if(!$string){
+            return array();
+        }
+        return explode($delimiter, $string);
+    }
+
     static public function end($message,$exception=S::EXCEPTION_SITE){
         if($exception==S::EXCEPTION_SITE)
             throw new YException($message);//操作异常

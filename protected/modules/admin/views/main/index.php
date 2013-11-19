@@ -1,5 +1,3 @@
-<script type="text/javascript" src="<?php echo $this->url('ueditor/ueditor.config.js');?>"></script>
-<script type="text/javascript" src="<?php echo $this->url('ueditor/ueditor.all.js');?>"></script>
 <script type="text/javascript">//template
     var template = Hogan.compile(<?php echo json_encode($this->template);?>);
 </script>
@@ -13,10 +11,6 @@
 
     function content_refresh(){
         var html = template.render(params);
-        // html += '<div>';
-        // html += '<textarea name="后台取值的key" id="myEditor" style="height:400px;width:500px;">这里写你的初始化内容</textarea>';
-        // html += '<input type="submit" id="submit" value="提交"/>';
-        // html += '</div>';
         $('.maincontent').html(html);
 
         $('#upload_logo').click(function(){
@@ -34,12 +28,13 @@
             return false;
         });
 
+        ////////////link///////////////
         $('#add_link').click(function(){
             $('[id^="link_"]').removeClass('merror');
             var name = $('#link_name').val(),
                 url = $('#link_url').val(),
                 sort = $('#link_sort').val() || 0;
-            oneAjax('Main','AjaxAddLink',{name:name,url:url,sort:sort},function(o){
+            oneAjax('Main','AjaxAdd',{type:'Link',name:name,url:url,sort:sort},function(o){
                 if(o.code==1){
                     State.back(0);
                 }else{
@@ -51,26 +46,13 @@
             return false;
         });
 
-        $('.js_cbox_all').click(function(e){
-            var a = $(this).parents('ul').find('.js_cbox,.js_cbox_all');
-            if($(this).filter(':checked').length){
-                $.each(a,function(){
-                    this.checked = true;
-                })
-            }else{
-                $.each(a,function(){
-                    this.checked = false;
-                })
-            }
-        });
-
         $('#delete_link').click(function(){
             var ids = [];
             $('.js_link').find('.js_cbox:checked').each(function(){
                 ids.push(this.value);
             });
             ids = ids.join(',');
-            oneAjax('Main','AjaxDeleteLink',{ids:ids},function(o){
+            oneAjax('Main','AjaxDelete',{type:'Link',ids:ids},function(o){
                 if(o.code==1){
                     State.back(0);
                 }else{
@@ -80,13 +62,33 @@
             return false;
         });
 
-        // var editor = UE.getEditor('myEditor');
-        // editor.ready(function(){
-        //     this.setContent('test');
-        // });
-        // $('#submit').click(function(){
-        //     console.log(editor.getContent());
-        // });
+        ////////////contact///////////////
+        $('[id^=contact_edit_]').click(function(){
+            var id = this.id.replace('contact_edit_','');
+            State.forward('Main','ContactEdit',{id:id});
+            return false;
+        });
+
+        $('#contact_add').click(function(){
+            State.forward('Main','ContactEdit',{});
+            return false;
+        });
+
+        $('#contact_delete').click(function(){
+            var ids = [];
+            $('.js_contact').find('.js_cbox:checked').each(function(){
+                ids.push(this.value);
+            });
+            ids = ids.join(',');
+            oneAjax('Main','AjaxDelete',{type:'Contact',ids:ids},function(o){
+                if(o.code==1){
+                    State.back(0);
+                }else{
+                    alert('error');
+                }
+            },this);
+            return false;
+        });
     }
 </script>
 <script type="text/javascript">//php代码只能出现在这个脚本中

@@ -28,6 +28,7 @@ class Company extends YActiveRecord
         // will receive user inputs.
         return array(
             array('name, openedTime', 'required'),
+            array('category, nameFirstLetter, weight, hasLogo, star, score, beFixed, beRecommend, beGuarantee, clickCount, COMMENTCount, platform, hasLicense, url, hasUrlPhoto, abstract, description', 'safe'),
             array('openedTime', 'type', 'type' => 'date', 'message' => '{attribute}: is not a date!', 'dateFormat' => 'yyyy-MM-dd'),
         );
     }

@@ -10,7 +10,7 @@
     error_reporting(E_ERROR|E_WARNING);
     //远程抓取图片配置
     $config = array(
-        "savePath" => "upload/" ,            //保存路径
+        "savePath" => '../../../../upload/',
         "allowFiles" => array( ".gif" , ".png" , ".jpg" , ".jpeg" , ".bmp" ) , //文件允许格式
         "maxSize" => 3000                    //文件大小限制，单位KB
     );

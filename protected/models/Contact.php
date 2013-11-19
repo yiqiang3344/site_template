@@ -37,6 +37,7 @@ class Contact extends YActiveRecord
         // will receive user inputs.
         return array(
             array('urlName, name, content', 'required'),
+            array('sort', 'safe'),
             array('urlName, name', 'unique'),
             array('urlName', 'length', 'max'=>64),
             array('name', 'length', 'max'=>64),
@@ -67,7 +68,7 @@ class Contact extends YActiveRecord
 
     public static function getListBySort(){
         return Y::modelsToArray(self::model()->nodelete()->findAll(array(
-            'select'=>'urlName,name',
+            'select'=>'id,urlName,name',
             'order'=>'sort',
         )));
     }

@@ -38,46 +38,37 @@ function Pager(dom,c,a,params,pager,ajax){
         list : []
     };
 
-    //show 5 links,other is ellipsis
-    var link_count = pager.page_count-pager.page;
-    if(link_count<=5){
-        for(var i=pager.page+1;i<=pager.page_count;i++){
+    var b2 = pager.page-2,
+        a2 = pager.page+2,
+        link,
+        has_ellipsis = false;
+    for(var i=1;i<=pager.page_count;i++){
+        //alway show first and last page; 
+        //when show first or last not show last or next; 
+        //show tow page before or after now page.
+        if((i>=b2 && i<=a2) || i==1 || i==pager.page_count){
             params.p = i;
-            var link = {
+            link = {
                 ellipsis : false,
                 id : ajax ? (className+i) : false,
                 href : getUrl(c,a,params),
-                name : i
+                name : i,
+                select : i==pager.page
             };
-            p.list.push(link);
+        }else{
+            link = has_ellipsis ? false : {ellipsis : true};
+            has_ellipsis = true;
         }
-    }else{
-        var c1 = pager.page+3,
-            c2 = pager.page_count-1,
-            link;
-        for(var i=pager.page+1;i<=pager.page_count;i++){
-            link = {
-                ellipsis : true,
-            };
-            if(i<=c1 || i>=c2){
-                params.p = i;
-                link = {
-                    ellipsis : false,
-                    id : ajax ? (className+i) : false,
-                    href : getUrl(c,a,params),
-                    name : i
-                };
-            }
-            p.list.push(link);
-        }
+        link && p.list.push(link);
     }
+
     dom.html(pagerTemplate.render(p));
 
     if(ajax){
         dom.find('[id^="'+className+'"]').click(function(){
             var p = this.id.replace(className,'');
             ajax.params.p = p;
-            yajax(ajax.c,ajax.a,ajax.params,ajax.callback,this);
+            oneAjax(ajax.c,ajax.a,ajax.params,ajax.callback,this);
             return false;
         });
     }
