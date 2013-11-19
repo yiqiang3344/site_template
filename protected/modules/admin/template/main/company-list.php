@@ -5,14 +5,14 @@
             搜索：
             <input type="text" id="search_val"/>
             <select id="search_type">
-                <option value="name">name</option>
+                <option value="name">名字</option>
                 <option value="id">id</option>
-                <option value="category">category</option>
+                <option value="category">种类</option>
             </select>
             <input type="submit" id="search" value="确定"/>
         </span>
     </div>
-    <ul class="mlist js_contact">
+    <ul class="mlist js_company">
         <li class="clearfix">
             <div class="fl w50">
                  <input type="checkbox" class="js_cbox_all"/>
