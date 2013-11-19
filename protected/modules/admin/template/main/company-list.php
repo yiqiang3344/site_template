@@ -43,7 +43,7 @@
             <div class="fl w50">
                  <input type="checkbox" class="js_cbox" value="{{id}}"/>
             </div>
-            <div class="attr" id="attr_id">{{id}}</div>
+            <div class="attr">{{id}}</div>
             <div class="attr" id="attr_category">{{category}}</div>
             <div class="attr" id="attr_name">{{name}}</div>
             <div class="attr" id="attr_nameFirstLetter">{{nameFirstLetter}}</div>

@@ -11,7 +11,7 @@
             <input type="submit" id="search" value="确定"/>
         </span>
     </div>
-    <ul class="mlist js_information">
+    <ul class="mlist js_activity">
         <li class="clearfix">
             <div class="fl w50">
                  <input type="checkbox" class="js_cbox_all"/>

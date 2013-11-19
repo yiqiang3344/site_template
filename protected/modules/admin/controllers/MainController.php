@@ -18,6 +18,98 @@ class MainController extends Controller{
         $this->render('index',$bind);
     }
 
+    public function actionActivityList() {
+        #input
+        $search = @$_GET['search'];//搜索 attr:val
+        $order_str = @$_GET['order'];//排序 type1:sc1,type2:sc2
+        $p = max(intval(@$_GET['p']),1);//分页
+        #start
+        $conditon = '';
+        if($search){
+            $l = array();
+            foreach(Y::xexplode(',', $search) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' like \'%'.$a[1].'%\'';
+            }
+            $conditon .= implode(' and ', $l);
+        }
+        $order = '';
+        $orders = array();
+        if($order_str){
+            $l = array();
+            foreach(Y::xexplode(',', $order_str) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' '.$a[1];
+                $orders[$a[0]] = $a[1];
+            }
+            $order .= implode(' , ', $l);
+        }
+        $select = 'id,title,abstract,hasPicture,deleteFlag';
+        $params =  Activity::getListByPage($select, $conditon, $order, $params, $p, 10, false, true);
+        END:
+        $bind = array(
+            'params' => $params,
+            'orders' => $orders
+        );
+        $this->render('activity-list',$bind);
+    }
+
+    public function actionActivityEdit() {
+        #input
+        $id = @$_GET['id'];
+        #start
+        $info = array();
+        if($id){
+            $info = Y::modelsToArray(Activity::model()->findByPk($id));
+        }
+
+        $params = array();
+        foreach(array('id','title','abstract','hasPicture','content','deleteFlag') as $v){
+            $params[$v] = @$info[$v];
+        }
+        END:
+        $bind = array(
+            'params' => $params,
+        );
+        $this->render('activity-edit',$bind);
+    }
+
+    public function actionCommentList() {
+        #input
+        $search = @$_GET['search'];//搜索 attr:val
+        $order_str = @$_GET['order'];//排序 type1:sc1,type2:sc2
+        $p = max(intval(@$_GET['p']),1);//分页
+        #start
+        $conditon = '';
+        if($search){
+            $l = array();
+            foreach(Y::xexplode(',', $search) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' like \'%'.$a[1].'%\'';
+            }
+            $conditon .= implode(' and ', $l);
+        }
+        $order = '';
+        $orders = array();
+        if($order_str){
+            $l = array();
+            foreach(Y::xexplode(',', $order_str) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' '.$a[1];
+                $orders[$a[0]] = $a[1];
+            }
+            $order .= implode(' , ', $l);
+        }
+        $select = 'id, companyId, userId, username, content, totalScore, scoreA, scoreB, scoreC, deleteFlag';
+        $params =  Comment::getListByPage($select, $conditon, $order, $params, $p, 10, false, true);
+        END:
+        $bind = array(
+            'params' => $params,
+            'orders' => $orders
+        );
+        $this->render('comment-list',$bind);
+    }
+
     public function actionInformationList() {
         #input
         $search = @$_GET['search'];//搜索 attr:val
@@ -188,6 +280,8 @@ class MainController extends Controller{
             $map = array(
                 'Contact'=>array('name','urlName','sort','content'),
                 'Company'=>array('category','name','nameFirstLetter','weight','hasLogo','star','score','beFixed','beRecommend','beGuarantee','clickCount','commentCount','platform','hasLicense','openedTime','url','hasUrlPhoto','abstract','description','deleteFlag'),
+                'Information'=>array('title','abstract','hasPicture','content','deleteFlag'),
+                'Activity'=>array('title','abstract','hasPicture','content','deleteFlag'),
             );
 
             $m = $type::model()->findByPk($id);
