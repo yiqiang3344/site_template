@@ -1,10 +1,13 @@
 <?php
 
 class MainController extends Controller{
+    public $title;
+
     public function actionIndex() {
         #input
         $post = $_POST;
         #start
+        $this->title = 'Index';
 
         $params = array(
             'logo_url'=>$this->siteUrl('img/logo.png'),
@@ -18,12 +21,122 @@ class MainController extends Controller{
         $this->render('index',$bind);
     }
 
+    public function actionBackup() {
+        #input
+        #start
+        $this->title = 'Backup';
+
+        $params = array(
+            'list' => array(),
+        );
+        END:
+        $bind = array(
+            'params' => $params,
+        );
+        $this->render('backup',$bind);
+    }
+
+    public function actionLinkList() {
+        #input
+        $search = @$_GET['search'];//搜索 attr:val
+        $order_str = @$_GET['order'];//排序 type1:sc1,type2:sc2
+        $p = max(intval(@$_GET['p']),1);//分页
+        #start
+        $this->title = 'Link';
+        $conditon = '';
+        if($search){
+            $l = array();
+            foreach(Y::xexplode(',', $search) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' like \'%'.$a[1].'%\'';
+            }
+            $conditon .= implode(' and ', $l);
+        }
+        $order = '';
+        $orders = array();
+        if($order_str){
+            $l = array();
+            foreach(Y::xexplode(',', $order_str) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' '.$a[1];
+                $orders[$a[0]] = $a[1];
+            }
+            $order .= implode(' , ', $l);
+        }
+        $select = 'id,name,url,sort,deleteFlag';
+        $params =  Link::getListByPage($select, $conditon, $order, $params, $p, 10, false, true);
+        END:
+        $bind = array(
+            'params' => $params,
+            'orders' => $orders
+        );
+        $this->render('link-list',$bind);
+    }
+
+    public function actionContactList() {
+        #input
+        $search = @$_GET['search'];//搜索 attr:val
+        $order_str = @$_GET['order'];//排序 type1:sc1,type2:sc2
+        $p = max(intval(@$_GET['p']),1);//分页
+        #start
+        $this->title = 'Contact';
+        $conditon = '';
+        if($search){
+            $l = array();
+            foreach(Y::xexplode(',', $search) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' like \'%'.$a[1].'%\'';
+            }
+            $conditon .= implode(' and ', $l);
+        }
+        $order = '';
+        $orders = array();
+        if($order_str){
+            $l = array();
+            foreach(Y::xexplode(',', $order_str) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' '.$a[1];
+                $orders[$a[0]] = $a[1];
+            }
+            $order .= implode(' , ', $l);
+        }
+        $select = 'id,name,urlName,sort,deleteFlag';
+        $params =  Contact::getListByPage($select, $conditon, $order, $params, $p, 10, false, true);
+        END:
+        $bind = array(
+            'params' => $params,
+            'orders' => $orders
+        );
+        $this->render('contact-list',$bind);
+    }
+
+    public function actionContactEdit() {
+        #input
+        $id = @$_GET['id'];
+        #start
+        $info = array();
+        if($id){
+            $info = Y::modelsToArray(Contact::model()->findByPk($id));
+        }
+
+        $params = array();
+        foreach(array('name','urlName','content','sort','deleteFlag') as $v){
+            $params[$v] = @$info[$v];
+        }
+        END:
+        $bind = array(
+            'params' => $params,
+        );
+        $this->render('contact-edit',$bind);
+    }
+
     public function actionActivityList() {
         #input
         $search = @$_GET['search'];//搜索 attr:val
         $order_str = @$_GET['order'];//排序 type1:sc1,type2:sc2
         $p = max(intval(@$_GET['p']),1);//分页
         #start
+        $this->title = 'Activity';
         $conditon = '';
         if($search){
             $l = array();
@@ -80,6 +193,7 @@ class MainController extends Controller{
         $order_str = @$_GET['order'];//排序 type1:sc1,type2:sc2
         $p = max(intval(@$_GET['p']),1);//分页
         #start
+        $this->title = 'Comment';
         $conditon = '';
         if($search){
             $l = array();
@@ -116,6 +230,7 @@ class MainController extends Controller{
         $order_str = @$_GET['order'];//排序 type1:sc1,type2:sc2
         $p = max(intval(@$_GET['p']),1);//分页
         #start
+        $this->title = 'Information';
         $conditon = '';
         if($search){
             $l = array();
@@ -172,6 +287,7 @@ class MainController extends Controller{
         $order_str = @$_GET['order'];//排序 type1:sc1,type2:sc2
         $p = max(intval(@$_GET['p']),1);//分页
         #start
+        $this->title = 'Company';
         $conditon = '';
         if($search){
             $l = array();
@@ -221,31 +337,52 @@ class MainController extends Controller{
         );
         $this->render('company-edit',$bind);
     }
-
-    public function actionContactEdit() {
+    ########################AJAX########################
+    public function actionAjaxBackup() {
         #input
-        $id = @$_GET['id'];
+        $form = $_POST;
         #start
-        $info = array();
-        if($id){
-            $info = Y::modelsToArray(Contact::model()->findByPk($id));
+        $code = 1;
+        $errors = '';
+
+        //导出当前sql文件
+
+        $form['file'] = '';
+        $m = new Backup;
+        $m->attributes = $form;
+        if(!$m->save()){
+            $code = 2;
+            $errors = $m->geterrors();
         }
 
-        $params = array(
-            'id'=>@$info['id'],
-            'name'=>@$info['name'],
-            'urlName'=>@$info['urlName'],
-            'content'=>@$info['content'],
-            'sort'=>@$info['sort']?$info['sort']:0,
-        );
         END:
-        $bind = array(
-            'params' => $params,
-        );
-        $this->render('contact-edit',$bind);
+        $this->render(array(
+            'code' => $code,
+            'errors' => $errors
+        ));
     }
 
-    ########################AJAX########################
+    public function actionAjaxReback() {
+        #input
+        $id = $_POST['id'];
+        #start
+        $code = 1;
+        $errors = '';
+
+        if($m = Backup::model()->findByPk($id)){
+
+        }else{
+            $code = 2;
+            $errors = '备份文件不存在！';
+        }
+
+        END:
+        $this->render(array(
+            'code' => $code,
+            'errors' => $errors
+        ));
+    }
+
     public function actionAjaxEditOne() {
         #input
         $type = ucwords($_POST['type']);
@@ -254,7 +391,7 @@ class MainController extends Controller{
         $val = $_POST['val'];
         #start
         $code = 1;
-        $error = '';
+        $errors = '';
 
         $m = $type::model()->findByPk($id);
         $m->$attr = $val;
@@ -293,7 +430,7 @@ class MainController extends Controller{
             $m->attributes = $info;
         }
         $code = 1;
-        $error = '';
+        $errors = '';
 
         if(!$m->save()){
             $code = 2;
@@ -314,7 +451,7 @@ class MainController extends Controller{
         #start
         $type::deleteByIds(explode(',',$ids));
         $code = 1;
-        $error = '';
+        $errors = '';
 
         END:
         $this->render(array(

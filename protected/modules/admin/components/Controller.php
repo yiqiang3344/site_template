@@ -71,17 +71,50 @@ class Controller extends CController {
      * @return void
      */
     public $template;
-    public function render( $view='',$data=array(), $template_flag=S::USE_TEMPLATE){
+    public $publicSubTemplate = array();//公用子模板
+    public $partialsSubTemplate = array();//局部子模板
+    public function render( $view='',$data=array(), $template_flag=S::DEV_USE_TEMPLATE,$usePartials=true,$usePublic=true){
         if(is_array($view)) {
             $output =  json_encode($view);
         }else {
-            //DEV_USE_TEMPLATE 表示只有开发时才传入模板，因为发布后模板已编译到js文件中; USE_TEMPLATE 表示绝对会传入模板，用于php渲染; false 表示不用模板
-            if($template_flag!=S::NOT_USE_TEMPLATE && ($template_flag==S::USE_TEMPLATE || ($template_flag==S::DEV_USE_TEMPLATE && Yii::app()->language=='dev'))){
+            //DEV_USE_TEMPLATE 表示开发时使用传入的模板，发布后使用已编译的js文件; USE_TEMPLATE 表示绝对会传入模板，用于php渲染; NOT_USE_TEMPLATE和其他 表示不用模板
+            if($template_flag==S::USE_TEMPLATE){
                 $this->template = $this->renderFile($this->getPath().'/template/'.$this->getId().'/'.$view.'.php',null,true);
+                //读取子模板
+                if($usePartials){
+                    $this->partialsSubTemplate = $this->getSubTemplateMap($this->getPath().'/template/'.$this->getId());
+                }
+                if($usePublic){
+                    $this->publicSubTemplate = $this->getSubTemplateMap($this->getPath().'/template/public_sub_template');
+                }
+            }elseif($template_flag==S::DEV_USE_TEMPLATE){
+                $this->template = $this->renderFile($this->getPath().'/template/'.$this->getId().'/'.$view.'.php',null,true);
+                //读取子模板 非dev时，子模板已被编译为js方法， 局部子模板的js文件会在layouts的模板view中加载
+                if($usePartials){
+                    $this->partialsSubTemplate = $this->getSubTemplateMap($this->getPath().'/template/'.$this->getId());
+                }
+                if($usePublic){
+                    $this->publicSubTemplate = $this->getSubTemplateMap($this->getPath().'/template/public_sub_template');
+                }
             }
             $output =  parent::render($view,$data,true);
         }
         echo $output;
+    }
+
+    private function getSubTemplateMap($dir){
+        $a = array();
+        foreach(scandir($dir) as $file){
+            if(is_file($dir.'/'.$file) && strpos($file,'_')===0){
+                $name = '';
+                foreach(explode('_',basename($file,'.php')) as $v){
+                    $name .= ucfirst($v);
+                }
+                $name = lcfirst($name);
+                $a[$name] = $this->renderFile($dir.'/'.$file,null,true);
+            }
+        }
+        return $a;
     }
 
     public function getBaseUrl(){

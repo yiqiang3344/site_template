@@ -1,18 +1,23 @@
 <div class="">
-    <div class="name">
-        <span>name</span>
-        <input id="name" type="text" value="{{name}}">
-    </div>
     <div class="urlName">
-        <span>url name</span>
-        <input id="urlName" type="text" value="{{urlName}}">
+        <span>url标识</span>
+        <input class="attr" id="urlName" type="text" value="{{urlName}}">
+    </div>
+    <div class="name">
+        <span>名称</span>
+        <input class="attr" id="name" type="text" value="{{name}}">
     </div>
     <div class="sort">
-        <span>sort</span>
-        <input id="sort" type="text" value="{{sort}}">
+        <span>权重</span>
+        <input class="attr" id="sort" type="text" value="{{sort}}">
+    </div>
+    <div class="deleteFlag">
+        <span>删除</span>
+        <input class="attr" id="deleteFlag" type="text" value="{{deleteFlag}}">
     </div>
     <div class="content">
-        <textarea style="width:600px;height:400px;" name="content" id="myEditor">{{content}}</textarea>
+        <span>内容</span>
+        <textarea style="width:600px;height:400px;" class="attr" id="content">{{content}}</textarea>
     </div>
     <div>
         <input id="submit" type="submit" value="提交">

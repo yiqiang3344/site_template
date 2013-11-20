@@ -1,5 +1,3 @@
-<script type="text/javascript" src="<?php echo $this->url('ueditor/ueditor.config.js');?>"></script>
-<script type="text/javascript" src="<?php echo $this->url('ueditor/ueditor.all.js');?>"></script>
 <script type="text/javascript">//template
     var template = Hogan.compile(<?php echo json_encode($this->template);?>);
 </script>
@@ -15,20 +13,12 @@
         var html = template.render(params);
         $('.maincontent').html(html);
 
-        var content = UE.getEditor('content');
-        content.ready(function(){
-            // this.setContent('test');
-        });
-        $('#submit').click(function(){
-            var data = {type:'Contact',id:params.id};
-            $('.attr').each(function(){
-                $(this).removeClass('merror');
-                data[this.id] = $(this).val();
-            });
-            data.content = content.getContent();
+        //备份
+        $('#backup').click(function(){
+            var data = {name:$('#name').val()};
             oneAjax('Main','AjaxAdd',data,function(o){
                 if(o.code==1){
-                    State.back(1);
+                    State.back(0);
                 }else{
                     $.each(o.errors,function(k,v){
                         $('#'+k).addClass('merror');
@@ -36,6 +26,19 @@
                 }
             },this);
         });
+
+        //还原
+        $('[id^=reback_]').click(function(){
+            var data = {id:this.id.replace('reback_','')};
+            oneAjax('Main','AjaxReback',data,function(o){
+                if(o.code==1){
+                    State.back(0);
+                }else{
+                    alert(o.errors);
+                }
+            },this);
+        });
+
     }
 </script>
 <script type="text/javascript">//php代码只能出现在这个脚本中

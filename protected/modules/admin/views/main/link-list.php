@@ -14,19 +14,19 @@
         $('.maincontent').html(html);
 
         //分页
-        Pager($('#page'),'Main','CommentList',{},params);
+        Pager($('#page'),'Main','LinkList',{},params);
 
         //搜索
         $('#search').click(function(){
             var search = $('#search_type').val()+':'+$('#search_val').val();
-            State.forward('Main','CommentList',{search:search,p:params.page});
+            State.forward('Main','LinkList',{search:search,p:params.page});
         });
         //排序
         $('[id^=order_]').click(function(){
             var val = this.id.replace('order_',''),
                 sc = orders[val]=='ASC'?'DESC':'ASC',
                 order_str = val+':'+sc;
-            State.forward('Main','CommentList',{order:order_str,p:params.page});
+            State.forward('Main','LinkList',{order:order_str,p:params.page});
         });
         //点击修改
         $('[id^=attr_]').attr('ContentEditable',true).focus(function(){
@@ -37,7 +37,7 @@
                 attr = this.id.replace('attr_',''),
                 me = this;
             if(val !== $(this).data('val')){
-                oneAjax('Main','AjaxEditOne',{type:'Comment',id:id,attr:attr,val:val},function(o){
+                oneAjax('Main','AjaxEditOne',{type:'Link',id:id,attr:attr,val:val},function(o){
                     if(o.code!=1){
                         
 alert(o.errors[attr][0]);
@@ -46,13 +46,24 @@ alert(o.errors[attr][0]);
             }
         });
 
+        $('[id^=edit_]').click(function(){
+            var id = this.id.replace('edit_','');
+            State.forward('Main','LinkEdit',{id:id});
+            return false;
+        });
+
+        $('#add').click(function(){
+            State.forward('Main','LinkEdit');
+            return false;
+        });
+
         $('#delete').click(function(){
             var ids = [];
-            $('.js_comment').find('.js_cbox:checked').each(function(){
+            $('.js_link').find('.js_cbox:checked').each(function(){
                 ids.push(this.value);
             });
             ids = ids.join(',');
-            oneAjax('Main','AjaxDelete',{type:'Comment',ids:ids},function(o){
+            oneAjax('Main','AjaxDelete',{type:'Link',ids:ids},function(o){
                 if(o.code==1){
                     State.back(0);
                 }else{

@@ -15,9 +15,65 @@
             window.UEDITOR_HOME_URL=<?php echo json_encode($this->getAssetsUrl().'/ueditor/');?>;
         </script>
         <script type="text/javascript" src="<?php echo $this->url('js/helper.js');?>"></script>
+        <script type="text/javascript">
+            //设置子模板编译方法，dev中才有定义
+            <?php foreach(array_merge($this->partialsSubTemplate,$this->publicSubTemplate) as $k=>$v):?>
+            var <?php echo $k;?> = Hogan.compile(<?php echo json_encode($v);?>);
+            <?php endforeach;?>
+        </script>
     </head>
     <body>
-        <?php echo $content;?>
+        <div id="maindiv" class="maindiv">
+            <?php echo $content;?>
+        </div>
+        <script type="text/javascript">
+            show_head(<?php echo json_encode($this->title);?>);
+            function show_head(t){
+                var params = {list:[
+                    {
+                        select:t=='Index'?1:0,
+                        url:getUrl('Main','index'),
+                        name:'logo管理'
+                    },
+                    {
+                        select:t=='Link'?1:0,
+                        url:getUrl('Main','LinkList'),
+                        name:'导航链接'
+                    },
+                    {
+                        select:t=='Contact'?1:0,
+                        url:getUrl('Main','ContactList'),
+                        name:'联系我们'
+                    },
+                    {
+                        select:t=='Company'?1:0,
+                        url:getUrl('Main','CompanyList'),
+                        name:'公司'
+                    },
+                    {
+                        select:t=='Comment'?1:0,
+                        url:getUrl('Main','CommentList'),
+                        name:'评论'
+                    },
+                    {
+                        select:t=='Activity'?1:0,
+                        url:getUrl('Main','ActivityList'),
+                        name:'活动'
+                    },
+                    {
+                        select:t=='Information'?1:0,
+                        url:getUrl('Main','InformationList'),
+                        name:'资讯'
+                    },
+                    {
+                        select:t=='Backup'?1:0,
+                        url:getUrl('Main','Backup'),
+                        name:'备份还原'
+                    }
+                ]};
+                $('#maindiv').prepend(pHeader.render(params));
+            }
+        </script>
     </body>
 </html>
 
