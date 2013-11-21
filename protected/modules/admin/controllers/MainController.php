@@ -1,8 +1,6 @@
 <?php
 
 class MainController extends Controller{
-    public $title;
-
     public function actionIndex() {
         #input
         $post = $_POST;
@@ -21,9 +19,17 @@ class MainController extends Controller{
         $this->render('index',$bind);
     }
 
+    public function actionLogout() {
+        #input
+        #start
+        Yii::app()->user->logout();
+        $this->redirect($this->url('Main','Index'));
+    }
+
     public function actionBackup() {
         #input
         #start
+        $this->checkSuperAdmin();
         $this->title = 'Backup';
 
         $params = array(
@@ -34,6 +40,102 @@ class MainController extends Controller{
             'params' => $params,
         );
         $this->render('backup',$bind);
+    }
+
+    public function actionAdminList() {
+        #input
+        $search = @$_GET['search'];//搜索 attr:val
+        $order_str = @$_GET['order'];//排序 type1:sc1,type2:sc2
+        $p = max(intval(@$_GET['p']),1);//分页
+        #start
+        $this->checkSuperAdmin();
+        $this->title = 'Admin';
+        $conditon = 'super=0 ';//不能修改超级管理员
+        if($search){
+            $l = array();
+            foreach(Y::xexplode(',', $search) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' like \'%'.$a[1].'%\'';
+            }
+            $conditon .= 'and '.implode(' and ', $l);
+        }
+        $order = '';
+        $orders = array();
+        if($order_str){
+            $l = array();
+            foreach(Y::xexplode(',', $order_str) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' '.$a[1];
+                $orders[$a[0]] = $a[1];
+            }
+            $order .= implode(' , ', $l);
+        }
+        $select = 'id,username,deleteFlag';
+        $params =  Admin::getListByPage($select, $conditon, $order, $params, $p, 10, false, true);
+        END:
+        $bind = array(
+            'params' => $params,
+            'orders' => $orders
+        );
+        $this->render('admin-list',$bind);
+    }
+
+    public function actionAdminEdit() {
+        #input
+        $id = @$_GET['id'];
+        #start
+        $this->checkSuperAdmin();
+        $info = array();
+        if($id){
+            $info = Y::modelsToArray(Admin::model()->findByPk($id));
+        }
+
+        $params = array();
+        foreach(array('username','password','passwordConfirm') as $v){
+            $params[$v] = @$info[$v];
+        }
+        END:
+        $bind = array(
+            'params' => $params,
+        );
+        $this->render('admin-edit',$bind);
+    }
+
+    public function actionUserList() {
+        #input
+        $search = @$_GET['search'];//搜索 attr:val
+        $order_str = @$_GET['order'];//排序 type1:sc1,type2:sc2
+        $p = max(intval(@$_GET['p']),1);//分页
+        #start
+        $this->title = 'User';
+        $conditon = '';
+        if($search){
+            $l = array();
+            foreach(Y::xexplode(',', $search) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' like \'%'.$a[1].'%\'';
+            }
+            $conditon .= implode(' and ', $l);
+        }
+        $order = '';
+        $orders = array();
+        if($order_str){
+            $l = array();
+            foreach(Y::xexplode(',', $order_str) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' '.$a[1];
+                $orders[$a[0]] = $a[1];
+            }
+            $order .= implode(' , ', $l);
+        }
+        $select = 'id,username,deleteFlag';
+        $params =  User::getListByPage($select, $conditon, $order, $params, $p, 10, false, true);
+        END:
+        $bind = array(
+            'params' => $params,
+            'orders' => $orders
+        );
+        $this->render('user-list',$bind);
     }
 
     public function actionLinkList() {
@@ -177,7 +279,7 @@ class MainController extends Controller{
         }
 
         $params = array();
-        foreach(array('id','title','abstract','hasPicture','content','deleteFlag') as $v){
+        foreach(array('title','abstract','hasPicture','content','deleteFlag') as $v){
             $params[$v] = @$info[$v];
         }
         END:
@@ -393,7 +495,20 @@ class MainController extends Controller{
         $code = 1;
         $errors = '';
 
+        if($type=='User' && !in_array($attr, array('deleteFlag'))){
+            Y::end('Illegal operation.');
+        }elseif($type=='Admin' && !in_array($attr, array('deleteFlag'))){
+            Y::end('Illegal operation.');
+        }elseif(in_array($type, array('Admin','Backup')) && !$this->checkSuperAdmin()){
+            Y::end('Illegal operation.');
+        }
+
         $m = $type::model()->findByPk($id);
+
+        if($type=='Admin' && $m->super==1){
+            Y::end('Illegal operation.');
+        }
+
         $m->$attr = $val;
         if(!$m->save()){
             $code = 2;
@@ -419,14 +534,21 @@ class MainController extends Controller{
                 'Company'=>array('category','name','nameFirstLetter','weight','hasLogo','star','score','beFixed','beRecommend','beGuarantee','clickCount','commentCount','platform','hasLicense','openedTime','url','hasUrlPhoto','abstract','description','deleteFlag'),
                 'Information'=>array('title','abstract','hasPicture','content','deleteFlag'),
                 'Activity'=>array('title','abstract','hasPicture','content','deleteFlag'),
+                'Admin'=>array('username','password','passwordConfirm'),
             );
+
+            if(in_array($type,array('Admin','Backup'))){
+                if(!$this->checkSuperAdmin(false)){
+                    Y::end('Illegal operation');
+                }
+            }
 
             $m = $type::model()->findByPk($id);
             foreach($map[$type] as $v){
                 $m->$v = $info[$v];
             }
         }else{
-            $m = new $type;
+            $m = new $type('create');
             $m->attributes = $info;
         }
         $code = 1;

@@ -14,21 +14,20 @@
         $('.maincontent').html(html);
 
         $('#submit').click(function(){
-            var data = {};
+            var data = {type:'Admin',id:params.id};
             $('.attr').each(function(){
                 $(this).removeClass('merror');
                 data[this.id] = $(this).val();
             });
-            oneAjax('Site','AjaxLogin',data,function(o){
+            oneAjax('Main','AjaxAdd',data,function(o){
                 if(o.code==1){
-                    State.forward('Main','Index');
+                    State.back(1);
                 }else{
                     $.each(o.errors,function(k,v){
                         $('#'+k).addClass('merror');
                     });
                 }
             },this);
-            return false;
         });
     }
 </script>

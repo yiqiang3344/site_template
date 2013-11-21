@@ -28,6 +28,9 @@ class Controller extends CController {
      */
     public $breadcrumbs = array ();
 
+    //页面标识
+    public $title = '';
+
     public function init(){
     }
 
@@ -43,6 +46,20 @@ class Controller extends CController {
             return false;
         }
         $filterChain->run();
+    }
+
+    public function CheckSuperAdmin($goto=true) {
+        $Admin = $this->getUd();
+        if(!$Admin || $Admin['super']!=1){
+            $goto && $this->redirect($this->url('Main','Index'));
+            return false;
+        }
+        return true;
+    }
+
+    public function getUD() {
+        $u = Yii::app()->user->isGuest?array():Admin::model()->UD()->findByAttributes(array('username'=>Yii::app()->user->name));
+        return Y::modelsToArray($u);
     }
 
     private $_basePath;

@@ -12,6 +12,7 @@
             var STIME=<?php echo Y::getTime();?>;
             var CTIME=new Date().getTime();
             var TEST_SERVER_FLAG=<?php echo YII_DEBUG;?>;
+            var UD=<?php echo json_encode($this->getUd());?>;
             window.UEDITOR_HOME_URL=<?php echo json_encode($this->getAssetsUrl().'/ueditor/');?>;
         </script>
         <script type="text/javascript" src="<?php echo $this->url('js/helper.js');?>"></script>
@@ -66,11 +67,32 @@
                         name:'资讯'
                     },
                     {
-                        select:t=='Backup'?1:0,
-                        url:getUrl('Main','Backup'),
-                        name:'备份还原'
+                        select:t=='User'?1:0,
+                        url:getUrl('Main','UserList'),
+                        name:'用户管理'
                     }
                 ]};
+                if(UD){
+                    params.list = params.list.concat([
+                        {
+                            select:t=='Admin'?1:0,
+                            url:getUrl('Main','AdminList'),
+                            name:'管理员管理'
+                        },
+                        {
+                            select:t=='Backup'?1:0,
+                            url:getUrl('Main','Backup'),
+                            name:'备份还原'
+                        }
+                    ]);
+                }
+                params.list.push(
+                    {
+                        select:0,
+                        url:getUrl('Main','Logout'),
+                        name:'退出'
+                    }
+                );
                 $('#maindiv').prepend(pHeader.render(params));
             }
         </script>

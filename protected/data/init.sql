@@ -14,6 +14,7 @@ CREATE TABLE user (
     `password` char(128) NOT NULL COMMENT '',
     `ip` varchar(32) UNIQUE NOT NULL COMMENT '',
     `updateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '',
+    `deleteFlag` tinyint(3) NOT NULL DEFAULT 0 COMMENT '0 正常 1禁用',
     `recordTime` int(10) UNSIGNED NOT NULL COMMENT '',
     PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='' AUTO_INCREMENT=1 ;
@@ -23,7 +24,9 @@ CREATE TABLE admin (
      `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '',
      `username` varchar(32) UNIQUE NOT NULL COMMENT '',
      `password` char(128) NOT NULL COMMENT '',
+     `super` tinyint(3) NOT NULL DEFAULT 0 COMMENT '1超级管理员',
      `updateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '',
+     `deleteFlag` tinyint(3) NOT NULL DEFAULT 0 COMMENT '0 正常 1禁用',
      `recordTime` int(10) UNSIGNED NOT NULL COMMENT '',
      PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='' AUTO_INCREMENT=1 ;

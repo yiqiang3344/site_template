@@ -17,7 +17,7 @@ class UserIdentity extends CUserIdentity
 	 */
 	public function authenticate()
 	{
-		$user= Admin::model()->find('username=:username',array(':username'=>$this->username));
+		$user= Admin::model()->canUse()->find('username=:username',array(':username'=>$this->username));
 		if(!$user)
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
 		else if(!$user->validatePassword($this->password))
