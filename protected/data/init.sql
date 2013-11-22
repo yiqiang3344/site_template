@@ -111,3 +111,14 @@ CREATE TABLE link (
     `recordTime` int(10) UNSIGNED NOT NULL COMMENT '',
     PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='导航外链' AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS backup;
+CREATE TABLE backup(
+    id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    name varchar(64) NOT NULL,
+    file varchar(64) NOT NULL COMMENT '文件名',
+    lastRebackTime int(10) NOT NULL DEFAULT 0 COMMENT '最后一次回复的时间',
+    deleteFlag tinyint(3) NOT NULL DEFAULT 0,
+    createTime int(10) NOT NULL COMMENT '备份时间',
+    PRIMARY KEY(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='备份状态表' AUTO_INCREMENT=1 ;

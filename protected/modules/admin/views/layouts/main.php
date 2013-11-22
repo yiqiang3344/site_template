@@ -15,6 +15,7 @@
             var UD=<?php echo json_encode($this->getUd());?>;
             window.UEDITOR_HOME_URL=<?php echo json_encode($this->getAssetsUrl().'/ueditor/');?>;
         </script>
+        <script type="text/javascript" src="<?php echo $this->url('js/tool.js');?>"></script>
         <script type="text/javascript" src="<?php echo $this->url('js/helper.js');?>"></script>
         <script type="text/javascript">
             //设置子模板编译方法，dev中才有定义

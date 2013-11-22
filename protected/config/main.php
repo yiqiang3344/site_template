@@ -101,5 +101,11 @@ return array(
     'params'=>array(
         // this is used in contact page
         'adminEmail'=>'webmaster@example.com',
+        'dbHost'=>'127.0.0.1',
+        'dbUser'=>'root',
+        'dbPassword'=>'yjq',
+        'dbName'=>'site1',
+        'backupDir'=>'data/backup',
+        'mysqlDir'=>'/usr/local/mysql/bin'
     ),
 );

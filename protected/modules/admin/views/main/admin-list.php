@@ -39,8 +39,7 @@
             if(val !== $(this).data('val')){
                 oneAjax('Main','AjaxEditOne',{type:'Admin',id:id,attr:attr,val:val},function(o){
                     if(o.code!=1){
-                        
-alert(o.errors[attr][0]);
+                        alert(o.errors[attr][0]);
                     }
                 },this);
             }

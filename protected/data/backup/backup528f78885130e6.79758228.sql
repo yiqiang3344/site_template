@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.5.33, for osx10.6 (i386)
 --
--- Host: localhost    Database: site1
+-- Host: 127.0.0.1    Database: site1
 -- ------------------------------------------------------
 -- Server version	5.5.33
 
@@ -229,6 +229,7 @@ CREATE TABLE `user` (
   `password` char(128) COLLATE utf8_bin NOT NULL,
   `ip` varchar(32) COLLATE utf8_bin NOT NULL,
   `updateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleteFlag` tinyint(3) NOT NULL DEFAULT '0',
   `recordTime` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
@@ -242,7 +243,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (9,'test','d047038edabf6fd6b539f9ad78d88f3ae297652ac721c994a6678f63e963a0f91c99d692543ff0054656453b056cc1262998108ffa94644499eb3969b4254746','::1','2013-10-28 14:24:37',1382970277);
+INSERT INTO `user` VALUES (9,'test','d047038edabf6fd6b539f9ad78d88f3ae297652ac721c994a6678f63e963a0f91c99d692543ff0054656453b056cc1262998108ffa94644499eb3969b4254746','::1','2013-11-21 14:01:20',0,1382970277);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -255,4 +256,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-11-21 16:38:02
+-- Dump completed on 2013-11-22 23:30:16

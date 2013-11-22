@@ -28,17 +28,40 @@ class MainController extends Controller{
 
     public function actionBackup() {
         #input
+        $search = @$_GET['search'];//搜索 attr:val
+        $order_str = @$_GET['order'];//排序 type1:sc1,type2:sc2
+        $p = max(intval(@$_GET['p']),1);//分页
         #start
         $this->checkSuperAdmin();
         $this->title = 'Backup';
-
-        $params = array(
-            'list' => array(),
-        );
+        $conditon = '';
+        if($search){
+            $l = array();
+            foreach(Y::xexplode(',', $search) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' like \'%'.$a[1].'%\'';
+            }
+            $conditon .= 'and '.implode(' and ', $l);
+        }
+        $order = '';
+        $orders = array();
+        if($order_str){
+            $l = array();
+            foreach(Y::xexplode(',', $order_str) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' '.$a[1];
+                $orders[$a[0]] = $a[1];
+            }
+            $order .= implode(' , ', $l);
+        }
+        $select = 'id,name,lastRebackTime,createTime';
+        $params =  Backup::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
+        $params['now'] = date('Ymdhis',Y::getTime());
         END:
         $bind = array(
             'params' => $params,
-        );
+            'orders' => $orders
+        );        
         $this->render('backup',$bind);
     }
 
@@ -71,7 +94,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,username,deleteFlag';
-        $params =  Admin::getListByPage($select, $conditon, $order, $params, $p, 10, false, true);
+        $params =  Admin::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -129,7 +152,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,username,deleteFlag';
-        $params =  User::getListByPage($select, $conditon, $order, $params, $p, 10, false, true);
+        $params =  User::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -166,7 +189,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,name,url,sort,deleteFlag';
-        $params =  Link::getListByPage($select, $conditon, $order, $params, $p, 10, false, true);
+        $params =  Link::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -203,7 +226,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,name,urlName,sort,deleteFlag';
-        $params =  Contact::getListByPage($select, $conditon, $order, $params, $p, 10, false, true);
+        $params =  Contact::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -260,7 +283,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,title,abstract,hasPicture,deleteFlag';
-        $params =  Activity::getListByPage($select, $conditon, $order, $params, $p, 10, false, true);
+        $params =  Activity::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -317,7 +340,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id, companyId, userId, username, content, totalScore, scoreA, scoreB, scoreC, deleteFlag';
-        $params =  Comment::getListByPage($select, $conditon, $order, $params, $p, 10, false, true);
+        $params =  Comment::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -354,7 +377,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,title,abstract,hasPicture,deleteFlag';
-        $params =  Information::getListByPage($select, $conditon, $order, $params, $p, 10, false, true);
+        $params =  Information::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -411,7 +434,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,category,name,nameFirstLetter,weight,hasLogo,star,score,beFixed,beRecommend,beGuarantee,clickCount,commentCount,platform,hasLicense,openedTime,url,hasUrlPhoto,abstract,deleteFlag';
-        $params =  Company::getListByPage($select, $conditon, $order, $params, $p, 10, false, true);
+        $params =  Company::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -472,10 +495,10 @@ class MainController extends Controller{
         $errors = '';
 
         if($m = Backup::model()->findByPk($id)){
-
+            list($code,$errors) = $m->reback();
         }else{
             $code = 2;
-            $errors = '备份文件不存在！';
+            $errors = '备份不存在！';
         }
 
         END:
@@ -535,6 +558,7 @@ class MainController extends Controller{
                 'Information'=>array('title','abstract','hasPicture','content','deleteFlag'),
                 'Activity'=>array('title','abstract','hasPicture','content','deleteFlag'),
                 'Admin'=>array('username','password','passwordConfirm'),
+                'Backup'=>array('name'),
             );
 
             if(in_array($type,array('Admin','Backup'))){
