@@ -1,4 +1,3 @@
-
 # ###
 # Pager
 # @param {object} dom : jquery selector,where to insert html
@@ -66,162 +65,6 @@ window.Pager = (dom,c,a,params,pager,ajax)->
         )
 
 # ###
-# operate Cookie
-# @param {string} uniqueN 
-# ###
-window.YCache = (uniqueN)->
-    uniqueN = if typeof(uniqueN) isnt "string" then "" else 'uniqueN_'+uniqueN+'_'
-    setCookie = (name, value)->
-        Days = 1
-        exp = new Date()
-        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000)
-        document.cookie = "#{name} = #{escape(this.encode(value))} ;expires= #{exp.toGMTString()} "
-
-    getCookie = (name)->
-        arr = document.cookie.match(new RegExp("(^| ) #{name} =([^;]*)(;|$)"));
-        if arr?
-            this.unencode(unescape(arr[2]))
-        null
-
-    delCookie = (name)->
-        exp = new Date()
-        exp.setTime(exp.getTime() - 1)
-        tem = this.getCookie(name)
-        if tem?
-            document.cookie = 'name='+tem+';expires='+exp.toGMTString()
-
-    encode = (str)->
-        temstr = ""
-        for i in [str.length - 1..0]
-            temstr = temstr + str.charCodeAt(i)
-            if i
-                temstr = temstr+'a'
-        temstr
-
-    unencode = (str)->
-        strarr = "";
-        temstr = "";
-        strarr = str.split("a")
-        for i in [str.length - 1..0]
-            temstr = temstr + String.fromCharCode(eval(strarr[i]))
-        temstr;
-
-    {
-        set: (text)->
-            setCookie(uniqueN, text)
-        ,
-        clear: ->
-            delCookie(uniqueN)
-        ,
-        get: ->
-            getCookie(uniqueN)
-    }
-
-class window.State
-    history = []
-    # list of url : name
-    Dic = {}
-    Cache = YCache('siteHistory')
-
-    setDic : (p)->
-        if typeof p isnt 'object'
-            false
-        for k in p
-            Dic[k]=p[k]
-        true
-
-    setDefaultPosition : (url,params)->
-        loadFromCookie()
-        if history.length is 0
-            history.push({url:url,params:params})
-            saveToCookie()
-        true
-
-    # forward and record
-    forward : (url,params)->
-        history.push({url:url,params:params})
-        saveToCookie()
-        window.State.gotoUrl(url,params)
-        true
-
-    # forward no record
-    forwardNoback : (url,params)->
-        window.State.gotoUrl(url,params)
-        true
-
-    # back n=0 refresh,n>0 to max-n,n<0 to-n 
-    back : (n)->
-        n or= 0
-        if not n
-            h = history[history.length-1]
-        else if n<0
-            n = (if -n>history.length then history.length else -n)-1
-        else
-            n = if n>history.length then 0 else history.length-n;
-        for i in [history.length-1..1]
-            h = history.pop()
-            if i is n
-                break
-        saveToCookie()
-        window.State.gotoUrl(h.url,h.params)
-        true
-
-    gotoUrl : (url,params)->
-        location.href = getUrl(url,params)
-        true
-
-    getPositionHtml : ->
-        p = {
-            default:{}
-            list:[]
-        }
-        for i in [0..history.length]
-            if i is 0
-                p.default = {
-                    url:getUrl(history[i].url,history[i].params)
-                    name:Dic[history[i].url]
-                }
-            else
-                p.list.push({
-                    url:getUrl(history[i].url,history[i].params)
-                    name:Dic[history[i].url]
-                })
-        sitePositionTemplate.render(p)
-        true
-
-    saveToCookie = ->
-        l = []
-        for i in [0..history.lenght]
-            pl = []
-            for j in history[i].params
-                pl.push(j+'**'+history[i].params[j])
-            l.push(history[i].url+'^^'+pl.join('&&'));
-        v = l.join('%%')
-        Cache.set(v)
-        true
-
-    loadFromCookie = ->
-        c = Cache.get()
-        if not c or c.indexOf('/') is -1
-            return false
-        hl = c.split('%%')
-        h = []
-        for i in [0..hl.length]
-            l = hl[i].split('^^')
-            p = {}
-            if l[1]
-                pl = l[1].split('&&')
-                for i in [0..pl.length]
-                    pp = pl[ii].split('**')
-                    p[pp[0]] = pp[1]
-            h.push({
-                url:l[0]
-                params:p
-            })
-        history = h
-        true
-
-# ###
 # get the time of server
 # ###
 window.time = ->
@@ -232,27 +75,30 @@ window.time = ->
 # @param {string} a or object action
 # @param {object} p params
 # ###
-window.getUrl = (c,a,p)->
-    if a is undefined
-        pieces = c.split("/")
-        arr = URLCACHE
-        for i in [0..pieces.length]
-            if arr[pieces[i]]
-                arr = arr[pieces[i]]
-        "#{BASEURL}/#{c}?v=#{arr}"
+window.getUrl = (c, a, p) ->
+  if a is `undefined`
+    pieces = c.split("/")
+    arr = URLCACHE
+    i = 0
+    while i < pieces.length
+      arr = arr[pieces[i]]  if arr[pieces[i]]
+      i++
+    BASEURL + "/" + c + "?v=" + arr
+  else
+    url = undefined
+    param = undefined
+    if typeof (a) is "string"
+      url = BASEURI + "/" + c + "/" + a
+      param = p
     else
-        if typeof a is "string"
-            url = "#{BASEURI}/#{c}/#{a}"
-            param = p
-        else
-            url = "#{BASEURI}/#{c}"
-            param = a
-        if param
-            l = []
-            for k in param
-                l.push("#{encodeURIComponent(k)}=#{encodeURIComponent(param[k])}")
-            l.length>0 ? url = "#{url}?#{l.join('&')}"
-        url
+      url = BASEURI + "/" + c
+      param = a
+    if param
+      l = []
+      for k of param
+        l.push encodeURIComponent(k) + "=" + encodeURIComponent(param[k])
+      l.length > 0 and (url += "?" + l.join("&"))
+    url
 
 # ###
 # @param {time} time
@@ -303,3 +149,188 @@ window.oneAjax = (c,a,data,succ_callback,dom)->
             alert('ajax error: other')
         true
     $.ajax({url:getUrl(c,a),data:data,dataType:"json",type: "POST",success:succ,error:fail})
+
+############未测试
+
+# ###
+# operate Cookie
+# @param {string} uniqueN 
+# ###
+window.YCache = (uniqueN)->
+    uniqueN = if typeof(uniqueN) isnt "string" then "" else 'uniqueN_' + uniqueN + '_'
+    setCookie = (name, value)->
+        Days = 1
+        exp = new Date()
+        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000)
+        document.cookie = name + '=' + escape(encode(value)) + ';expires=' + exp.toGMTString()
+
+    getCookie = (name)->
+        arr = document.cookie.match(new RegExp('(^| )' + name + '=([^;]*)(;|$)'))
+        ret = unencode(unescape(arr[2])) if arr
+
+    delCookie = (name)->
+        exp = new Date()
+        exp.setTime(exp.getTime() - 1)
+        tem = getCookie(name)
+        if tem
+            document.cookie = 'name=' + tem + ';expires=' + exp.toString()
+
+    encode = (str)->
+        temstr = ''
+        i = str.length
+        while i-- > 0
+            temstr = temstr + str.charCodeAt(i)
+            if i
+                temstr = temstr+'a'
+        temstr
+
+    unencode = (str)->
+        strarr = '';
+        temstr = '';
+        strarr = str.split("a")
+        i = str.length
+        while i-- > 0
+            temstr += String.fromCharCode(eval(strarr[i]))
+        temstr;
+
+    {
+        set: (text)->
+            setCookie(uniqueN, text)
+        ,
+        clear: ->
+            delCookie(uniqueN)
+        ,
+        get: ->
+            getCookie(uniqueN)
+    }
+
+# window.State = {}
+# (->
+#     history = []
+#     # list of url : name
+#     Dic = {}
+#     Cache = YCache('siteHistory')
+
+#     State.setDic = (p)->
+#         if typeof p isnt 'object'
+#             false
+#         for k,v of p
+#             Dic[k] = v
+#         true
+
+#     State.getDic = ->
+#         Dic
+
+#     State.getHistory= ->
+#         history
+
+#     State.setDefaultPosition = (url,params)->
+#         loadFromCookie()
+#         if history.length is 0
+#             history.push({url:url,params:params})
+#             saveToCookie()
+#         true
+
+#     # forward and record
+#     State.forward = (url,params)->
+#         history.push({url:url,params:params})
+#         saveToCookie()
+#         State.gotoUrl(url,params)
+#         true
+
+#     # forward no record
+#     State.forwardNoback = (url,params)->
+#         State.gotoUrl(url,params)
+#         true
+
+#     # back n=0 refresh,n>0 to max-n,n<0 to-n 
+#     State.back = (n)->
+#         n or= 0
+#         if not n
+#             h = history[history.length-1]
+#         else if n<0
+#             n = (if -n>history.length then history.length else -n)-1
+#         else
+#             n = if n>history.length then 0 else history.length-n;
+#         for i in [history.length-1..1]
+#             h = history.pop()
+#             if i is n
+#                 break
+#         saveToCookie()
+#         State.gotoUrl(h.url,h.params)
+#         true
+
+#     State.gotoUrl = (url,params)->
+#         location.href = getUrl(url,params)
+#         true
+
+#     State.getPositionHtml = ->
+#         p = {
+#             default:{}
+#             list:[]
+#         }
+#         i = 0
+#         while i < history.length
+#             if i is 0
+#                 p.default = {
+#                     url:getUrl(history[i].url,history[i].params)
+#                     name:Dic[history[i].url]
+#                 }
+#             else
+#                 p.list.push({
+#                     url:getUrl(history[i].url,history[i].params)
+#                     name:Dic[history[i].url]
+#                 })
+#             i++
+#         return sitePositionTemplate.render(p)
+
+#     saveToCookie = ->
+#         l = []
+#         i = 0
+#         while i < history.lenght
+#             pl = []
+#             for j in history[i].params
+#                 pl.push(j+'**'+history[i].params[j])
+#             l.push(history[i].url+'^^'+pl.join('&&'));
+#             i++
+#         v = l.join('%%')
+#         Cache.set(v)
+#         true
+
+#     loadFromCookie = ->
+#         c = Cache.get()
+#         if not c or c.indexOf('/') is -1
+#             return false
+#         hl = c.split('%%')
+#         h = []
+#         i = 0
+#         while i < hl.length
+#             l = hl[i].split('^^')
+#             p = {}
+#             if l[1]
+#                 pl = l[1].split('&&')
+#                 ii = 0
+#                 while ii < pl.length
+#                     pp = pl[ii].split('**')
+#                     p[pp[0]] = pp[1]
+#             h.push({
+#                 url:l[0]
+#                 params:p
+#             })
+#             i++
+#         history = h
+#         true
+# )()
+window.State = {}
+(->
+  State.forward = (c, a, p) ->
+    document.location.href = getUrl(c, a, p)
+
+  State.replace = (c, a, p) ->
+    document.location.replace getUrl(c, a, p)
+
+  State.back = (n) ->
+    n = n or 0
+    history.go -n
+)()
+

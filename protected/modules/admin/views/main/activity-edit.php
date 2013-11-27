@@ -26,6 +26,9 @@
                 data[this.id] = $(this).val();
             });
             data.content = content.getContent();
+            //获取第一张图片
+            var m = data.content.match(/<img +src="(.*?)".*?\/\>/);
+            data.img = m ? m[1] : '';
             oneAjax('Main','AjaxAdd',data,function(o){
                 if(o.code==1){
                     State.back(1);

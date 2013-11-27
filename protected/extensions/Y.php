@@ -9,6 +9,11 @@ class Y{
     }
 
     static public function end($message,$exception=S::EXCEPTION_SITE){
+        if(self::$_transaction){
+            self::$_transaction->rollback();
+            self::$_transaction = null;
+        }
+
         if($exception==S::EXCEPTION_SITE)
             throw new YException($message);//操作异常
         else

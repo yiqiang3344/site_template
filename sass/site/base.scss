@@ -2,13 +2,30 @@
 /* sass变量方法定义                   */
 /************************************/
 $screen_width : 640px;
+$red : #ff0808;
 $black : #000;
 $blue :  #0076d1;
 $yellow : #fde900;
 $pink :  #8c1227;
 $white : #fff;
 $gray :  #777;
-
+@function color($c){
+    @if $c=="red"{
+        @return $red;
+    }@else if $c=="black"{
+        @return $black;
+    }@else if $c=="blue"{
+        @return $blue;
+    }@else if $c=="yellow"{
+        @return $yellow;
+    }@else if $c=="pink"{
+        @return $pink;
+    }@else if $c=="white"{
+        @return $white;
+    }@else if $c=="gray"{
+        @return $gray;
+    }
+}
 /************************************/
 /* 布局                              */
 /************************************/
@@ -152,7 +169,7 @@ em, i{
     }
 }
 /*mr*/
-@each $v in 10{
+@each $v in 5,10{
     .mr#{$v} {
         margin-right: #{$v}px;
     }
@@ -257,21 +274,21 @@ em, i{
     font-weight: bold;
 }
 /*color*/
-.black{
-    color: $black;
+@each $v in "red","black","blue","yellow","pink","white","gray"{
+    @each $d in "pale","middle","deep"{
+        .#{$v}_#{$d} {
+            $vv : color($v);
+            @if $d=="pale"{
+                color: lighten($vv, 20%);
+            }@else if $d=="middle"{
+                color: lighten($vv, 50%);
+            }@else{
+                color: lighten($vv, 100%);
+            }
+        }
+    }
 }
-.blue{
-    color: $blue;
-}
-.yellow{
-    color: $yellow;
-}
-.pink{
-    color: $pink;
-}
-.white{
-    color: $white;
-}
-.gray{
-    color: $gray;
+/*cursor*/
+.cp{
+    cursor : pointer;
 }

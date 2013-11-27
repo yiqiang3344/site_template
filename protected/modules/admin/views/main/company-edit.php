@@ -19,14 +19,14 @@
         description.ready(function(){
             // this.setContent('test');
         });
-        $('#submit').click(function(){
-            var data = {type:'Company',id:params.id};
-            $('.attr').each(function(){
-                $(this).removeClass('merror');
-                data[this.id] = $(this).val();
-            });
-            data.description = description.getContent();
-            oneAjax('Main','AjaxAdd',data,function(o){
+        $('#submit').click(function(e){
+            var fd = new FormData(document.getElementById("form"));
+            fd.append('type','Company');
+            fd.append('id',params.id);
+            fd.append('logo',$('#logo').get(0).files[0]);
+            fd.append('urlPhoto',$('#urlPhoto').get(0).files[0]);
+            fd.append('description', description.getContent());
+            oneAjax('Main','AjaxAdd',fd,function(o){
                 if(o.code==1){
                     State.back(1);
                 }else{
@@ -34,7 +34,8 @@
                         $('#'+k).addClass('merror');
                     });
                 }
-            },this);
+            },this,true);
+            return false;
         });
     }
 </script>

@@ -5,27 +5,23 @@ echo "patch md5, generate url.js success";
 //处理一个语言目录
 function setCacheCode(){
     $arr=array();   
-    //处理语言所对应目录
-    //处理根目录下面的img目录
-    $adir="../img";
-    $file_list=array();
-    scan_dir($adir,$file_list);
-    foreach($file_list as $file){
-        if(preg_match("{thumb\.db}isu",$file)||preg_match("{thumbs\.db}isu",$file)||preg_match("{\\.DS_Store$}isu",$file)){
-            continue;
+    //处理指定目录
+    $dirs = array(
+        'img',
+        'images',
+        'upload',
+        'upload1'
+    );
+    foreach($dirs as $d){
+        $adir = '../'.$d;
+        $file_list=array();
+        scan_dir($adir,$file_list);
+        foreach($file_list as $file){
+            if(preg_match("{thumb\.db}isu",$file)||preg_match("{thumbs\.db}isu",$file)||preg_match("{\\.DS_Store$}isu",$file)){
+                continue;
+            }
+            pushToAr($arr,$d.'/'.substr($file,strlen($adir)+1),substr(md5_file($file),0,8));
         }
-        pushToAr($arr,"img/".substr($file,strlen($adir)+1),substr(md5_file($file),0,8));
-    }
-    
-    //处理根目录下面的images目录
-    $adir="../images";
-    $file_list=array(); 
-    scan_dir($adir,$file_list);
-    foreach($file_list as $file){
-        if(preg_match("{thumb\.db}isu",$file)||preg_match("{thumbs\.db}isu",$file)||preg_match("{\\.DS_Store$}isu",$file)){
-            continue;
-        }
-        pushToAr($arr,"images/".substr($file,strlen($adir)+1),substr(md5_file($file),0,8));
     }
     
     //保存到url.js

@@ -114,7 +114,7 @@ class MainController extends Controller{
         }
 
         $params = array();
-        foreach(array('username','password','passwordConfirm') as $v){
+        foreach(array('id','username','password','passwordConfirm') as $v){
             $params[$v] = @$info[$v];
         }
         END:
@@ -245,7 +245,7 @@ class MainController extends Controller{
         }
 
         $params = array();
-        foreach(array('name','urlName','content','sort','deleteFlag') as $v){
+        foreach(array('id','name','urlName','content','sort','deleteFlag') as $v){
             $params[$v] = @$info[$v];
         }
         END:
@@ -282,7 +282,7 @@ class MainController extends Controller{
             }
             $order .= implode(' , ', $l);
         }
-        $select = 'id,title,abstract,hasPicture,deleteFlag';
+        $select = 'id,title,abstract,img,deleteFlag';
         $params =  Activity::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
@@ -302,7 +302,7 @@ class MainController extends Controller{
         }
 
         $params = array();
-        foreach(array('title','abstract','hasPicture','content','deleteFlag') as $v){
+        foreach(array('id','title','abstract','img','content','deleteFlag') as $v){
             $params[$v] = @$info[$v];
         }
         END:
@@ -376,7 +376,7 @@ class MainController extends Controller{
             }
             $order .= implode(' , ', $l);
         }
-        $select = 'id,title,abstract,hasPicture,deleteFlag';
+        $select = 'id,title,abstract,img,deleteFlag';
         $params =  Information::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
@@ -396,7 +396,7 @@ class MainController extends Controller{
         }
 
         $params = array();
-        foreach(array('id','title','abstract','hasPicture','content','deleteFlag') as $v){
+        foreach(array('id','title','abstract','img','content','deleteFlag') as $v){
             $params[$v] = @$info[$v];
         }
         END:
@@ -433,7 +433,7 @@ class MainController extends Controller{
             }
             $order .= implode(' , ', $l);
         }
-        $select = 'id,category,name,nameFirstLetter,weight,hasLogo,star,score,beFixed,beRecommend,beGuarantee,clickCount,commentCount,platform,hasLicense,openedTime,url,hasUrlPhoto,abstract,deleteFlag';
+        $select = 'id,category,name,nameFirstLetter,weight,logo,star,score,beFixed,beRecommend,beGuarantee,clickCount,commentCount,platform,hasLicense,openedTime,url,urlPhoto,abstract,deleteFlag';
         $params =  Company::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
@@ -453,7 +453,7 @@ class MainController extends Controller{
         }
 
         $params = array();
-        foreach(array('id','category','name','nameFirstLetter','weight','hasLogo','star','score','beFixed','beRecommend','beGuarantee','clickCount','commentCount','platform','hasLicense','openedTime','url','hasUrlPhoto','abstract','description','deleteFlag') as $v){
+        foreach(array('id','category','name','nameFirstLetter','weight','logo','star','score','beFixed','beRecommend','beGuarantee','clickCount','commentCount','platform','hasLicense','openedTime','url','urlPhoto','abstract','description','deleteFlag') as $v){
             $params[$v] = @$info[$v];
         }
         END:
@@ -469,10 +469,10 @@ class MainController extends Controller{
         #start
         $code = 1;
         $errors = '';
+        if(!$this->checkSuperAdmin(false)){
+            Y::end('Illegal operation');
+        }
 
-        //导出当前sql文件
-
-        $form['file'] = '';
         $m = new Backup;
         $m->attributes = $form;
         if(!$m->save()){
@@ -493,6 +493,9 @@ class MainController extends Controller{
         #start
         $code = 1;
         $errors = '';
+        if(!$this->checkSuperAdmin(false)){
+            Y::end('Illegal operation');
+        }
 
         if($m = Backup::model()->findByPk($id)){
             list($code,$errors) = $m->reback();
@@ -551,21 +554,21 @@ class MainController extends Controller{
         $id = @$_POST['id'];
         $info = $_POST;
         #start
+        if(in_array($type,array('Admin','Backup'))){
+            if(!$this->checkSuperAdmin(false)){
+                Y::end('Illegal operation');
+            }
+        }
+        Y::begin();
         if($id){
             $map = array(
                 'Contact'=>array('name','urlName','sort','content'),
-                'Company'=>array('category','name','nameFirstLetter','weight','hasLogo','star','score','beFixed','beRecommend','beGuarantee','clickCount','commentCount','platform','hasLicense','openedTime','url','hasUrlPhoto','abstract','description','deleteFlag'),
-                'Information'=>array('title','abstract','hasPicture','content','deleteFlag'),
-                'Activity'=>array('title','abstract','hasPicture','content','deleteFlag'),
+                'Company'=>array('category','name','nameFirstLetter','weight','logo','star','score','beFixed','beRecommend','beGuarantee','clickCount','commentCount','platform','hasLicense','openedTime','url','urlPhoto','abstract','description','deleteFlag'),
+                'Information'=>array('title','abstract','img','content','deleteFlag'),
+                'Activity'=>array('title','abstract','img','content','deleteFlag'),
                 'Admin'=>array('username','password','passwordConfirm'),
                 'Backup'=>array('name'),
             );
-
-            if(in_array($type,array('Admin','Backup'))){
-                if(!$this->checkSuperAdmin(false)){
-                    Y::end('Illegal operation');
-                }
-            }
 
             $m = $type::model()->findByPk($id);
             foreach($map[$type] as $v){
@@ -575,13 +578,40 @@ class MainController extends Controller{
             $m = new $type('create');
             $m->attributes = $info;
         }
+
         $code = 1;
         $errors = '';
-
         if(!$m->save()){
             $code = 2;
             $errors = $m->getErrors();
+        }else{
+            //上传图片
+            if($type=='Company'){
+                $save = false;
+                foreach($_FILES as $k=>$f){
+                    $save = true;
+                    $config = array(
+                        'savePath' => 'upload/',
+                        'name' => 'company_'.$k.'_'.$m->id,
+                        'maxSize' => 2000, //单位KB
+                        'allowFiles' => array('.gif', '.png', '.jpg')
+                    );
+                    //生成上传实例对象并完成上传
+                    $up = new Uploader($k, $config);
+
+                    $info = $up->getFileInfo();
+                    if($info['state']!='SUCCESS'){
+                        Y::rollback();
+                        $code = 3;
+                        $errors = $k.'上传失败!';
+                        GOTO END;
+                    }
+                    $m->$k = $this->url($info['url']);
+                }
+                $save && $m->save();
+            }
         }
+        Y::commit();
 
         END:
         $this->render(array(
@@ -595,6 +625,12 @@ class MainController extends Controller{
         $type = ucwords($_POST['type']);
         $ids = $_POST['ids'];
         #start
+        if(in_array($type,array('Admin','Backup'))){
+            if(!$this->checkSuperAdmin(false)){
+                Y::end('Illegal operation');
+            }
+        }
+
         $type::deleteByIds(explode(',',$ids));
         $code = 1;
         $errors = '';

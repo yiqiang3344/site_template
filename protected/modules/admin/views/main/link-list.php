@@ -46,12 +46,6 @@ alert(o.errors[attr][0]);
             }
         });
 
-        $('[id^=edit_]').click(function(){
-            var id = this.id.replace('edit_','');
-            State.forward('Main','LinkEdit',{id:id});
-            return false;
-        });
-
         $('#add').click(function(){
             State.forward('Main','LinkEdit');
             return false;

@@ -5,14 +5,40 @@
     height: 200px;
 }
 .maincontent{
-    height: 600px;
+    min-height: 600px;
 }
 .mfooter{
-    position: absolute;
-    bottom: 0;
     width: 100%;
     min-height: 200px;
 }
 .merror{
     border: 1px solid red;
+}
+
+.mlist_abstract{
+    .line{
+        clear:both;
+        margin:10 0 10 0;
+        height: 100px;
+        .img{
+            img{
+                height:100px;
+                width:100px;
+            };
+            float:left;
+            height: 100px;
+            width: 100px;
+        };
+        .info{
+            float:left;
+            width: 100px;
+            .title{
+
+            };
+            .abstract{
+
+            };
+        }
+    };
+
 }

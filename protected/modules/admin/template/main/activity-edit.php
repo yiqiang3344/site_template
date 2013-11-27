@@ -7,11 +7,6 @@
         <span>简介</span>
         <textarea style="width:400px;height:200px;" class="attr" id="abstract">{{abstract}}</textarea>
     </div>
-    <div class="hasPicture">
-        <span>有图片</span>
-        <input class="attr" id="hasPicture" type="text" value="{{hasPicture}}">
-    </div>
-    <div class="deleteFlag">
         <span>删除</span>
         <input class="attr" id="deleteFlag" type="text" value="{{deleteFlag}}">
     </div>

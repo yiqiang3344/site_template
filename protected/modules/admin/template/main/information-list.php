@@ -18,7 +18,7 @@
             <div class="attr" id="order_id">id</div>
             <div class="attr" id="order_title">标题</div>
             <div class="attr" id="order_abstract">简要</div>
-            <div class="attr" id="order_hasPicture">有图片</div>
+            <div class="attr" id="order_img">有图片</div>
             <div class="attr" id="order_deleteFlag">已删除</div>
         </li>
         {{#data}}
@@ -29,7 +29,7 @@
             <div class="attr">{{id}}</div>
             <div class="attr" id="attr_title">{{title}}</div>
             <div class="attr" id="attr_abstract">{{abstract}}</div>
-            <div class="attr" id="attr_hasPicture">{{hasPicture}}</div>
+            <div class="attr img" id="">{{#img}}<img src="{{img}}" alt="无"/>{{/img}}</div>
             <div class="attr" id="attr_deleteFlag">{{deleteFlag}}</div>
             <div class="fl"><a href="" id="edit_{{id}}">编辑</a></div>
         </li>

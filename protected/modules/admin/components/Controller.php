@@ -145,8 +145,16 @@ class Controller extends CController {
                 $ret .= urlencode ( $k ) . "=" . urlencode ( $v ) . "&";
             }
         }else{
-            $md5 = @md5_file ($this->getPath().'/'.$c);
-            $ret = $this->getAssetsUrl().'/'.$c.($md5 ? '?v=' . substr ( $md5, 0, 8 ) : '');
+            if(preg_match('{^(js/(url)\.|img|images|upload|upload1)}',$c)){
+                $file = Yii::app()->getBasePath().'/../'.$c;
+                $md5 = @md5_file ($file);
+                $file = Yii::app()->getBaseUrl().'/'.$c;
+            }else{
+                $file = $this->getPath().'/'.$c;
+                $md5 = @md5_file ($file);
+                $file = $this->getAssetsUrl().'/'.$c;
+            }
+            $ret = $file.($md5 ? '?v=' . substr ( $md5, 0, 8 ) : '');
         }
         return $ret;
     }

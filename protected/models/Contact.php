@@ -22,7 +22,12 @@ class Contact extends YActiveRecord
     public function scopes()
     {
         return array(
-            'nodelete'=>array(
+            'viewList'=>array(
+                'select'=>'id,urlName,name',
+                'condition'=>'deleteFlag=0'
+            ),
+            'viewDetail'=>array(
+                'select'=>'id,urlName,name,content',
                 'condition'=>'deleteFlag=0',
             ),
         );
@@ -63,12 +68,11 @@ class Contact extends YActiveRecord
     }
 
     public static function getInfoByUrlName($urlName){
-        return self::model()->nodelete()->find('urlName=:urlName',array(':urlName'=>$urlName));
+        return Y::modelsToArray(self::model()->viewDetail()->find('urlName=:urlName',array(':urlName'=>$urlName)));
     }
 
     public static function getListBySort(){
-        return Y::modelsToArray(self::model()->nodelete()->findAll(array(
-            'select'=>'id,urlName,name',
+        return Y::modelsToArray(self::model()->viewList()->findAll(array(
             'order'=>'sort',
         )));
     }

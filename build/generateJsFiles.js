@@ -2,7 +2,6 @@ var hogan = require('hogan.js');
 var fs = require('fs');
 var helper = require('./helper');
 var lang_list = [
-        'zh_cn',
     ];
 
 process.chdir('../protected/');

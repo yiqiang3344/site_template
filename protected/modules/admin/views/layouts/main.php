@@ -8,7 +8,8 @@
         <link href="<?php echo $this->url("css/page.css");?>" rel="stylesheet" type="text/css" media="screen" />
         <script type="text/javascript" src="<?php echo $this->url("js/jquery.js");?>"></script>
         <script type="text/javascript">
-            var CODE_BASE_URL=<?php echo json_encode(Yii::app()->getBaseUrl() . "/index.php/".$this->module->getName());?>;
+            var BASEURL=<?php echo json_encode(Yii::app()->getBaseUrl());?>;
+            var BASEURI=<?php echo json_encode(Yii::app()->getBaseUrl() . "/index.php/".$this->module->getName());?>;
             var STIME=<?php echo Y::getTime();?>;
             var CTIME=new Date().getTime();
             var TEST_SERVER_FLAG=<?php echo YII_DEBUG;?>;
@@ -16,7 +17,8 @@
             window.UEDITOR_HOME_URL=<?php echo json_encode($this->getAssetsUrl().'/ueditor/');?>;
         </script>
         <script type="text/javascript" src="<?php echo $this->url('js/tool.js');?>"></script>
-        <script type="text/javascript" src="<?php echo $this->url('js/helper.js');?>"></script>
+        <script type="text/javascript" src="<?php echo $this->url('js/url.js');?>"></script>
+        <script type="text/javascript" src="<?php echo $this->url('js/main.js');?>"></script>
         <script type="text/javascript">
             //设置子模板编译方法，dev中才有定义
             <?php foreach(array_merge($this->partialsSubTemplate,$this->publicSubTemplate) as $k=>$v):?>

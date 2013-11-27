@@ -128,7 +128,7 @@
             />
     </target>
 
-    <target name="translate" description="translate" depends="config">
+    <target name="translate" description="translate" depends="config,coffee,sass">
         <exec dir="protected" command="php ../build/translate.php" outputProperty="msg.out"/>
         <echo msg="message: ${msg.out}" />
     </target>
@@ -147,7 +147,33 @@
         <exec dir="protected" command="php ../build/setCacheCode.php" outputProperty="msg.out"/>
         <echo msg="message: ${msg.out}" />
     </target>
-    
-    <target name="go" description="start" depends="setCacheCode">
+
+
+    <target name="go" description="start" depends="setCacheCode,removeAssets">
+    </target>
+
+    <target name="removeAssets" description="remove assets" depends="">
+        <exec dir="protected" command="rm -rf ../assets/*" outputProperty="msg.out"/>
+        <echo msg="message: ${msg.out}" />
+    </target>
+
+    <target name="coffee" description="generete site and admin js" depends="">
+        <exec dir="protected" command="coffee --output modules/admin/script/js/  --compile ../coffee/admin/js/" outputProperty="msg.out"/>
+        <echo msg="message: ${msg.out}" />
+        <exec dir="protected" command="coffee --output ../js/  --compile ../coffee/site/js/" outputProperty="msg.out"/>
+        <echo msg="message: ${msg.out}" />
+        <exec dir="protected" command="coffee --output ../dev/js/  --compile ../coffee/site/dev/" outputProperty="msg.out"/>
+        <echo msg="message: ${msg.out}" />
+    </target>
+
+    <target name="sass" description="generete site and admin css" depends="">
+        <exec dir="protected" command="sass --style compressed ../sass/site/base.scss ../css/base.css" outputProperty="msg.out"/>
+        <echo msg="message of site base.css :${msg.out}" />
+        <exec dir="protected" command="sass --style compressed ../sass/site/page.scss ../css/page.css" outputProperty="msg.out"/>
+        <echo msg="message of site page.css :${msg.out}" />
+        <exec dir="protected" command="sass --style compressed ../sass/admin/base.scss modules/admin/script/css/base.css" outputProperty="msg.out"/>
+        <echo msg="message of admin base.css :${msg.out}" />
+        <exec dir="protected" command="sass --style compressed ../sass/admin/page.scss modules/admin/script/css/page.css" outputProperty="msg.out"/>
+        <echo msg="message of admin page.css :${msg.out}" />
     </target>
 </project>

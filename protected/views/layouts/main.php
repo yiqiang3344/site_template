@@ -18,29 +18,42 @@
             var VERSION=<?php echo json_encode(A::VERSION);?>;
             var UD = <?php echo json_encode($this->getUD());?>;
         </script>
+        <script type="text/javascript" src="<?php echo $this->url("js/tools.js");?>"></script>
         <script type="text/javascript" src="<?php echo $this->url("js/main.js");?>"></script>
-        <script type="text/javascript">
-            //设置子模板编译方法，dev中才有定义
-            <?php if(Yii::app()->language=='dev'):?>
-                <?php foreach(array_merge($this->partialsSubTemplate,$this->publicSubTemplate) as $k=>$v):?>
-                var <?php echo $k;?> = Hogan.compile(<?php echo json_encode($v);?>);
-                <?php endforeach;?>
-            <?php endif;?>
-        </script>
+        <?php if($this->template_flag==S::DEV_USE_TEMPLATE):?>
+            <script type="text/javascript">
+                //设置子模板编译方法，dev中才有定义
+                <?php if(Yii::app()->language=='dev'):?>
+                    <?php foreach(array_merge($this->partialsSubTemplate,$this->publicSubTemplate) as $k=>$v):?>
+                    var <?php echo $k;?> = Hogan.compile(<?php echo json_encode($v);?>);
+                    <?php endforeach;?>
+                <?php endif;?>
+            </script>
+        <?php endif;?>
         <script type="text/javascript" src="<?php echo $this->url('js/url.js');?>"></script>
         <script type="text/javascript" src="<?php echo $this->url('js/helper.js');?>"></script>
-        <!-- 倒入含有局部子模板编译方法的js文件 -->
-        <?php if(Yii::app()->language!='dev' && $this->partialsSubTemplate):?>
-        <script type="text/javascript" src="<?php echo $this->url('js/'.$this->getId().'_sub_template.js');?>"></script>
+        <?php if($this->template_flag==S::DEV_USE_TEMPLATE):?>
+            <!-- 倒入含有局部子模板编译方法的js文件 -->
+            <?php if(Yii::app()->language!='dev' && $this->partialsSubTemplate):?>
+            <script type="text/javascript" src="<?php echo $this->url('js/'.$this->getId().'_sub_template.js');?>"></script>
+            <?php endif;?>
         <?php endif;?>
     </head>
     <body>
         <div id="maindiv">
+            <?php echo $this->Mustache->render($this->publicSubTemplate['headerTemplate'],$this->getHeaderParams()); ?>
             <?php echo $content;?>
+            <?php echo $this->Mustache->render($this->publicSubTemplate['footerTemplate'],$this->getFooterParams()); ?>
         </div>
         <script type="text/javascript">
-            showHeader(UD.user,UD.navLinks);
-            showFooter(UD.contactLinks);
+        $('.js_logout').click(function() {
+            oneAjax('Site', 'AjaxLogout', {}, function(obj) {
+                if (obj.code === 1) {
+                    State.back(0);
+                }
+            }, this);
+            return false;
+        });
         </script>
     </body>
 </html>

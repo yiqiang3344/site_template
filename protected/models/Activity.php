@@ -28,9 +28,9 @@ class Activity extends YActiveRecord
         // will receive user inputs.
         return array(
             array('title, abstract, content', 'required'),
+            array('img','safe'),
             array('title', 'length', 'min' => 1, 'max' => 128),
             array('abstract', 'length', 'min' => 1, 'max' => 256),
-            array('hasPicture','boolean','allowEmpty'=>true),
         );
     }
 

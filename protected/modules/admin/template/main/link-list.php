@@ -31,7 +31,6 @@
             <div class="attr" id="attr_url">{{url}}</div>
             <div class="attr" id="attr_sort">{{sort}}</div>
             <div class="attr" id="attr_deleteFlag">{{deleteFlag}}</div>
-            <div class="fl"><a href="" id="edit_{{id}}">编辑</a></div>
         </li>
         {{/data}}
     </ul>
