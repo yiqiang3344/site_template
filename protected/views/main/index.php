@@ -1,8 +1,5 @@
 <div class="maincontent">
-<?php
-    $m = new Mustache_Engine;
-    echo $m->render($this->template,$params);
-?>
+<?php echo $this->Mustache->render($this->template,$params); ?>
 </div>
 
 <script type="text/javascript">//template

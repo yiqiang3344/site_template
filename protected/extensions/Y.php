@@ -8,16 +8,54 @@ class Y{
         return explode($delimiter, $string);
     }
 
+    function getUrl($c,$a=null,$p=array()){
+        if($a){
+            $ret = Yii::app()->getBaseUrl().'/index.php/'.$c.'/'.$a;
+            $l = array();
+            foreach($p as $k=>$v){
+                $l[] = urlencode ( $k ) . "=" . urlencode ( $v );
+            }
+            $p && ($ret .= '?'.implode('&', $l));
+        }else{
+            //非开发环境中的css和js都是压缩过的,开发环境中则不压缩
+            $not_translate = preg_match('{^(js/(jquery|main|url|tools)\.|css|img|images)}',$c);
+            if(Yii::app()->language=='dev'){
+                if(!$not_translate){
+                    //开发语言中需要翻译的
+                    $c = Yii::app()->language.'/'.$c;
+                }
+            }else{
+                $min_name = str_replace(array('.js','.css'),array('.min.js','.min.css'),$c);
+                if($not_translate){
+                    //非开发语言中不需要翻译的
+                    $c = 'script/'.basename($min_name);
+                }else{
+                    //非开发语言中需要翻译的
+                    $c = Yii::app()->language.'/'.$min_name;
+                }
+            }
+            $md5 = @md5_file ($c);
+            $ret = Yii::app()->getBaseUrl().'/'.$c.($md5 ? '?v=' . substr ( $md5, 0, 8 ) : '');
+        }
+        return $ret;
+    }
+
     static public function end($message,$exception=S::EXCEPTION_SITE){
         if(self::$_transaction){
             self::$_transaction->rollback();
             self::$_transaction = null;
         }
 
-        if($exception==S::EXCEPTION_SITE)
-            throw new YException($message);//操作异常
-        else
+        if($exception==S::EXCEPTION_SITE){
+            if(YII_DEBUG){
+                throw new YException($message);//操作异常
+            }else{
+                header('Location:'.Y::getUrl('Site','Error'));
+                Yii::end();
+            }
+        }else{
             throw new CException($message);//代码异常
+        }
     }
 
     static public function getFirstLetter($str){
@@ -99,7 +137,7 @@ class Y{
 
     //根据条件获取指定列的列表
     public static function getList($model_name,$select, $condition, $order='', $params=array(), $include_delete=false){
-        if(is_string($condition)){
+        if($condition && is_string($condition)){
             $criteria=new CDbCriteria;
             $criteria->condition = $condition;
             $include_delete || $criteria->addCondition('deleteFlag=0');
@@ -115,7 +153,7 @@ class Y{
     //根据条件获取全部信息的列表并分页
     public static function getListByPage($model_name,$select, $condition, $order, $params, $page, $page_size, $require_all, $include_delete=false){
         $criteria=new CDbCriteria;
-        $criteria->condition = $condition;
+        $condition && ($criteria->condition = $condition);
         $include_delete || $criteria->addCondition('deleteFlag=0');
         if ($page_size == 0) {
             return array(

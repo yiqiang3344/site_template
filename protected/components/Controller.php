@@ -28,6 +28,10 @@ class Controller extends CController {
      */
     public $breadcrumbs = array ();
 
+    public function init() {
+        $this->setStageList();
+    }
+
     public function filters() {
         return array (
         );
@@ -49,6 +53,7 @@ class Controller extends CController {
         if(is_array($view)) {
             $output =  json_encode($view);
         }else {
+            require_once 'vendor/autoload.php';//一开始引入可能会和其他模块名冲突
             $this->template_flag = $template_flag;
             //DEV_USE_TEMPLATE 表示开发时使用传入的模板，发布后使用已编译的js文件; USE_TEMPLATE 表示绝对会传入模板，用于php渲染; NOT_USE_TEMPLATE和其他 表示不用模板
             if($template_flag==S::USE_TEMPLATE){
@@ -97,35 +102,7 @@ class Controller extends CController {
     }
 
     public function url($c,$a=null,$p=array()){
-        if($a){
-            $ret = Yii::app()->getBaseUrl().'/index.php/'.$c.'/'.$a;
-            $l = array();
-            foreach($p as $k=>$v){
-                $l[] = urlencode ( $k ) . "=" . urlencode ( $v );
-            }
-            $p && ($ret .= '?'.implode('&', $l));
-        }else{
-            //非开发环境中的css和js都是压缩过的,开发环境中则不压缩
-            $not_translate = preg_match('{^(js/(jquery|main|url|tools)\.|css|img|images)}',$c);
-            if(Yii::app()->language=='dev'){
-                if(!$not_translate){
-                    //开发语言中需要翻译的
-                    $c = Yii::app()->language.'/'.$c;
-                }
-            }else{
-                $min_name = str_replace(array('.js','.css'),array('.min.js','.min.css'),$c);
-                if($not_translate){
-                    //非开发语言中不需要翻译的
-                    $c = 'script/'.basename($min_name);
-                }else{
-                    //非开发语言中需要翻译的
-                    $c = Yii::app()->language.'/'.$min_name;
-                }
-            }
-            $md5 = @md5_file ($c);
-            $ret = Yii::app()->getBaseUrl().'/'.$c.($md5 ? '?v=' . substr ( $md5, 0, 8 ) : '');
-        }
-        return $ret;
+        return Y::getUrl($c,$a,$p);
     }
 
     public function actions(){
@@ -186,11 +163,12 @@ class Controller extends CController {
     public function getHeaderParams(){
         $user = $this->getUser();
         $params = array(
+            'searchUrl' => $this->url('Search','Index'),
             'loginUrl' => $this->url('Site','Login'),
             'registerUrl' => $this->url('Site','Register'),
             'user' => $user?true:false,
             'username' => $user->username,
-            'list' => array(
+            'navList' => array(
                 array(
                     'name'=>'首页',
                     'url'=>$this->url('Main','Index'),
@@ -199,10 +177,23 @@ class Controller extends CController {
                     'name'=>'活动',
                     'url'=>$this->url('Activity','Index'),
                 ),
-            )
+                array(
+                    'name'=>'资讯',
+                    'url'=>$this->url('Information','Index'),
+                ),
+                array(
+                    'name'=>'公司大全',
+                    'url'=>$this->url('Company','Index'),
+                ),
+                array(
+                    'name'=>'排行榜',
+                    'url'=>$this->url('Rank','Index',array('key'=>'clickCount')),
+                ),
+            ),
+            'stageList'=>$this->stateList,
         );
         foreach(Link::model()->getListBySort() as $row){
-            $params['list'][] = array(
+            $params['navList'][] = array(
                 'name'=>$row['name'],
                 'url'=>$row['url'],
             );
@@ -229,4 +220,49 @@ class Controller extends CController {
         }
         return $params;
     }
+
+    public $stateList;
+    public function setStageList($subStateName=false) {
+        if(!$this->stateList){
+            $map = array(
+                'company'=>array(
+                    'name'=> '公司大全',
+                    'url'=> $this->url('Company','Index'),
+                ),
+                'information'=>array(
+                    'name'=> '资讯',
+                    'url'=> $this->url('Information','Index'),
+                ),
+                'activity'=>array(
+                    'name'=> '活动',
+                    'url'=> $this->url('Activity','Index'),
+                ),
+                'rank'=>array(
+                    'name'=> '排行榜',
+                    'url'=> $this->url('Rank','Index'),
+                ),
+                'search'=>array(
+                    'name'=> '搜索',
+                    'url'=> $this->url('Search','Index'),
+                ),
+            );
+            $this->stateList = array(
+                array(
+                    'name'=>'首页',
+                    'url'=>$this->url('Main','Index'),
+                    'first'=>true,
+                )
+            );
+            if(isset($map[$this->getId()])){
+                $this->stateList[] = $map[$this->getId()];
+            }
+        }
+        if($subStateName){
+            $this->stateList[] = array(
+                'name'=>$subStateName,
+                'url'=>false
+            );
+        }
+    }
+
 }

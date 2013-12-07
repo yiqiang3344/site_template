@@ -8,7 +8,7 @@
 # @param [option] {object} ajax : {className:'this pager class name',c:'controller', a:'action', params:'params', callback:function(){} } 
 # ###
 window.Pager = (dom,c,a,params,pager,ajax)->
-    if pager.page_count is 1
+    if pager.page_count <= 1
         return ''
     ajax or= false
     className = if ajax then 'pager_'+ajax.className else false
@@ -36,7 +36,8 @@ window.Pager = (dom,c,a,params,pager,ajax)->
     b2 = pager.page-2
     a2 = pager.page+2
     has_ellipsis = false
-    for  i in [1..pager.page_count]
+    i = 1
+    while i <= pager.page_count
         # alway show first and last page; 
         # when show first or last not show last or next; 
         # show tow page before or after now page.
@@ -53,6 +54,7 @@ window.Pager = (dom,c,a,params,pager,ajax)->
             link = if has_ellipsis then false else {ellipsis : true}
             has_ellipsis = true
         link and p.list.push(link)
+        i++
 
     dom.html(pagerTemplate.render(p))
 
@@ -96,7 +98,7 @@ window.getUrl = (c, a, p) ->
     if param
       l = []
       for k of param
-        l.push encodeURIComponent(k) + "=" + encodeURIComponent(param[k])
+        l.push encodeURIComponent(k) + "=" + encodeURIComponent(param[k]) if param[k]?
       l.length > 0 and (url += "?" + l.join("&"))
     url
 

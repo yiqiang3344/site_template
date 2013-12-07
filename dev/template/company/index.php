@@ -1,7 +1,9 @@
 <div class="clear">
     <div class="fl">
         <p>大分类</p>
-        <p><a href=""></a></p>
+        {{#categorys}}
+        <p><a href="{{url}}">{{name}}</a></p>
+        {{/categorys}}
     </div>
     <div class="fl">
         <div>
@@ -16,13 +18,18 @@
         <div>
             排序：
             {{#sorts}}
-            <span> <button id="order_{{attr}}">{{name}}</button> </span>
+            <select name="" id="order_{{attr}}">
+                <option value="">{{name}}</option>
+                <option value="desc" {{#desc}}selected{{/desc}}>{{name}}↑</option>
+                <option value="asc" {{#asc}}selected{{/asc}}>{{name}}↓</option>
+            </select>
             {{/sorts}}
+            <button class="js_order_do">查看</button> 
         </div>
         
-        <ul class="mlist_company js_list">
+        <ul class="mlist_company js_list clearfix">
             {{#data}}
-            <li  class="clearfix" id="info_{{id}}">
+            <li  class="line clearfix" id="info_{{id}}">
                 <div class="left">
                     <img class="logo" src="{{logo}}" alt="无">
                 </div>
@@ -30,19 +37,19 @@
                     <div class="center_top">
                         <span class="name">{{name}}</span>
                         <span class="star">{{star}}</span>
-                        <span class="score"><b class="red_pale">{{name}}</b>分</span>
+                        <span class="score"><b class="red_pale">{{score}}</b>分</span>
                     </div>
                     <div class="center_middle">{{abstract}}</div>
                     <div class="center_bottom">
-                        <span class="click_count">{{click_count}}</span>
-                        <span class="comment_count">{{comment_count}}</span>
+                        <span class="clickCount">{{clickCount}}</span>
+                        <span class="commentCount">{{commentCount}}</span>
                     </div>
                 </div>
                 <div class="right">
                     <div class="right_top">
-                        <span class="be_fixed {{#be_fixed}}on{{/be_fixed}}">固</span>
-                        <span class="be_recommend {{#be_recommend}}on{{/be_recommend}}">保</span>
-                        <span class="be_guarantee {{#be_guarantee}}on{{/be_guarantee}}">荐</span>
+                        <span class="beFixed {{#beFixed}}on{{/beFixed}}">固</span>
+                        <span class="beRecommend {{#beRecommend}}on{{/beRecommend}}">保</span>
+                        <span class="beGuarantee {{#beGuarantee}}on{{/beGuarantee}}">荐</span>
                     </div>
                     <div class="right_bottom">
                         <a class="goto" href="{{goto}}">进入</a>
@@ -51,6 +58,6 @@
             </li>
             {{/data}}
         </ul>
-        <div id="page"></div>
+        <div id="pager"></div>
     </div>
 </div>

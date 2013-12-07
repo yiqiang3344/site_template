@@ -36,7 +36,9 @@ class ActivityController extends Controller
         #start
         $params = Y::modelsToArray(Activity::model()->findByPk($id));
 
+        $stageName = $params['title'];
         END:
+        $this->setStageList($stageName);
         $bind = array(
             'params' => $params,
         );

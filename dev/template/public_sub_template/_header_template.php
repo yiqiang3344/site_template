@@ -12,13 +12,26 @@
     <div class="clearfix">
         <div class="mlogo fl"></div>
         <div class="msearch fr">
-            <input class="js_search" type="text"/>
+            <form action="{{searchUrl}}" method="get">
+                <input class="content" name="search" type="text"/>
+                <input class="button" type="submit" value="搜索"/>
+            </form>
         </div>
     </div>
     <div class="mnav clearfix">
-        {{#list}}
+        {{#navList}}
         <div class="fl mr5"><a href="{{url}}">{{name}}</a></div>
-        {{/list}}
+        {{/navList}}
     </div>
-    <div class="mpos js_pos"></div>
+    <div class="mpos clearfix mt10">
+        <p class="fl">当前位置：</p>
+        {{#stageList}}
+        <div class="fl mr5">
+            {{^first}}
+            &gt;
+            {{/first}}
+            <a {{#url}}href="{{url}}"{{/url}}>{{name}}</a>
+        </div>
+        {{/stageList}}
+    </div>
 </div>

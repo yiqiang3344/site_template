@@ -3,28 +3,40 @@ class RankController extends Controller
 {
     public function actionIndex(){
         #input
-        $order_str = @$_GET['order'];//排序 type1:sc1,type2:sc2
+        $key = @$_GET['key']?$_GET['key']:'clickCount';//排序
         $page = max(intval(@$_GET['p']),1);//分页
         #start
-        $order = '';
-        $orders = array('recordTime'=>'desc');
-        if($order_str){
-            $l = array();
-            foreach(Y::xexplode(',', $order_str) as $v){
-                $a = explode(':', $v);
-                $l[] = $a[0].' '.$a[1];
-                $orders[$a[0]] = $a[1];
-            }
-            $order .= implode(' , ', $l);
-        }
         $condition = '';
+        $sortMap = array('clickCount'=>'访问量','commentCount'=>'评论数','score'=>'评分','star'=>'星级');
+        if(isset($sortMap[$key])){
+            $order = $key.' desc,weight desc';
+        }else{
+            Y::end('illegal access.');
+        }
         $params = array();
         $select = 'id,logo,name,star,score,beFixed,beRecommend,beGuarantee,clickCount,commentCount,abstract';
-        $params = Company::getListByPage($select, $condition, $order, $params, $page, 20, false);
+        $params = Company::getListByPage($select, $condition, $order, $params, $page, 2, false);
         foreach($params['data'] as &$row){
-            $row['url'] = $this->url('Company','Go',array('to'=>$row['id']));
+            $row['goto'] = $this->url('Company','Go',array('to'=>$row['id']));
         }
+
+        //排序方式
+        $sorts = array();
+        foreach($sortMap as $k=>$v){
+            $sorts[] = array(
+                'name'=>$v,
+                'attr'=>$k,
+                'url'=>$this->url('Rank','Index',array('key'=>$k)),
+                'on'=>$k==$key?true:false
+            );
+        }
+        $params['sorts'] = $sorts;
+
+        $stageName = $sortMap[$key].'排行';
+        END:
+        $this->setStageList($stageName);
         $bind = array(
+            'key' => $key,
             'params' => $params,
         );
         $this->render('index', $bind);

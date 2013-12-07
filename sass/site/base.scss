@@ -126,8 +126,20 @@ em, i{
 .pa{
     position: absolute;
 }
+.t0{
+    top:0;
+}
+.r0{
+    right:0;
+}
+.b0{
+    bottom:0;
+}
+.l0{
+    left:0;
+}
 /*width*/
-@each $v in 50, 100, 300, 640, all{
+@each $v in 50, 100, 300, 400, 640, all{
     .w#{$v} {
         @if $v==all{
             width: 100%;
@@ -137,7 +149,7 @@ em, i{
     }
 }
 /*height*/
-@each $v in 50, 100, all{
+@each $v in 50, 100, 200, all{
     .h#{$v} {
         @if $v==all{
             height: 100%;
@@ -272,6 +284,10 @@ em, i{
 }
 .fwb{
     font-weight: bold;
+}
+/*underline*/
+.udl{
+    text-decoration: underline;
 }
 /*color*/
 @each $v in "red","black","blue","yellow","pink","white","gray"{

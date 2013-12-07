@@ -42,3 +42,27 @@
     };
 
 }
+.mlist_company{
+    .line{
+        height: 100px;
+        margin: 10px 0 10px 0;
+        .left{
+            float: left;
+            width: 100px;
+            .logo{}
+        }
+        .center{
+            float: left;
+            width: 300px;
+            .center_top{}
+            .center_middle{}
+            .center_bottom{}
+        }
+        .right{
+            float: left;
+            width: 100px;
+            .right_top{}
+            .right_bottom{}
+        }
+    }
+}

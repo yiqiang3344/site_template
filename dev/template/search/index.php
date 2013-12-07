@@ -1,7 +1,8 @@
-<div class="clearfix">
-    {{#sorts}}
-    <div class="fl mr10"><a href="{{url}}" id="order_{{attr}}" class="{{#on}}udl{{/on}}">{{name}}排行</a></div>
-    {{/sorts}}
+<div class="msearch">
+    <form action="{{searchUrl}}" method="get">
+        <input class="content" name="search" type="text" value="{{search}}"/>
+        <input class="button" type="submit" value="搜索"/>
+    </form>
 </div>
 
 <ul class="mlist_company js_list clearfix">

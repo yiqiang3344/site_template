@@ -51,7 +51,7 @@ CREATE TABLE company (
     `hasLicense` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '有无牌照',
     `openedTime` date NOT NULL COMMENT '开业时间',
     `url` varchar(64) NOT NULL DEFAULT '' COMMENT '网站链接',
-    `UrlPhoto` varchar(128) NOT NULL DEFAULT '' COMMENT '网站截图',
+    `urlPhoto` varchar(128) NOT NULL DEFAULT '' COMMENT '网站截图',
     `abstract` varchar(256) NOT NULL DEFAULT '' COMMENT '摘要',
     `description` text NOT NULL DEFAULT '' COMMENT '描述',
     `updateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '',
@@ -59,6 +59,23 @@ CREATE TABLE company (
     `recordTime` int(10) UNSIGNED NOT NULL COMMENT '',
     PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='' AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE `comment` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `companyId` int(10) unsigned NOT NULL,
+  `userId` int(10) unsigned NOT NULL,
+  `username` varchar(32) COLLATE utf8_bin NOT NULL,
+  `content` varchar(512) COLLATE utf8_bin NOT NULL,
+  `totalScore` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `scoreA` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '评分a',
+  `scoreB` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '评分b',
+  `scoreC` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '评分c',
+  `deleteFlag` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `recordTime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 
 DROP TABLE IF EXISTS information;
 CREATE TABLE information (

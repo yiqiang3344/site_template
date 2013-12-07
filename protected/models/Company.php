@@ -54,6 +54,14 @@ class Company extends YActiveRecord
         );
     }
 
+    public static function getCategorys(){
+        $criteria=new CDbCriteria;
+        $criteria->select = 'category';
+        $criteria->group = 'category';
+        $criteria->condition = 'deleteFlag=0';
+        return self::model()->findAll($criteria);
+    }
+
     public function addCommentCount(){
         $this->updateCounters(array('commentCount'=>1));
     }

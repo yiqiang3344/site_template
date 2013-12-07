@@ -34,14 +34,14 @@ class MainController extends Controller{
         #start
         $this->checkSuperAdmin();
         $this->title = 'Backup';
-        $conditon = '';
+        $condition = '';
         if($search){
             $l = array();
             foreach(Y::xexplode(',', $search) as $v){
                 $a = explode(':', $v);
                 $l[] = $a[0].' like \'%'.$a[1].'%\'';
             }
-            $conditon .= 'and '.implode(' and ', $l);
+            $condition .= 'and '.implode(' and ', $l);
         }
         $order = '';
         $orders = array();
@@ -55,7 +55,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,name,lastRebackTime,createTime';
-        $params =  Backup::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
+        $params =  Backup::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         $params['now'] = date('Ymdhis',Y::getTime());
         END:
         $bind = array(
@@ -73,14 +73,14 @@ class MainController extends Controller{
         #start
         $this->checkSuperAdmin();
         $this->title = 'Admin';
-        $conditon = 'super=0 ';//不能修改超级管理员
+        $condition = 'super=0 ';//不能修改超级管理员
         if($search){
             $l = array();
             foreach(Y::xexplode(',', $search) as $v){
                 $a = explode(':', $v);
                 $l[] = $a[0].' like \'%'.$a[1].'%\'';
             }
-            $conditon .= 'and '.implode(' and ', $l);
+            $condition .= 'and '.implode(' and ', $l);
         }
         $order = '';
         $orders = array();
@@ -94,7 +94,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,username,deleteFlag';
-        $params =  Admin::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
+        $params =  Admin::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -131,14 +131,14 @@ class MainController extends Controller{
         $p = max(intval(@$_GET['p']),1);//分页
         #start
         $this->title = 'User';
-        $conditon = '';
+        $condition = '';
         if($search){
             $l = array();
             foreach(Y::xexplode(',', $search) as $v){
                 $a = explode(':', $v);
                 $l[] = $a[0].' like \'%'.$a[1].'%\'';
             }
-            $conditon .= implode(' and ', $l);
+            $condition .= implode(' and ', $l);
         }
         $order = '';
         $orders = array();
@@ -152,7 +152,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,username,deleteFlag';
-        $params =  User::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
+        $params =  User::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -168,14 +168,14 @@ class MainController extends Controller{
         $p = max(intval(@$_GET['p']),1);//分页
         #start
         $this->title = 'Link';
-        $conditon = '';
+        $condition = '';
         if($search){
             $l = array();
             foreach(Y::xexplode(',', $search) as $v){
                 $a = explode(':', $v);
                 $l[] = $a[0].' like \'%'.$a[1].'%\'';
             }
-            $conditon .= implode(' and ', $l);
+            $condition .= implode(' and ', $l);
         }
         $order = '';
         $orders = array();
@@ -189,7 +189,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,name,url,sort,deleteFlag';
-        $params =  Link::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
+        $params =  Link::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -205,14 +205,14 @@ class MainController extends Controller{
         $p = max(intval(@$_GET['p']),1);//分页
         #start
         $this->title = 'Contact';
-        $conditon = '';
+        $condition = '';
         if($search){
             $l = array();
             foreach(Y::xexplode(',', $search) as $v){
                 $a = explode(':', $v);
                 $l[] = $a[0].' like \'%'.$a[1].'%\'';
             }
-            $conditon .= implode(' and ', $l);
+            $condition .= implode(' and ', $l);
         }
         $order = '';
         $orders = array();
@@ -226,7 +226,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,name,urlName,sort,deleteFlag';
-        $params =  Contact::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
+        $params =  Contact::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -262,14 +262,14 @@ class MainController extends Controller{
         $p = max(intval(@$_GET['p']),1);//分页
         #start
         $this->title = 'Activity';
-        $conditon = '';
+        $condition = '';
         if($search){
             $l = array();
             foreach(Y::xexplode(',', $search) as $v){
                 $a = explode(':', $v);
                 $l[] = $a[0].' like \'%'.$a[1].'%\'';
             }
-            $conditon .= implode(' and ', $l);
+            $condition .= implode(' and ', $l);
         }
         $order = '';
         $orders = array();
@@ -283,7 +283,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,title,abstract,img,deleteFlag';
-        $params =  Activity::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
+        $params =  Activity::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -319,14 +319,14 @@ class MainController extends Controller{
         $p = max(intval(@$_GET['p']),1);//分页
         #start
         $this->title = 'Comment';
-        $conditon = '';
+        $condition = '';
         if($search){
             $l = array();
             foreach(Y::xexplode(',', $search) as $v){
                 $a = explode(':', $v);
                 $l[] = $a[0].' like \'%'.$a[1].'%\'';
             }
-            $conditon .= implode(' and ', $l);
+            $condition .= implode(' and ', $l);
         }
         $order = '';
         $orders = array();
@@ -340,7 +340,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id, companyId, userId, username, content, totalScore, scoreA, scoreB, scoreC, deleteFlag';
-        $params =  Comment::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
+        $params =  Comment::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -356,14 +356,14 @@ class MainController extends Controller{
         $p = max(intval(@$_GET['p']),1);//分页
         #start
         $this->title = 'Information';
-        $conditon = '';
+        $condition = '';
         if($search){
             $l = array();
             foreach(Y::xexplode(',', $search) as $v){
                 $a = explode(':', $v);
                 $l[] = $a[0].' like \'%'.$a[1].'%\'';
             }
-            $conditon .= implode(' and ', $l);
+            $condition .= implode(' and ', $l);
         }
         $order = '';
         $orders = array();
@@ -377,7 +377,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,title,abstract,img,deleteFlag';
-        $params =  Information::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
+        $params =  Information::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -413,14 +413,14 @@ class MainController extends Controller{
         $p = max(intval(@$_GET['p']),1);//分页
         #start
         $this->title = 'Company';
-        $conditon = '';
+        $condition = '';
         if($search){
             $l = array();
             foreach(Y::xexplode(',', $search) as $v){
                 $a = explode(':', $v);
                 $l[] = $a[0].' like \'%'.$a[1].'%\'';
             }
-            $conditon .= implode(' and ', $l);
+            $condition .= implode(' and ', $l);
         }
         $order = '';
         $orders = array();
@@ -434,7 +434,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,category,name,nameFirstLetter,weight,logo,star,score,beFixed,beRecommend,beGuarantee,clickCount,commentCount,platform,hasLicense,openedTime,url,urlPhoto,abstract,deleteFlag';
-        $params =  Company::getListByPage($select, $conditon, $order, array(), $p, 10, false, true);
+        $params =  Company::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,

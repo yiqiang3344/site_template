@@ -36,7 +36,9 @@ class InformationController extends Controller
         #start
         $params = Y::modelsToArray(Information::model()->findByPk($id));
 
+        $stageName = $params['title'];
         END:
+        $this->setStageList($stageName);
         $bind = array(
             'params' => $params,
         );
