@@ -18,8 +18,13 @@
             var VERSION=<?php echo json_encode(A::VERSION);?>;
             var UD = <?php echo json_encode($this->getUD());?>;
         </script>
+        <?php if(Yii::app()->language=='dev'):?>
         <script type="text/javascript" src="<?php echo $this->url("js/tools.js");?>"></script>
         <script type="text/javascript" src="<?php echo $this->url("js/main.js");?>"></script>
+        <script type="text/javascript" src="<?php echo $this->url('js/url.js');?>"></script>
+        <?php else:?>
+        <script type="text/javascript" src="<?php echo $this->url("js/all.js");?>"></script>
+        <?php endif;?>
         <?php if($this->template_flag==S::DEV_USE_TEMPLATE):?>
             <script type="text/javascript">
                 //设置子模板编译方法，dev中才有定义
@@ -30,7 +35,6 @@
                 <?php endif;?>
             </script>
         <?php endif;?>
-        <script type="text/javascript" src="<?php echo $this->url('js/url.js');?>"></script>
         <script type="text/javascript" src="<?php echo $this->url('js/helper.js');?>"></script>
         <?php if($this->template_flag==S::DEV_USE_TEMPLATE):?>
             <!-- 倒入含有局部子模板编译方法的js文件 -->

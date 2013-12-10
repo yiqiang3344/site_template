@@ -18,7 +18,7 @@ class Y{
             $p && ($ret .= '?'.implode('&', $l));
         }else{
             //非开发环境中的css和js都是压缩过的,开发环境中则不压缩
-            $not_translate = preg_match('{^(js/(jquery|main|url|tools)\.|css|img|images)}',$c);
+            $not_translate = preg_match('{^(js/(jquery|all)\.|css|img|images)}',$c);
             if(Yii::app()->language=='dev'){
                 if(!$not_translate){
                     //开发语言中需要翻译的

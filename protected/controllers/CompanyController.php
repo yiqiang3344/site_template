@@ -124,7 +124,7 @@ class CompanyController extends Controller
         }
         $order = 'id desc';
         $select = 'userId, username, content, totalScore, scoreA, scoreB, scoreC, recordTime';
-        $comments = Comment::getListByPage($select, $condition, $order, array(), $page, 5, false, true);
+        $comments = Comment::getListByPage($select, $condition, $order, array(), $page, 5, false, false);
         foreach($comments['data'] as &$row){
             $row['userImg'] = '';
         }
@@ -165,13 +165,17 @@ class CompanyController extends Controller
             $code = 1;
             $errors = '';
             if($post){
-                $m = new Comment;
+                Y::begin();
+                $m = new Comment('create');
                 $post['userId'] = $user->id;
                 $post['username'] = $user->username;
                 $m->attributes = $post;
                 if(!$m->save()){
                     $code = 2;
                     $errors = $m->getErrors();
+                    Y::rollback();
+                }else{
+                    Y::commit();
                 }
             }else{
                 $code = 2;

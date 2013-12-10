@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="site1" basedir="../" default="help">
+<project name="sidneySiteBuild" basedir="../" default="release">
     <property file="build/default.properties" />
     <if>
         <isset property="build.env" />
@@ -9,150 +9,28 @@
         </then>
     </if>
 
-    <target name="help" description="echo">
-    </target>
-
     <target name="config" description="Replace config files">
         <copy todir="${project.basedir}" overwrite="true">
             <fileset dir="${project.basedir}">
-                <include pattern="protected/**/*.php.mustache" />
-                <include pattern="build/**/*.php.mustache" />
-                <include pattern="*.php.mustache" />
+                <include pattern="**/*.ymustache.php" />
             </fileset>
-            <mapper type="glob" from="*.php.mustache" to="*.php" />
+            <mapper type="glob" from="*.ymustache.php" to="*.php" />
             <filterchain>
-                <filterreader classpath="build/filters" classname="MustacheRender" />
+                <filterreader classpath="build/bin" classname="MustacheRender" />
             </filterchain>
         </copy>
         <copy todir="${project.basedir}" overwrite="true">
             <fileset dir="${project.basedir}">
-                <include pattern="build/*.js.mustache" />
+                <include pattern="**/*.ymustache.js" />
             </fileset>
-            <mapper type="glob" from="*.js.mustache" to="*.js" />
+            <mapper type="glob" from="*.ymustache.js" to="*.js" />
             <filterchain>
-                <filterreader classpath="build/filters" classname="MustacheRender" />
+                <filterreader classpath="build/bin" classname="MustacheRender" />
             </filterchain>
         </copy>
     </target>
 
-    <target name="product" description="get product site">
-        <if>
-            <isset property="product.dir" />
-            <then>
-                <mkdir dir="${product.dir}" />
-            </then>
-            <else>
-                <property name="product.dir" value="../product_site" />
-                <mkdir dir="${product.dir}" />
-            </else>
-        </if>
-        <copy todir="${product.dir}" overwrite="true">
-            <fileset dir="${project.basedir}">
-                <include pattern="protected/**" />
-                <include pattern="img/**" />
-                <include pattern="images/**" />
-                <include pattern="script/**" />
-                <include pattern="vendor/*.*" />
-                <include pattern="vendor/yiisoft/**" />
-                <include pattern="zh_cn/**" />
-                <include pattern="assets/**" />
-                <include pattern="index.php" />
-            </fileset>
-        </copy>
-        <!-- 删除所有mustache文件 -->
-        <delete>
-            <fileset dir="${product.dir}">
-                <include name="**/*.mustache" />
-            </fileset>
-        </delete>
-    </target>
-
-    <target name="db-init" depends="config" description="Initiate database">
-        <pdosqlexec url="mysql:host=${db.host};port=${db.port}" userid="${db.user}" password="${db.passwd}">
-            CREATE DATABASE IF NOT EXISTS ${db.name};
-        </pdosqlexec>
-        <pdosqlexec url="mysql:host=${db.host};port={db.port};dbname=${db.name}" userid="${db.user}" password="${db.passwd}" src="${project.basedir}/protected/data/init.sql">
-        </pdosqlexec>
-    </target>
-
-    <target name="db-migrate" depends="db-init" description="Migrate database">
-        <exec command="./yiic migrate --interactive=0" dir="${project.basedir}/protected/" />
-    </target>
-
-    <target name="message" depends="config" description="generate messages">
-        <exec command="./yiic message ./messages/config.php" dir="${project.basedir}/protected/" />
-    </target>
-
-    <target name='eol' description="Replace all windows eol to unix eol">
-        <reflexive>
-            <fileset dir="${project.basedir}">
-                <include pattern="*.(js|css|html|mustache|php)" />
-            </fileset>
-            <filterchain>
-                <replaceregexp>
-                    <regexp pattern="\r(\n)" replace="\1" />
-                </replaceregexp>
-            </filterchain>
-        </reflexive>
-    </target>
-
-    <target name="deploy" depends="config" description="Deploy code">
-        <if>
-            <isset property="deploy.servers" />
-            <then>
-                <foreach list="${deploy.servers}" param="server" target="deployTo" />
-            </then>
-        </if>
-    </target>
-
-    <taskdef name="filesync" classname="phing.tasks.ext.FileSyncTask" />
-    <target name="deployTo">
-        <echo message="Deploy code to ${server}:${deploy.dir}" />
-        <if>
-            <or>
-                <equals arg1="${server}" arg2="127.0.0.1" />
-                <equals arg1="${server}" arg2="localhost" />
-            </or>
-            <then>
-                <property name="destination" value="${deploy.dir}" />
-            </then>
-            <else>
-                <property name="destination" value="${deploy.user}@${server}:${deploy.dir}" />
-            </else>
-        </if>
-        <filesync
-            sourceDir="${project.basedir}/"
-            destinationDir="${destination}"
-            options='-avz'
-            delete="true"
-            />
-    </target>
-
-    <target name="translate" description="translate" depends="config,coffee,sass">
-        <exec dir="protected" command="php ../build/translate.php" outputProperty="msg.out"/>
-        <echo msg="message: ${msg.out}" />
-    </target>
-
-    <target name="generateJsFiles" description="generate js files" depends="translate">
-        <exec dir="protected" command="node ../build/generateJsFiles.js" outputProperty="msg.out"/>
-        <echo msg="message: ${msg.out}" />
-    </target>
-
-     <target name="compressJsCss" description="compress js and css" depends="generateJsFiles">
-        <exec dir="protected" command="php ../build/compressJsCss.php" outputProperty="msg.out"/>
-        <echo msg="message: ${msg.out}" />
-    </target>
-
-    <target name="setCacheCode" description="set cache code" depends="compressJsCss">
-        <exec dir="protected" command="php ../build/setCacheCode.php" outputProperty="msg.out"/>
-        <echo msg="message: ${msg.out}" />
-    </target>
-
-
-    <target name="go" description="start" depends="setCacheCode,removeAssets">
-    </target>
-
-    <target name="removeAssets" description="remove assets" depends="">
+    <target name="rmAssets" description="remove assets" depends="">
         <exec dir="protected" command="rm -rf ../assets/*" outputProperty="msg.out"/>
         <echo msg="message: ${msg.out}" />
     </target>
@@ -175,5 +53,131 @@
         <echo msg="message of admin base.css :${msg.out}" />
         <exec dir="protected" command="sass --style compressed ../sass/admin/page.scss modules/admin/script/css/page.css" outputProperty="msg.out"/>
         <echo msg="message of admin page.css :${msg.out}" />
+    </target>
+
+    <target name="initCode" description="init code,coffee to js and sass to css and remove assets." depends="coffee,sass,rmAssets"></target>
+
+    <target name="clearLangs" description="clear languages dirs and files" depends="">
+        <foreach list="${site.langList}" param="lang" target="rmLangs"/>
+    </target>
+
+    <target name="rmLangs" description="remove languages dirs and files" depends="">
+        <delete dir="${lang}" includeemptydirs="true" verbose="false" failonerror="false" />
+        <foreach param="dir" absparam="absdir" target="rmViewLangs">
+            <fileset dir="protected/views">
+                <include name="*" />
+            </fileset>
+        </foreach>
+    </target>
+
+    <target name="rmViewLangs" description="remove views languages dirs and files" depends="">
+        <delete dir="${absdir}/${lang}" includeemptydirs="true" verbose="false" failonerror="false" />
+    </target>
+
+    <target name="initLangs" description="init languages dirs and files" depends="">
+        <foreach list="${site.langList}" param="lang" target="cpDev"/>
+    </target>
+
+    <target name="cpDev" description="" depends="">
+        <copy todir="${lang}" overwrite="true">
+            <fileset dir="dev">
+                <include name="**" />
+            </fileset>
+        </copy>
+        <foreach param="dir" absparam="absdir" target="cpViews">
+            <fileset dir="protected/views">
+                <include name="*" />
+            </fileset>
+        </foreach>
+    </target>
+
+    <target name="cpViews" description="" depends="">
+        <copy todir="${absdir}/${lang}" overwrite="true">
+            <fileset dir="${absdir}">
+               <include name="*.php" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="translate" description="translate" depends="">
+        <exec dir="protected" command="php ../build/bin/translate.php" outputProperty="msg.out"/>
+        <echo msg="message: ${msg.out}" />
+    </target>
+
+    <target name="i18n" description="internationalization" depends="clearLangs,initLangs,translate"> </target>
+
+    <target name="versionNumber" description="set css`s img version number and generate version number js file url.js" depends="">
+        <exec dir="protected" command="php ../build/bin/versionNumber.php" outputProperty="msg.out"/>
+        <echo msg="message: ${msg.out}" />
+    </target>
+
+    <target name="optimizeJs" description="compile template files and extract view`s js code." depends="">
+        <exec dir="protected" command="node ../build/bin/optimizeJs.js" outputProperty="msg.out"/>
+        <echo msg="message: ${msg.out}" />
+    </target>
+
+     <target name="mini" description="compress js and css,and combine js." depends="">
+        <exec dir="protected" command="php ../build/bin/mini.php" outputProperty="msg.out"/>
+        <echo msg="message: ${msg.out}" />
+    </target>
+
+    <target name="release" description="release product." depends="initCode,i18n,versionNumber,optimizeJs,mini"></target>
+
+    <target name="export" description="export product site">
+        <if>
+            <isset property="product.dir" />
+            <else>
+                <property name="product.dir" value="../product_site" />
+            </else>
+        </if>
+        <if>
+            <isset property="product.langList" />
+            <then>
+                <property name="site.langList" value="${product.langList}" />
+            </then>
+        </if>
+        <delete dir="${product.dir}" includeemptydirs="true"/>
+        <mkdir dir="${product.dir}" />
+        <copy todir="${product.dir}" overwrite="true">
+            <fileset dir="${project.basedir}">
+                <include pattern="protected/**" />
+                <include pattern="img/**" />
+                <include pattern="images/**" />
+                <include pattern="script/**" />
+                <include pattern="vendor/**" />
+                <include pattern="assets" />
+                <include pattern="upload" />
+                <include pattern="upload1" />
+                <include pattern="index.php" />
+            </fileset>
+        </copy>
+        <foreach list="${site.langList}" param="lang" target="cpProduct"/>
+        <!-- 删除所有mustache文件 -->
+        <delete>
+            <fileset dir="${product.dir}">
+                <include name="**/*.ymustache.php" />
+                <include name="**/*.ymustache.js" />
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="cpProduct" description="" depends="">
+        <copy todir="${product.dir}" overwrite="true">
+            <fileset dir="${project.basedir}">
+                <include pattern="${lang}/**" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="initDb" description="Initiate database" depends="config">
+        <pdosqlexec url="mysql:host=${db.host};port=${db.port}" userid="${db.user}" password="${db.passwd}">
+            CREATE DATABASE IF NOT EXISTS ${db.name};
+        </pdosqlexec>
+        <pdosqlexec url="mysql:host=${db.host};port={db.port};dbname=${db.name}" userid="${db.user}" password="${db.passwd}" src="${project.basedir}/protected/data/init.sql">
+        </pdosqlexec>
+    </target>
+
+    <target name="initYiiMessage" description="init yii message dirs and files" depends="config">
+        <exec dir="${project.basedir}/protected/" command="./yiic message ./messages/config.php"/>
     </target>
 </project>

@@ -31,13 +31,8 @@ foreach($files as $file){
                 is_dir(($dir=implode('/',$dd))) || mkdir($dir);
             }
         }
-        if(preg_match('{\.js$}', $basename = basename($file[0]))){
-            $new_filename=dirname($file[0])."/".str_replace("{lang}",$l,$file[1])."/".basename($file[0],'.js').'.min.js';
-            $content = JSMin::minify($file[2][$l]);
-        }else{
-            $new_filename=dirname($file[0])."/".str_replace("{lang}",$l,$file[1])."/".$basename;
-            $content = $file[2][$l];
-        }
+        $new_filename=dirname($file[0])."/".str_replace("{lang}",$l,$file[1])."/".basename($file[0]);
+        $content = $file[2][$l];
         file_put_contents($new_filename,$content);
     }
 }

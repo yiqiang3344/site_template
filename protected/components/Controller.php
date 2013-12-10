@@ -61,10 +61,10 @@ class Controller extends CController {
                 $this->template = $this->renderFile(Yii::app()->language.'/template/'.$this->getId().'/'.$view.'.php',null,true);
                 //读取子模板
                 if($usePartials){
-                    $this->partialsSubTemplate = $this->getSubTemplateMap('dev/template/'.$this->getId());
+                    $this->partialsSubTemplate = $this->getSubTemplateMap(Yii::app()->language.'/template/'.$this->getId());
                 }
                 if($usePublic){
-                    $this->publicSubTemplate = $this->getSubTemplateMap('dev/template/public_sub_template');
+                    $this->publicSubTemplate = $this->getSubTemplateMap(Yii::app()->language.'/template/public_sub_template');
                 }
             }elseif($template_flag==S::DEV_USE_TEMPLATE){
                 if(Yii::app()->language=='dev'){

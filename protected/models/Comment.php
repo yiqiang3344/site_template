@@ -30,14 +30,14 @@ class Comment extends YActiveRecord
             array('userId, username, companyId, content, totalScore, scoreA, scoreB, scoreC', 'required'),
             array('totalScore, scoreA, scoreB, scoreC', 'numerical', 'integerOnly'=>true),
             array('content', 'length', 'min' =>1, 'max'=> 512),
-            array('content', 'checkContent'),
+            array('content', 'checkContent',on=>'create'),
         );
     }
 
     public function checkContent(){
         if(($m = self::model()->find(array(
             'select'=>'recordTime',
-            'condition'=>'userId=:userId and companyId=:companyId',
+            'condition'=>'userId=:userId and companyId=:companyId and deleteFlag=0',
             'params'=>array(':userId'=>$this->userId,':companyId'=>$this->companyId),
             'order'=>'id desc',
             'limit'=>1,
@@ -48,6 +48,8 @@ class Comment extends YActiveRecord
 
     protected function beforeSave() {
         if($this->isNewRecord) {
+            //公司评论数增加
+            Company::model()->findByPk($this->companyId)->addCommentCount();
             $this->recordTime = Y::getTime();
         }
         return parent::beforeSave();
