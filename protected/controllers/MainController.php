@@ -5,7 +5,7 @@ class MainController extends Controller
         #input
 
         #start
-        $companys = Y::modelsToArray(Company::model()->findAll(array(
+        $companys = Y::modelsToArray(MCompany::model()->findAll(array(
             'select'=>'id,logo,name,star',
             'condition'=>'deleteFlag=0 and beRecommend=1',
             'order'=>'weight desc',
@@ -13,21 +13,21 @@ class MainController extends Controller
         )));
 
 
-        $activities = Y::modelsToArray(Activity::model()->findAll(array(
+        $activities = Y::modelsToArray(MActivity::model()->findAll(array(
             'select'=>'id,img,title,abstract',
             'condition'=>'deleteFlag=0 and img!=""',
             'order'=>'id desc',
             'limit'=> 8,
         )));
 
-        $informations = Y::modelsToArray(Information::model()->findAll(array(
+        $informations = Y::modelsToArray(MInformation::model()->findAll(array(
             'select'=>'id,img,title,abstract',
             'condition'=>'deleteFlag=0 and img!=""',
             'order'=>'id desc',
             'limit'=> 8,
         )));
 
-        $newCompanys = Y::modelsToArray(Company::model()->findAll(array(
+        $newCompanys = Y::modelsToArray(MCompany::model()->findAll(array(
             'select'=>'id,logo,name,star',
             'condition'=>'deleteFlag=0',
             'order'=>'id desc',

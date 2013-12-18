@@ -40,7 +40,7 @@ class SiteController extends Controller
         #input
         $FUser = $_POST;
         #start
-        $MUser = new User('login');
+        $MUser = new MUser('login');
         $MUser->attributes = $FUser;
         $errors = array();
         $session = Yii::app()->session;
@@ -68,13 +68,13 @@ class SiteController extends Controller
         #input
         $FUser = $_POST;
         #start
-        $MUser = new User('register');
+        $MUser = new MUser('register');
         $MUser->ip = Y::getIp();
         $MUser->attributes = $FUser;
         $errors = array();
         $session = Yii::app()->session;
         if($MUser->save()){
-            $MUser = new User('login');
+            $MUser = new MUser('login');
             $MUser->attributes = $FUser;
             $MUser->login();
             $code = 1;

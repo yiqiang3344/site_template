@@ -20,7 +20,7 @@ class InformationController extends Controller
         $condition = '';
         $params = array();
         $select = 'id,title,abstract,img';
-        $params = Information::getListByPage($select, $condition, $order, $params, $page, 20, false);
+        $params = MInformation::getListByPage($select, $condition, $order, $params, $page, 20, false);
         foreach($params['data'] as &$row){
             $row['url'] = $this->url('Information','Go',array('to'=>$row['id']));
         }
@@ -34,7 +34,7 @@ class InformationController extends Controller
         #input
         $id = $_GET['to'];
         #start
-        $params = Y::modelsToArray(Information::model()->findByPk($id));
+        $params = Y::modelsToArray(MInformation::model()->findByPk($id));
 
         $stageName = $params['title'];
         END:

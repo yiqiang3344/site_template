@@ -53,7 +53,6 @@ class Controller extends CController {
         if(is_array($view)) {
             $output =  json_encode($view);
         }else {
-            require_once 'vendor/autoload.php';//一开始引入可能会和其他模块名冲突
             $this->template_flag = $template_flag;
             //DEV_USE_TEMPLATE 表示开发时使用传入的模板，发布后使用已编译的js文件; USE_TEMPLATE 表示绝对会传入模板，用于php渲染; NOT_USE_TEMPLATE和其他 表示不用模板
             if($template_flag==S::USE_TEMPLATE){
@@ -148,7 +147,7 @@ class Controller extends CController {
     }
 
     public function getUser(){
-        return User::model()->find('username=:username',array(':username'=>Yii::app()->user->getId()));
+        return MUser::model()->find('username=:username',array(':username'=>Yii::app()->user->getId()));
     }
 
     public function getUD(){
@@ -163,11 +162,12 @@ class Controller extends CController {
     public function getHeaderParams(){
         $user = $this->getUser();
         $params = array(
+            'logo' => $this->url('img/logo.png'),
             'searchUrl' => $this->url('Search','Index'),
             'loginUrl' => $this->url('Site','Login'),
             'registerUrl' => $this->url('Site','Register'),
             'user' => $user?true:false,
-            'username' => $user->username,
+            'username' => $user?$user->username:null,
             'navList' => array(
                 array(
                     'name'=>'首页',
@@ -192,7 +192,7 @@ class Controller extends CController {
             ),
             'stageList'=>$this->stateList,
         );
-        foreach(Link::model()->getListBySort() as $row){
+        foreach(MLink::model()->getListBySort() as $row){
             $params['navList'][] = array(
                 'name'=>$row['name'],
                 'url'=>$row['url'],
@@ -206,9 +206,9 @@ class Controller extends CController {
             'list' => array()
         );
         $sublist = array();
-        $list = Contact::model()->getListBySort();
+        $list = MContact::model()->getListBySort();
         $c = count($list);
-        foreach(Contact::model()->getListBySort() as $k => $row){
+        foreach(MContact::model()->getListBySort() as $k => $row){
             $sublist[] = array(
                 'name'=>$row['name'],
                 'url'=>$this->url('Contact','Go',array('to'=>$row['urlName'])),

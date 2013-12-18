@@ -20,8 +20,8 @@
   });
 
   window.Pager = function(dom, c, a, params, pager, ajax) {
-    var a2, b2, className, has_ellipsis, i, last, link, next, p, _i, _ref;
-    if (pager.page_count === 1) {
+    var a2, b2, className, has_ellipsis, i, last, link, next, p;
+    if (pager.page_count <= 1) {
       return '';
     }
     ajax || (ajax = false);
@@ -51,7 +51,8 @@
     b2 = pager.page - 2;
     a2 = pager.page + 2;
     has_ellipsis = false;
-    for (i = _i = 1, _ref = pager.page_count; 1 <= _ref ? _i <= _ref : _i >= _ref; i = 1 <= _ref ? ++_i : --_i) {
+    i = 1;
+    while (i <= pager.page_count) {
       if ((i >= b2 && i <= a2) || i === 1 || i === pager.page_count) {
         params.p = i;
         link = {
@@ -68,6 +69,7 @@
         has_ellipsis = true;
       }
       link && p.list.push(link);
+      i++;
     }
     dom.html(pagerTemplate.render(p));
     if (ajax) {

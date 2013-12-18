@@ -35,14 +35,14 @@ class CompanyController extends Controller
         }
         $params = array();
         $select = 'id,logo,name,star,score,beFixed,beRecommend,beGuarantee,clickCount,commentCount,abstract';
-        $params = Company::getListByPage($select, $condition, $order, $params, $page, 2, false);
+        $params = MCompany::getListByPage($select, $condition, $order, $params, $page, 2, false);
         foreach($params['data'] as &$row){
             $row['goto'] = $this->url('Company','Go',array('to'=>$row['id']));
         }
 
         //大分类
         $categorys = array();
-        foreach(Company::getCategorys() as $m){
+        foreach(MCompany::getCategorys() as $m){
             $categorys[] = array(
                 'name'=>$m->category,
                 'url'=>$this->url('Company','Index',array('search'=>'category-'.$m->category.(@$searchs['nameFirstLetter'] ? ('_nameFirstLetter-'.$searchs['nameFirstLetter']) : '')))
@@ -109,7 +109,7 @@ class CompanyController extends Controller
         if(!$id){
             Y::end('illegal Access.');
         }
-        $params = Y::modelsToArray(Company::model()->findByPk($id));
+        $params = Y::modelsToArray(MCompany::model()->findByPk($id));
 
         $condition = 'companyId='.$id;
         $searchs = array();
@@ -124,7 +124,7 @@ class CompanyController extends Controller
         }
         $order = 'id desc';
         $select = 'userId, username, content, totalScore, scoreA, scoreB, scoreC, recordTime';
-        $comments = Comment::getListByPage($select, $condition, $order, array(), $page, 5, false, false);
+        $comments = MComment::getListByPage($select, $condition, $order, array(), $page, 5, false, false);
         foreach($comments['data'] as &$row){
             $row['userImg'] = '';
         }
@@ -141,7 +141,7 @@ class CompanyController extends Controller
             $commentUrls[] = array(
                 'name'=> $v.'星',
                 'url'=> $this->url('Company','Go',array('to'=>$id,'search'=>'totalScore-'.$v)),
-                'num'=> Comment::model()->count('companyId=:companyId and totalScore=:totalScore',array(':companyId'=>$id,':totalScore'=>$v))
+                'num'=> MComment::model()->count('companyId=:companyId and totalScore=:totalScore',array(':companyId'=>$id,':totalScore'=>$v))
             );
         }
         $params['commentUrls'] = $commentUrls;
@@ -166,7 +166,7 @@ class CompanyController extends Controller
             $errors = '';
             if($post){
                 Y::begin();
-                $m = new Comment('create');
+                $m = new MComment('create');
                 $post['userId'] = $user->id;
                 $post['username'] = $user->username;
                 $m->attributes = $post;

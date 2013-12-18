@@ -9,6 +9,7 @@ defined('YII_DEBUG') or define('YII_DEBUG',1);
 // specify how many levels of call stack should be shown in each log message
 defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
 
+// require_once 'vendor/autoload.php';
 require $yii;
 $app = Yii::createWebApplication($config);
 

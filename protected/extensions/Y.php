@@ -10,7 +10,7 @@ class Y{
 
     function getUrl($c,$a=null,$p=array()){
         if($a){
-            $ret = Yii::app()->getBaseUrl().'/index.php/'.$c.'/'.$a;
+            $ret = Yii::app()->getBaseUrl().'/'.$c.'/'.$a;
             $l = array();
             foreach($p as $k=>$v){
                 $l[] = urlencode ( $k ) . "=" . urlencode ( $v );
@@ -18,18 +18,17 @@ class Y{
             $p && ($ret .= '?'.implode('&', $l));
         }else{
             //非开发环境中的css和js都是压缩过的,开发环境中则不压缩
-            $not_translate = preg_match('{^(js/(jquery|all)\.|css|img|images)}',$c);
             if(Yii::app()->language=='dev'){
-                if(!$not_translate){
+                if(!preg_match('{^(js/(jquery|all)\.|css|img|images)}',$c)){
                     //开发语言中需要翻译的
                     $c = Yii::app()->language.'/'.$c;
                 }
             }else{
                 $min_name = str_replace(array('.js','.css'),array('.min.js','.min.css'),$c);
-                if($not_translate){
+                if(preg_match('{^(js/(jquery|all)\.|css)}',$c)){
                     //非开发语言中不需要翻译的
                     $c = 'script/'.basename($min_name);
-                }else{
+                }elseif(preg_match('{^js}',$c)){
                     //非开发语言中需要翻译的
                     $c = Yii::app()->language.'/'.$min_name;
                 }

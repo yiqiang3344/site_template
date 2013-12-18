@@ -8,9 +8,9 @@ class MainController extends Controller{
         $this->title = 'Index';
 
         $params = array(
-            'logo_url'=>$this->siteUrl('img/logo.png'),
-            'links' => Link::getListBySort(),
-            'contacts' => Contact::getListBySort(),
+            'logo_url'=>$this->url('img/logo.png'),
+            'links' => MLink::getListBySort(),
+            'contacts' => MContact::getListBySort(),
         );
         END:
         $bind = array(
@@ -55,7 +55,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,name,lastRebackTime,createTime';
-        $params =  Backup::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
+        $params =  MBackup::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         $params['now'] = date('Ymdhis',Y::getTime());
         END:
         $bind = array(
@@ -94,7 +94,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,username,deleteFlag';
-        $params =  Admin::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
+        $params =  MAdmin::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -110,7 +110,7 @@ class MainController extends Controller{
         $this->checkSuperAdmin();
         $info = array();
         if($id){
-            $info = Y::modelsToArray(Admin::model()->findByPk($id));
+            $info = Y::modelsToArray(MAdmin::model()->findByPk($id));
         }
 
         $params = array();
@@ -152,7 +152,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,username,deleteFlag';
-        $params =  User::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
+        $params =  MUser::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -189,13 +189,33 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,name,url,sort,deleteFlag';
-        $params =  Link::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
+        $params =  MLink::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
             'orders' => $orders
         );
         $this->render('link-list',$bind);
+    }
+
+    public function actionLinkEdit() {
+        #input
+        $id = @$_GET['id'];
+        #start
+        $info = array();
+        if($id){
+            $info = Y::modelsToArray(MLink::model()->findByPk($id));
+        }
+
+        $params = array();
+        foreach(array('id','name','url','sort','deleteFlag') as $v){
+            $params[$v] = @$info[$v];
+        }
+        END:
+        $bind = array(
+            'params' => $params,
+        );
+        $this->render('link-edit',$bind);
     }
 
     public function actionContactList() {
@@ -226,7 +246,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,name,urlName,sort,deleteFlag';
-        $params =  Contact::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
+        $params =  MContact::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -241,7 +261,7 @@ class MainController extends Controller{
         #start
         $info = array();
         if($id){
-            $info = Y::modelsToArray(Contact::model()->findByPk($id));
+            $info = Y::modelsToArray(MContact::model()->findByPk($id));
         }
 
         $params = array();
@@ -283,7 +303,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,title,abstract,img,deleteFlag';
-        $params =  Activity::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
+        $params =  MActivity::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -298,7 +318,7 @@ class MainController extends Controller{
         #start
         $info = array();
         if($id){
-            $info = Y::modelsToArray(Activity::model()->findByPk($id));
+            $info = Y::modelsToArray(MActivity::model()->findByPk($id));
         }
 
         $params = array();
@@ -340,7 +360,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id, companyId, userId, username, content, totalScore, scoreA, scoreB, scoreC, deleteFlag';
-        $params =  Comment::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
+        $params =  MComment::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -377,7 +397,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,title,abstract,img,deleteFlag';
-        $params =  Information::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
+        $params =  MInformation::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -392,7 +412,7 @@ class MainController extends Controller{
         #start
         $info = array();
         if($id){
-            $info = Y::modelsToArray(Information::model()->findByPk($id));
+            $info = Y::modelsToArray(MInformation::model()->findByPk($id));
         }
 
         $params = array();
@@ -434,7 +454,7 @@ class MainController extends Controller{
             $order .= implode(' , ', $l);
         }
         $select = 'id,category,name,nameFirstLetter,weight,logo,star,score,beFixed,beRecommend,beGuarantee,clickCount,commentCount,platform,hasLicense,openedTime,url,urlPhoto,abstract,deleteFlag';
-        $params =  Company::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
+        $params =  MCompany::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
@@ -449,7 +469,7 @@ class MainController extends Controller{
         #start
         $info = array();
         if($id){
-            $info = Y::modelsToArray(Company::model()->findByPk($id));
+            $info = Y::modelsToArray(MCompany::model()->findByPk($id));
         }
 
         $params = array();
@@ -473,7 +493,7 @@ class MainController extends Controller{
             Y::end('Illegal operation');
         }
 
-        $m = new Backup;
+        $m = new MBackup;
         $m->attributes = $form;
         if(!$m->save()){
             $code = 2;
@@ -497,7 +517,7 @@ class MainController extends Controller{
             Y::end('Illegal operation');
         }
 
-        if($m = Backup::model()->findByPk($id)){
+        if($m = MBackup::model()->findByPk($id)){
             list($code,$errors) = $m->reback();
         }else{
             $code = 2;
@@ -513,7 +533,7 @@ class MainController extends Controller{
 
     public function actionAjaxEditOne() {
         #input
-        $type = ucwords($_POST['type']);
+        $type = 'M'.ucwords($_POST['type']);
         $id = $_POST['id'];
         $attr = $_POST['attr'];
         $val = $_POST['val'];
@@ -521,17 +541,17 @@ class MainController extends Controller{
         $code = 1;
         $errors = '';
 
-        if($type=='User' && !in_array($attr, array('deleteFlag'))){
+        if($type=='MUser' && !in_array($attr, array('deleteFlag'))){
             Y::end('Illegal operation.');
-        }elseif($type=='Admin' && !in_array($attr, array('deleteFlag'))){
+        }elseif($type=='MAdmin' && !in_array($attr, array('deleteFlag'))){
             Y::end('Illegal operation.');
-        }elseif(in_array($type, array('Admin','Backup')) && !$this->checkSuperAdmin()){
+        }elseif(in_array($type, array('MAdmin','MBackup')) && !$this->checkSuperAdmin()){
             Y::end('Illegal operation.');
         }
 
         $m = $type::model()->findByPk($id);
 
-        if($type=='Admin' && $m->super==1){
+        if($type=='MAdmin' && $m->super==1){
             Y::end('Illegal operation.');
         }
 
@@ -550,7 +570,7 @@ class MainController extends Controller{
 
     public function actionAjaxAdd() {
         #input
-        $type = ucwords($_POST['type']);
+        $type = 'M'.ucwords($_POST['type']);
         $id = @$_POST['id'];
         $info = $_POST;
         #start
@@ -562,12 +582,13 @@ class MainController extends Controller{
         Y::begin();
         if($id){
             $map = array(
-                'Contact'=>array('name','urlName','sort','content'),
-                'Company'=>array('category','name','nameFirstLetter','weight','logo','star','score','beFixed','beRecommend','beGuarantee','clickCount','commentCount','platform','hasLicense','openedTime','url','urlPhoto','abstract','description','deleteFlag'),
-                'Information'=>array('title','abstract','img','content','deleteFlag'),
-                'Activity'=>array('title','abstract','img','content','deleteFlag'),
-                'Admin'=>array('username','password','passwordConfirm'),
-                'Backup'=>array('name'),
+                'MLink'=>array('name','url','sort'),
+                'MContact'=>array('name','urlName','sort','content'),
+                'MCompany'=>array('category','name','nameFirstLetter','weight','logo','star','score','beFixed','beRecommend','beGuarantee','clickCount','commentCount','platform','hasLicense','openedTime','url','urlPhoto','abstract','description','deleteFlag'),
+                'MInformation'=>array('title','abstract','img','content','deleteFlag'),
+                'MActivity'=>array('title','abstract','img','content','deleteFlag'),
+                'MAdmin'=>array('username','password','passwordConfirm'),
+                'MBackup'=>array('name'),
             );
 
             $m = $type::model()->findByPk($id);
@@ -586,7 +607,7 @@ class MainController extends Controller{
             $errors = $m->getErrors();
         }else{
             //上传图片
-            if($type=='Company'){
+            if($type=='MCompany'){
                 $save = false;
                 foreach($_FILES as $k=>$f){
                     $save = true;
@@ -603,7 +624,7 @@ class MainController extends Controller{
                     if($info['state']!='SUCCESS'){
                         Y::rollback();
                         $code = 3;
-                        $errors = $k.'上传失败!';
+                        $errors = array($k.'上传失败!');
                         GOTO END;
                     }
                     $m->$k = $this->url($info['url']);
@@ -622,10 +643,10 @@ class MainController extends Controller{
 
     public function actionAjaxDelete() {
         #input
-        $type = ucwords($_POST['type']);
+        $type = 'M'.ucwords($_POST['type']);
         $ids = $_POST['ids'];
         #start
-        if(in_array($type,array('Admin','Backup'))){
+        if(in_array($type,array('MAdmin','MBackup'))){
             if(!$this->checkSuperAdmin(false)){
                 Y::end('Illegal operation');
             }
@@ -655,7 +676,7 @@ class MainController extends Controller{
             $config['savePath'] = 'img/';
             $config['name'] = 'logo';
             $config['setDir'] = true;
-            $config['allowFiles'] = array('.png', '.jpg');
+            $config['allowFiles'] = array('.png');
         }
 
         //生成上传实例对象并完成上传

@@ -8,7 +8,7 @@ class ContactController extends Controller
         if(!$urlName){
             Y::end('illegal access.');
         }
-        $params = Contact::getInfoByUrlName($urlName);
+        $params = MContact::getInfoByUrlName($urlName);
 
         $stageName = $params['name'];
         END:

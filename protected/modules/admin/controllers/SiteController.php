@@ -20,7 +20,7 @@ class SiteController extends Controller
         $code = 1;
         $errors = '';
 
-        $admin = new Admin('login');
+        $admin = new MAdmin('login');
         $admin->attributes = $post;
         if(!$admin->validate() || !$admin->login()){
             $code = 2;

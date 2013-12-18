@@ -30,7 +30,7 @@ CREATE TABLE admin (
      `recordTime` int(10) UNSIGNED NOT NULL COMMENT '',
      PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='' AUTO_INCREMENT=1 ;
-insert into admin(username,password,recordTime) values('admin','eb3ccf0a7c36c8723ba9f34851048baea1299b21ec691b4c9a14ea39f35912b9f5afe5cec9244f5814fe43dda494829f84ccbd4e207531dd26ca0e6627cf1f14',unix_timestamp());
+insert into admin(username,password,super,recordTime) values('admin','eb3ccf0a7c36c8723ba9f34851048baea1299b21ec691b4c9a14ea39f35912b9f5afe5cec9244f5814fe43dda494829f84ccbd4e207531dd26ca0e6627cf1f14',1,unix_timestamp());
 
 DROP TABLE IF EXISTS company;
 CREATE TABLE company (

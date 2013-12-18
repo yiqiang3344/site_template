@@ -127,7 +127,7 @@
         <if>
             <isset property="product.dir" />
             <else>
-                <property name="product.dir" value="../product_site" />
+                <property name="product.dir" value="../pro_site1" />
             </else>
         </if>
         <if>
@@ -144,11 +144,12 @@
                 <include pattern="img/**" />
                 <include pattern="images/**" />
                 <include pattern="script/**" />
-                <include pattern="vendor/**" />
+                <include pattern="vendor/yiisoft/yii/framework/**" />
                 <include pattern="assets" />
                 <include pattern="upload" />
                 <include pattern="upload1" />
                 <include pattern="index.php" />
+                <include pattern=".htaccess" />
             </fileset>
         </copy>
         <foreach list="${site.langList}" param="lang" target="cpProduct"/>
@@ -167,6 +168,15 @@
                 <include pattern="${lang}/**" />
             </fileset>
         </copy>
+        <delete>
+            <fileset dir="${product.dir}">
+                <include name="protected/views/*.*"/>
+                <include name="protected/.sass-cache/**"/>
+                <include name="protected/runtime/**"/>
+                <include name="protected/*.*"/>
+                <include name="protected/yiic"/>
+            </fileset>
+        </delete>
     </target>
 
     <target name="initDb" description="Initiate database" depends="config">
@@ -179,5 +189,14 @@
 
     <target name="initYiiMessage" description="init yii message dirs and files" depends="config">
         <exec dir="${project.basedir}/protected/" command="./yiic message ./messages/config.php"/>
+    </target>
+
+    <target name="cpUrlJs" description="copy url.js to admin js dir" depends="">
+        <copy todir="${project.basedir}/protected/modules/admin/script/" overwrite="true">
+            <fileset dir="${project.basedir}">
+                <include pattern="js/url.js" />
+            </fileset>
+        </copy>
+        <echo msg="message: ${msg.out}" />
     </target>
 </project>

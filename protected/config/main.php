@@ -30,6 +30,7 @@ return array(
         // uncomment the following to enable URLs in path-format
         'urlManager'=>array(
             'urlFormat'=>'path',
+            'showScriptName'=>false,
             /*
             'rules'=>array(
                 '<controller:\w+>/<id:\d+>'=>'<controller>/view',
@@ -68,16 +69,16 @@ return array(
         // uncomment the following to use a MySQL database
         'db'=>array(
             'class' => 'CDbConnection',
-            'connectionString' => 'mysql:host=127.0.0.1;dbname=site1',
+            'connectionString' => 'mysql:host=localhost;dbname=v7khthzkfy_site1',
             'emulatePrepare' => true,
-            'username' => 'root',
-            'password' => 'yjq',
+            'username' => 'v7khthzkfy_site1',
+            'password' => 'Y98tgzGRx',
             'charset' => 'utf8',
         ),
 
         'errorHandler'=>array(
             // use 'site/error' action to display errors
-            'errorAction'=>'site/error',
+            'errorAction'=>'main/index',
         ),
         'log'=>array(
             'class'=>'CLogRouter',
@@ -101,10 +102,10 @@ return array(
     'params'=>array(
         // this is used in contact page
         'adminEmail'=>'webmaster@example.com',
-        'dbHost'=>'127.0.0.1',
-        'dbUser'=>'root',
-        'dbPassword'=>'yjq',
-        'dbName'=>'site1',
+        'dbHost'=>'localhost',
+        'dbUser'=>'v7khthzkfy_site1',
+        'dbPassword'=>'Y98tgzGRx',
+        'dbName'=>'v7khthzkfy_site1',
         'backupDir'=>'data/backup',
         'mysqlDir'=>'/usr/local/mysql/bin'
     ),
