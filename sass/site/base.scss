@@ -1,7 +1,8 @@
 /************************************/
 /* sass变量方法定义                   */
 /************************************/
-$screen_width : 640px;
+$screen_width : 960px;
+$site_bg_color : #E9E9E9;
 $red : #ff0808;
 $black : #000;
 $blue :  #0076d1;
@@ -56,17 +57,14 @@ ol, ul, menu{
 a{
     text-decoration: none;
 }
+a:hover{
+    color: red;
+}
 img{
     border: none;
 }
 em, i{
     font-style: normal;
-}
-.maindiv{
-    position: relative;
-    display: block;
-    width: $screen_width;
-    margin: 0 auto;
 }
 /*clear*/
 .clear{
@@ -82,6 +80,12 @@ em, i{
     content: "";
 }
 /*screen*/
+.wrapper{
+    position: relative;
+    background-color: $site_bg_color;
+    width: 100%;
+    margin: 0;
+}
 // @media only screen and (max-device-width:320px) and (max-device-height:480px){
 //     .wrapper{
 //         height: 862px;

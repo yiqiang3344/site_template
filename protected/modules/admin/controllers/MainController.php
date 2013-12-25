@@ -218,6 +218,63 @@ class MainController extends Controller{
         $this->render('link-edit',$bind);
     }
 
+    public function actionInforCategoryList() {
+        #input
+        $search = @$_GET['search'];//搜索 attr:val
+        $order_str = @$_GET['order'];//排序 type1:sc1,type2:sc2
+        $p = max(intval(@$_GET['p']),1);//分页
+        #start
+        $this->title = 'InforCategory';
+        $condition = '';
+        if($search){
+            $l = array();
+            foreach(Y::xexplode(',', $search) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' like \'%'.$a[1].'%\'';
+            }
+            $condition .= implode(' and ', $l);
+        }
+        $order = '';
+        $orders = array();
+        if($order_str){
+            $l = array();
+            foreach(Y::xexplode(',', $order_str) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' '.$a[1];
+                $orders[$a[0]] = $a[1];
+            }
+            $order .= implode(' , ', $l);
+        }
+        $select = 'id,name,title,sort,deleteFlag';
+        $params =  MInforCategory::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
+        END:
+        $bind = array(
+            'params' => $params,
+            'orders' => $orders
+        );
+        $this->render('inforcategory-list',$bind);
+    }
+
+    public function actionInforCategoryEdit() {
+        #input
+        $id = @$_GET['id'];
+        #start
+        $info = array();
+        if($id){
+            $info = Y::modelsToArray(InforCategory::model()->findByPk($id));
+        }
+
+        $params = array();
+        foreach(array('id','name','title','sort','deleteFlag') as $v){
+            $params[$v] = @$info[$v];
+        }
+        END:
+        $bind = array(
+            'params' => $params,
+        );
+        $this->render('inforcategory-edit',$bind);
+    }
+
     public function actionContactList() {
         #input
         $search = @$_GET['search'];//搜索 attr:val
@@ -396,7 +453,7 @@ class MainController extends Controller{
             }
             $order .= implode(' , ', $l);
         }
-        $select = 'id,title,abstract,img,deleteFlag';
+        $select = 'id,categoryId,top,title,abstract,img,deleteFlag';
         $params =  MInformation::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
@@ -416,9 +473,18 @@ class MainController extends Controller{
         }
 
         $params = array();
-        foreach(array('id','title','abstract','img','content','deleteFlag') as $v){
+        foreach(array('id','categoryId','top','categoryName','title','abstract','img','content','deleteFlag') as $v){
             $params[$v] = @$info[$v];
         }
+        $categoryList = array();
+        foreach(Y::modelsToArray(MInforCategory::model()->findAll()) as $row){
+            if($row['name']==$params['categoryName']){
+                $row['selected'] = 1;
+            }
+            $categoryList[] = $row;
+        }
+        $params['categoryList'] = $categoryList;
+
         END:
         $bind = array(
             'params' => $params,
@@ -584,8 +650,9 @@ class MainController extends Controller{
             $map = array(
                 'MLink'=>array('name','url','sort'),
                 'MContact'=>array('name','urlName','sort','content'),
-                'MCompany'=>array('category','name','nameFirstLetter','weight','logo','star','score','beFixed','beRecommend','beGuarantee','clickCount','commentCount','platform','hasLicense','openedTime','url','urlPhoto','abstract','description','deleteFlag'),
-                'MInformation'=>array('title','abstract','img','content','deleteFlag'),
+                'MCompany'=>array('category','name','nameFirstLetter','weight','star','score','beFixed','beRecommend','beGuarantee','clickCount','commentCount','platform','hasLicense','openedTime','url','abstract','description','deleteFlag'),
+                'MInformation'=>array('categoryId','top','title','abstract','img','content','deleteFlag'),
+                'MInforCategory'=>array('name','title','deleteFlag'),
                 'MActivity'=>array('title','abstract','img','content','deleteFlag'),
                 'MAdmin'=>array('username','password','passwordConfirm'),
                 'MBackup'=>array('name'),
@@ -610,6 +677,9 @@ class MainController extends Controller{
             if($type=='MCompany'){
                 $save = false;
                 foreach($_FILES as $k=>$f){
+                    if($f['name']==''){
+                        continue;
+                    }
                     $save = true;
                     $config = array(
                         'savePath' => 'upload/',
@@ -624,7 +694,7 @@ class MainController extends Controller{
                     if($info['state']!='SUCCESS'){
                         Y::rollback();
                         $code = 3;
-                        $errors = array($k.'上传失败!');
+                        $errors = array($k=>array($k.'上传失败!'));
                         GOTO END;
                     }
                     $m->$k = $this->url($info['url']);

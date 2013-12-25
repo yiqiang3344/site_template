@@ -19,7 +19,7 @@ class Y{
         }else{
             //非开发环境中的css和js都是压缩过的,开发环境中则不压缩
             if(Yii::app()->language=='dev'){
-                if(!preg_match('{^(js/(jquery|all)\.|css|img|images)}',$c)){
+                if(!preg_match('{^(js/(jquery|all|main|tools|url)\.|css|img|images)}',$c)){
                     //开发语言中需要翻译的
                     $c = Yii::app()->language.'/'.$c;
                 }
@@ -189,19 +189,15 @@ class Y{
     static public function modelsToArray($models){
         $arr = array();
         if(is_object($models)){
-            foreach($models as $k=>$v){
+            foreach(array_merge(get_object_vars($models),$models->attributes) as $k=>$v){
                 $v!==null && ($arr[$k] = $v);
             }
         }elseif(is_array($models)){
-            foreach ($models as $m) {
-                $a = array();
-                foreach ($m as $k => $v) {
-                    $v!==null && ($a[$k] = $v);
-                }
-                $arr[] = $a;
+            foreach ($models as $k => $m) {
+                $arr[$k] = self::modelsToArray($m);
             }
         }
-        return $arr;
+        return $arr ? $arr : $models;
     }
 
 

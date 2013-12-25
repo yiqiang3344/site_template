@@ -32,7 +32,7 @@
             $('.js_registerForm').find('.merror').removeClass('merror');
             oneAjax('Site', 'AjaxRegister', $('.js_registerForm').serialize(), function(obj) {
                 if (obj.code === 1) {
-                    State.back(0);
+                    State.forward('Main','Index');
                 } else if (obj.code === 2) {
                     $.each(obj.errors, function(k, v) {
                         return $('.js_registerForm').find('[name=' + k + ']').addClass('merror');

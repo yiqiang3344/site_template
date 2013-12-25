@@ -100,6 +100,7 @@ class MAdmin extends CActiveRecord
         }
         
         if($this->_identity->errorCode === UserIdentity::ERROR_NONE) {
+            $duration = 0;
             Yii::app()->user->login($this->_identity, $duration);
             return true;
         } else {

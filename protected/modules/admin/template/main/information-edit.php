@@ -3,6 +3,18 @@
         <span>标题</span>
         <input class="attr" id="title" type="text" value="{{title}}">
     </div>
+    <div class="categoryId">
+        <span>标题</span>
+        <select class="attr" id="categoryId">
+            {{#categoryList}}
+            <option value="{{id}}" {{#selected}}selected{{/selected}}>{{name}}</option>
+            {{/categoryList}}
+        </select>
+    </div>
+    <div class="top">
+        <span>置顶</span>
+        <input class="attr" id="top" value="{{top}}"/>
+    </div>
     <div class="abstract">
         <span>简介</span>
         <textarea style="width:400px;height:200px;" class="attr" id="abstract">{{abstract}}</textarea>

@@ -75,11 +75,11 @@
     </div>
     <div class="abstract">
         <span>简介</span>
-        <textarea style="width:400px;height:200px;" name="content" class="attr" id="abstract" name="abstract">{{abstract}}</textarea>
+        <textarea style="width:400px;height:200px;" class="attr" id="abstract" name="abstract">{{abstract}}</textarea>
     </div>
     <div class="description">
         <span>描述</span>
-        <textarea style="width:600px;height:400px;" name="content" class="attr" id="description" name="description">{{description}}</textarea>
+        <textarea style="width:600px;height:400px;" class="attr" id="description" name="description">{{description}}</textarea>
     </div>
     <div>
         <input id="submit" type="submit" value="提交">

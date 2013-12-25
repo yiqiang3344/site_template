@@ -80,10 +80,24 @@ CREATE TABLE `comment` (
 DROP TABLE IF EXISTS information;
 CREATE TABLE information (
     `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '',
+    `categoryId` int(10) NOT NULL COMMENT '',
+    `top` tinyint(3) NOT NULL COMMENT '首页显示',
     `title` varchar(128) NOT NULL COMMENT '',
     `abstract` varchar(256) NOT NULL DEFAULT '' COMMENT '',
     `img` varchar(128) NOT NULL DEFAULT '' COMMENT '插图',
     `content` text NOT NULL COMMENT '',
+    `updateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '',
+    `deleteFlag` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '',
+    `recordTime` int(10) UNSIGNED NOT NULL COMMENT '',
+    PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='' AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS inforCategory;
+CREATE TABLE inforCategory (
+    `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '',
+    `name` varchar(128) NOT NULL COMMENT '',
+    `title` varchar(256) NOT NULL COMMENT '',
+    `sort` tinyint(3) NOT NULL DEFAULT 0 COMMENT '排序',
     `updateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '',
     `deleteFlag` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '',
     `recordTime` int(10) UNSIGNED NOT NULL COMMENT '',

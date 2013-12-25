@@ -16,6 +16,8 @@
                  <input type="checkbox" class="js_cbox_all"/>
             </div>
             <div class="attr" id="order_id">id</div>
+            <div class="attr" id="order_categoryName">分类</div>
+            <div class="attr" id="order_top">置顶</div>
             <div class="attr" id="order_title">标题</div>
             <div class="attr" id="order_abstract">简要</div>
             <div class="attr" id="order_img">有图片</div>
@@ -27,6 +29,8 @@
                  <input type="checkbox" class="js_cbox" value="{{id}}"/>
             </div>
             <div class="attr">{{id}}</div>
+            <div class="attr" id="attr_categoryName">{{categoryName}}</div>
+            <div class="attr" id="attr_top">{{top}}</div>
             <div class="attr" id="attr_title">{{title}}</div>
             <div class="attr" id="attr_abstract">{{abstract}}</div>
             <div class="attr img" id="">{{#img}}<img src="{{img}}" alt="无"/>{{/img}}</div>

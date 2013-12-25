@@ -1,20 +1,228 @@
-.awidth{
-    widht:100px;
+/************************************/
+/* sass变量方法定义                   */
+/************************************/
+$screen_width : 960px;
+$maincontent_height : 460px;
+$nav_color : #000;
+
+/************************************/
+/* 抽象模块                          */
+/************************************/
+.abstract_main_content{
+    width: $screen_width;
+    margin: 0 auto;
 }
+
+/************************************/
+/* 模块                              */
+/************************************/
+
+// 头部
 .mheader{
-    height: 200px;
+    width: 100%;
+    .muser{
+        @extend .abstract_main_content;
+        color: #FF8400;
+        a{
+            color: #FF8400;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+    }
+    .mlogo_search{
+        @extend .abstract_main_content;
+    }
+    .mlogo{
+        width: 100px;
+        height: 50px;
+    }
+    .mlogo__img{
+        width: 100%;
+        height: 100%;
+    }
+    .msearch{
+        margin-top:6px;
+    }
+    .msearch__content_box{
+        position: relative;
+        float: left;
+        border: 1px solid #c1c1c1;
+        display: inline;
+        margin-top: 3px;
+        height: 33px;
+        width: 298px;
+        font-family: "Arial","SimSun","宋体";
+        font-size: 14px;
+    }
+    .msearch__content{
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 284px;
+        color: #666;
+        margin: 0;
+        border: 0px;
+        font-size: 14px;
+        height: 15px;
+        line-height: 15px;
+        padding: 9px 0 9px 14px;
+    }
+    .msearch__button{
+        border: 0;
+        float: left;
+        display: inline;
+        width: 66px;
+        height: 35px;
+        margin-top: 3px;
+        margin-right: 6px;
+        background: #ff8400 url(../images/bg2.png) 0px 0px no-repeat;
+        cursor: pointer;
+        border-radius: 0px;
+        &:hover{
+            background-position: -1px -64px;
+            background-color: transparent;
+            margin: 0;
+            width: 72px;
+            height: 42px;
+        }
+    }
+    .mnav{
+        width: 100%;
+        height: 50px;
+        background-color: $nav_color;
+    }
+    .mnav__main{
+        @extend .abstract_main_content;
+        height : 100%;
+    }
+    .mnav__link{
+        height : 100%;
+        line-height: 50px;
+        margin-right: 10px;
+    }
+    .mnav__a{
+        height : 100%;
+        display: block;
+        font-size: 24px;
+        color : #fff;
+        &:hover{
+            color : #000;
+            background-color : #fff;
+        }
+    }
+    .mpos{
+        @extend .abstract_main_content;
+        margin:5px auto;
+        font-size: 14px;
+        color:rgb(15, 97, 241);
+    }
 }
+
+// 内容
 .maincontent{
-    min-height: 600px;
+    @extend .abstract_main_content;
+    margin: 20px auto;
+    min-height: $maincontent_height;
 }
+
+// 底部
 .mfooter{
     width: 100%;
-    min-height: 200px;
+    background-color: #999;
+    padding-top: 10px;
+    .mfooter__main{
+        min-height: 100px;
+        @extend .abstract_main_content;
+    }
+    .mcopyright{
+        width: 100%;
+        background-color : #000;
+        color: #999;
+    }
+    .mcopyright__main{
+        @extend .abstract_main_content;
+        line-height: 50px;
+    }
 }
+
+.mlines{
+    .mlines__img{
+        width:100%;
+        height:100%;
+    }
+    .mlines__title{
+        margin-top: 10px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+}
+
+.mlines1{
+    .mlines__line{
+        margin: 10px 25px 40px 25px;
+        width: 70px;
+        height: 70px;
+        text-align: center;
+    }
+    .mlines__name{
+        font-size: 14px;
+        width: 100%;
+        height:14px;
+        overflow: hidden;
+    }
+    .mlines__stars{
+        width: 100%;
+    }
+}
+
+.mlines2{
+    .mlines__line{
+        margin: 10px;
+        width: 216px;
+        height: 110px;
+        position: relative;
+    }
+    .mlines__name{
+        position: absolute;
+        background-color:#666;
+        bottom:0;
+        opacity: 0.6;
+        font-size: 14px;
+        width: 100%;
+        text-align:center;
+        height: 22px;
+        line-height: 22px;
+        overflow: hidden;
+    }
+}
+
+.mlines4{
+    .mlines__line{
+        margin: 5px 8px 5px 8px;
+    }
+    .mlines__img{
+        width:50px;
+        height:50px;
+    }
+    .mlines__name{
+        font-size: 14px;
+        width: 120px;
+        height: 50px;
+        line-height: 50px;
+        overflow: hidden;
+        margin-left: 5px;
+    }
+}
+
+// 错误提示
 .merror{
     border: 1px solid red;
 }
 
+// 简介列表
 .mlist_abstract{
     .line{
         clear:both;
@@ -42,6 +250,8 @@
     };
 
 }
+
+// 公司列表
 .mlist_company{
     .line{
         height: 100px;

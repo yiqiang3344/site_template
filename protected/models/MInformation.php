@@ -27,7 +27,7 @@ class MInformation extends YActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('title, abstract, content', 'required'),
+            array('categoryId, top, title, abstract, content', 'required'),
             array('img','safe'),
             array('title', 'length', 'min' => 1, 'max' => 128),
             array('abstract', 'length', 'min' => 1, 'max' => 256),
@@ -50,6 +50,12 @@ class MInformation extends YActiveRecord
         // class name for the relations automatically generated below.
         return array(
         );
+    }
+
+    public $categoryName;
+    public function afterFind(){
+        $this->categoryName = MInforCategory::model()->findByPk($this->categoryId)->name;
+        return parent::afterFind();
     }
 
     public static function updateByIds($ids, $attributes){

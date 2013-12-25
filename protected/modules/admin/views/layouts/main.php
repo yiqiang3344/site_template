@@ -65,6 +65,11 @@
                         name:'活动'
                     },
                     {
+                        select:t=='InforCategory'?1:0,
+                        url:getUrl('Main','InforCategoryList'),
+                        name:'资讯分类'
+                    },
+                    {
                         select:t=='Information'?1:0,
                         url:getUrl('Main','InformationList'),
                         name:'资讯'
