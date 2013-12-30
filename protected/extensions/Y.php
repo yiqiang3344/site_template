@@ -1,14 +1,14 @@
 <?php
 //自定义常用方法
 class Y{
-    function xexplode($delimiter, $string){
+    public static function xexplode($delimiter, $string){
         if(!$string){
             return array();
         }
         return explode($delimiter, $string);
     }
 
-    function getUrl($c,$a=null,$p=array()){
+    public static function getUrl($c,$a=null,$p=array()){
         if($a){
             $ret = Yii::app()->getBaseUrl().'/'.$c.'/'.$a;
             $l = array();
@@ -267,7 +267,7 @@ class Y{
         return $onlineip;
     }
 
-    function FUE($hash,$times=1) {
+    public static function FUE($hash,$times=1) {
         for($i=$times;$i>0;$i--) {
             // Encode with base64...
             $hash=base64_encode($hash);
@@ -283,7 +283,7 @@ class Y{
         return $hash;
     }
 
-    function cp($src, $columns, &$dest = array()) {
+    public static function cp($src, $columns, &$dest = array()) {
         foreach ($columns as $column) {
             if (is_array($src)) {
                 $dest[$column] = $src[$column];
