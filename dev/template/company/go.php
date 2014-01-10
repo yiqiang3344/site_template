@@ -1,31 +1,39 @@
-<div class="clearfix">
-    <div class="fl">
-        <div class="clearfix">
-            <div class="fl">
-                    <a href="{{url}}"><img src="{{logo}}" alt="无"/></a>
-            </div>
-            <div class="fl">
-                <p class="name">名称：{{name}}</p>
-                <p class="">星级：{{star}}</p>
-                <p class="">评分：{{score}}</p>
-                <p class="">访问量：{{clickCount}}</p>
-                <p class="">评论数：{{commentCount}}</p>
-                <p class="">{{#beFixed}}固{{/beFixed}}{{#beRecommend}}荐{{/beRecommend}}{{#beGuarantee}}保{{/beGuarantee}}</p>
-            </div>
+<div class="category">
+    <div class="catlist">
+        <strong>当前位置</strong>
+        <div class="linkbox">
+            <a href="##" class="current"><span>首页&nbsp;»&nbsp;</span></a>
+            <a href="##"><span>公司&nbsp;»&nbsp;</span></a>
         </div>
+    </div>
+</div>
+<div class="clearfix com-info">
+    <div class="com-info-side">
+        <dl class="clearfix">
+            <dt>
+                    <a href="{{url}}"><img src="{{logo}}" alt="无"/></a>
+            </dt>
+            <dd>
+                <p class="name">{{name}}</p>
+                <p>评分：{{score}}</p>
+                <p class="star_{{star}}"></p>
+                <p class="">{{#beFixed}}<a class="btn">固</a>{{/beFixed}}{{#beRecommend}}<a class="btn">荐</a>{{/beRecommend}}{{#beGuarantee}}<a class="btn">保</a>{{/beGuarantee}}</p>
+            </dd>
+        </dl>
         <p class="platform">平台：{{platform}}</p>
         <p class="license">牌照：{{#hasLicense}}有{{/hasLicense}}{{^hasLicense}}无{{/hasLicense}}</p>
+        <p class="">访问量：{{clickCount}} 评论数：{{commentCount}}</p>
         <p class="openTime">开业时间：{{openedTime}}</p>
         <p class="">简介：{{abstract}}</p>
     </div>
-    <div class="fl">
-        <div class="">
-            <p>网站快照：</p>
+    <div class="com-info-m">
+        <div class="com-info-m-t">
+            <h2>网站快照：</h2>
             <img src="{{urlPhoto}}" alt="无">
         </div>
-        <div class="">
-            <p>描述：</p>
-            <div>{{{description}}}</div>
+        <div class="bdc">
+            <h2>描述：</h2>
+            <div class="p10">{{{description}}}</div>
         </div>
         <div class="comment">
             <div class="clearfix">
