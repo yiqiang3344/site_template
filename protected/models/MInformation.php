@@ -54,7 +54,8 @@ class MInformation extends YActiveRecord
 
     public $categoryName;
     public function afterFind(){
-        $this->categoryName = MInforCategory::model()->findByPk($this->categoryId)->name;
+        $o = MInforCategory::model()->findByPk($this->categoryId);
+        $o && ($this->categoryName = MInforCategory::model()->findByPk($this->categoryId)->name);
         return parent::afterFind();
     }
 
