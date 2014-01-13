@@ -17,7 +17,7 @@
                 <p class="name">{{name}}</p>
                 <p>评分：{{score}}</p>
                 <p class="star_{{star}}"></p>
-                <p class="">{{#beFixed}}<a class="btn">固</a>{{/beFixed}}{{#beRecommend}}<a class="btn">荐</a>{{/beRecommend}}{{#beGuarantee}}<a class="btn">保</a>{{/beGuarantee}}</p>
+                <p class="">{{#beFixed}}<a class="btn">固</a>{{/beFixed}}{{#beRecommend}}<a class="btn gray">荐</a>{{/beRecommend}}{{#beGuarantee}}<a class="btn">保</a>{{/beGuarantee}}</p>
             </dd>
         </dl>
         <p class="platform">平台：{{platform}}</p>
@@ -31,11 +31,63 @@
             <h2>网站快照：</h2>
             <img src="{{urlPhoto}}" alt="无">
         </div>
-        <div class="bdc">
+        <div class="bdc mb10">
             <h2>描述：</h2>
-            <div class="p10">{{{description}}}</div>
+            <div class="p10 lh2">{{{description}}}</div>
         </div>
-        <div class="comment">
+        <div class="com-pose mb10">
+            <div class="clearfix sorts-tab">
+                 {{#commentUrls}}
+                <a href="{{url}}">{{name}}<s>({{num}})</s></a>
+                 {{/commentUrls}}
+            </div>
+            <div class="clearfix m10">
+                <form action="">
+                    <textarea></textarea>
+                </form>
+                <dl>
+                    <dt>
+                        <i>总体评价：</i>
+                        <p class="star2"><a class="star2-1"></a><a class="star2-2"></a><a class="star2-3"></a><a class="star2-4"></a><a class="star2-5"></a></p>
+                    </dt>
+                    <dd>
+                        <i>评价A：</i>
+                        <p class="star2"><a class="star2-1"></a><a class="star2-2"></a><a class="star2-3"></a><a class="star2-4"></a><a class="star2-5"></a></p>
+                    </dd>
+                    <dd>
+                        <i>评价B：</i>
+                        <p class="star2"><a class="star2-1"></a><a class="star2-2"></a><a class="star2-3"></a><a class="star2-4"></a><a class="star2-5"></a></p>
+                    </dd>
+                    <dd>
+                        <i>评价C：</i>
+                        <p class="star2"><a class="star2-1"></a><a class="star2-2"></a><a class="star2-3"></a><a class="star2-4"></a><a class="star2-5"></a></p>
+                    </dd>
+                </dl>
+            </div>
+            <p class="submit"><input type="submit" class="btn2" value="提交评价"></p>
+        </div>
+        <div class="bdc mb10">
+            <h2>评论：</h2>
+            <ul class="rate-list">
+                <li>
+                    <p class="info">评论好评论好评论好评论好评论好<s>2014.01.12</s></p>
+                    <a class="name">use</a>
+                </li>
+                <li>
+                    <p class="info">评论好评论好评论好评论好评论好<s>2014.01.12</s></p>
+                    <a class="name">use</a>
+                </li>
+                <li>
+                    <p class="info">评论好评论好评论好评论好评论好<s>2014.01.12</s></p>
+                    <a class="name"></a>
+                </li>
+                <li>
+                    <p class="info">评论好评论好评论好评论好评论好<s>2014.01.12</s></p>
+                    <a class="name"></a>
+                </li>
+            </ul>
+        </div>
+       <!--  <div class="comment">
             <div class="clearfix">
                 {{#commentUrls}}
                 <p class="fl"><a href="{{url}}">{{name}}</a>({{num}})</p>
@@ -109,6 +161,11 @@
                     <button class="js_comment_submit">提交评论</button>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
+<script>
+    $('.star2 a').click(function() {
+        $(this).addClass('on').siblings().removeClass('on');
+    });
+</script>

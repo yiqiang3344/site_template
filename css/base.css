@@ -27,6 +27,8 @@ em, i { font-style: normal; }
 .clearfix:before, .clearfix:after { content: ""; display: table; }
 .clearfix:after { clear: both; overflow: hidden; }
 
+.lh2 { line-height: 2; }
+
 /*screen*/
 .wrapper { position: relative; background: url(../images/topbg.png) no-repeat #ebebeb; }
 

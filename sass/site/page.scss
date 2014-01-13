@@ -22,12 +22,51 @@ $btn-blue:#78D822;
 .star_2half {@extend .star;background-position: -34px -70px;}
 .star_3half{@extend .star;background-position: -19px -70px;}
 .star_4half{@extend .star;background-position: -4px -70px;}
+.star2{
+    width: 130px;height: 25px;background:url(../images/star2.png) 0 25px; position: relative;
+    a{
+        position: absolute;top: 0;left: 0;height: 25px;
+        &:hover{background:url(../images/star2.png) 0 25px;}
+        &.on{background:url(../images/star2.png) 0 25px;}
+    }
+    .star2-1{
+       width: 25px;z-index: 5;
+        &:hover{background-position:0 -120px;}
+        &.on{background-position:0 -120px;}
+    }
+    .star2-2{
+       width: 51px;z-index: 4;
+        &:hover{background-position:0 -90px;}
+        &.on{background-position:0 -90px;}
+    }
+    .star2-3{
+        width: 77px;z-index: 3;
+        &:hover{background-position:0 -60px;}
+        &.on{background-position:0 -60px;}
+    }
+    .star2-4{
+        width: 103px;z-index: 2;
+        &:hover{background-position:0 -30px;}
+        &.on{background-position:0 -30px;}
+    }
+    .star2-5{
+        width: 129px;z-index: 1;
+        &:hover{background-position:0 0;}
+        &.on{background-position:0 0;}
+    }
+}
 .bdc{background: #fff;border:1px solid #cbcbcb;}
 .btn{
     background: $btn-blue;color:#fff;padding:2px 6px;border-radius:3px;
-    &:hover{background:lighten($btn-blue,10%);}
+    &:hover{background:lighten($btn-blue,10%);text-decoration:none;}
 }
-.btn2{background: url(../images/btn.png);width: 86px;height: 30px;line-height: 30px;display: inline-block;text-align: center;color:#fff;font-size: 14px}
+.btn.gray{
+    background:gray;color:#bbb;
+}
+.btn2{
+    background: url(../images/btn.png);width: 86px;height: 30px;line-height: 30px;display: inline-block;text-align: center;color:#fff;font-size: 14px;border: none;outline:none;
+    &:hover{background-position:0 -30px;}
+}
 // 头部
 .head{
     @extend .w960;
@@ -116,7 +155,7 @@ $btn-blue:#78D822;
 // breadcrumb
 .breadcrumb{
     background: url(../images/breadcrumb.png);height: 37px; line-height: 39px; border-bottom: 1px solid #cbcbcb;position: relative;
-    dt{padding-left: 10px;float: left;height: 39px; background:url(../images/breadcrumb-bg.jpg) repeat-x;display: inline-block;}
+    dt{padding-left: 10px;float: left;height: 37px; background:url(../images/breadcrumb-bg.jpg) repeat-x;display: inline-block;}
     strong{font-size: 14px; color: #067dba;}
     a{color: #067dba;}
     dd{float: left;width: 32px; height: 37px;background: url(../images/breadcrumb-i.png) no-repeat scroll 0 -2px transparent;}
@@ -136,6 +175,10 @@ $btn-blue:#78D822;
             dd{color: #5f5f5f; line-height: 20px; margin-bottom: 10px; text-indent:2em;}
         }
     }
+}
+.news-info{
+    padding:20px;line-height: 1.5;
+    h2{border-bottom: 1px dotted #cbcbcb;font-family: 微软雅黑; text-align: center; font-size: 20px; color: #3f3e3e;padding-bottom:20px;margin-bottom:10px;}
 }
 // 内容
 .maincontent{
@@ -269,6 +312,34 @@ $btn-blue:#78D822;
 
     }
 }
+.com-pose{
+        background: #f6f6f6;border:1px solid #cbcbcb;overflow: hidden;
+        form{
+            float: left;
+            textarea{resize: none; border: 1px solid #cbcbcb;; display: block; outline: 0; overflow: auto;width: 330px;height: 113px;padding: 10px;}
+        }
+        dl{
+            float: left;margin-left: 10px;
+            dt{
+                    overflow: hidden;padding-bottom: 10px;
+            }
+            dd{overflow: hidden;}
+            i{float:left;width: 100px;text-align: right;height: 30px;line-height: 30px;}
+            p{float: left;}
+        }
+        .submit{padding:5px 10px;}
+}
+.rate-list{
+    li{
+        margin: 10px;border-bottom:1px solid #F1F0F0;overflow: hidden;line-height: 1.3;padding:10px;
+        .info{
+            float: left;width: 540px;
+            s{text-decoration:none;display: block;color:#ccc;font-weight: 400;}
+        }
+        .name{float: right;text-align: right;}
+        &:last-child{border-bottom: none;}
+    }
+}
 // 翻页
 .mpager{
     text-align: center;
@@ -316,6 +387,7 @@ $btn-blue:#78D822;
             .i_arr2{background-position:-21px 0;}
             .i_arr2.up{background-position:-14px 0;}
         }
+        s{text-decoration:none;color:#999}
         i{margin: 0 2px;}
         ul{position: relative;left: 0;top:-32px;}
     }
