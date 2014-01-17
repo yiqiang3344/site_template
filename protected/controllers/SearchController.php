@@ -6,7 +6,7 @@ class SearchController extends Controller
         $search = $_GET['search'];
         $page = max(intval(@$_GET['p']),1);//分页
         #start
-        $params = MSearch::getCompanyListByName($search,$page,2);
+        $params = MSearch::getCompanyListByName($search,$page,A::PAGE_SIZE);
         foreach($params['data'] as &$row){
             $row['goto'] = $this->url('Company','Go',array('to'=>$row['id']));
         }

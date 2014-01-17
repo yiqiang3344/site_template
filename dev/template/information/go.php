@@ -2,9 +2,9 @@
 	<dl class="breadcrumb clearfix">
 		<dt>
 			<strong>当前位置:</strong>
-			<a href="/">首页</a>&nbsp;»&nbsp;
-			<a href="/info_news.html">资讯</a>&nbsp;»&nbsp;
-			<a href="##">传于4月发布的Galaxy S5将加入红魔扫描技术 向iPhone 5s发起挑战？</a>&nbsp;»&nbsp;
+			<a href="{{homeUrl}}">首页</a>&nbsp;»&nbsp;
+			<a href="{{informationUrl}}">资讯</a>&nbsp;»&nbsp;
+			<a href="##">{{title}}</a>&nbsp;»&nbsp;
 		</dt>
 		<dd></dd>
 	</dl>

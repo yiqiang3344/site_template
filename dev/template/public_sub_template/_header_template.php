@@ -20,15 +20,4 @@
         <a href="{{url}}">{{name}}</a>
         {{/navList}}
     </div>
-    <!-- <div class="mpos clearfix">
-        <p class="fl">当前位置：</p>
-        {{#stageList}}
-        <div class="fl mr5">
-            {{^first}}
-            &gt;
-            {{/first}}
-            <a class="mpos__a" {{#url}}href="{{url}}"{{/url}}>{{name}}</a>
-        </div>
-        {{/stageList}}
-    </div> -->
 </div>

@@ -44,7 +44,7 @@
         <?php endif;?>
     </head>
     <body>
-        <div id="maindiv" class="wrapper">
+        <div class="wrapper" id="maindiv">
             <?php echo $this->Mustache->render($this->publicSubTemplate['headerTemplate'],$this->getHeaderParams()); ?>
             <?php echo $content;?>
             <?php echo $this->Mustache->render($this->publicSubTemplate['footerTemplate'],$this->getFooterParams()); ?>

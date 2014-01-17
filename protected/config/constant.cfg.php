@@ -13,4 +13,5 @@ class S{
 //项目常量
 class A{
     const VERSION = '1.0.0';//网站版本
+    const PAGE_SIZE = 20;
 }

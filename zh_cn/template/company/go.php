@@ -1,33 +1,96 @@
-<div class="clearfix">
-    <div class="fl">
-        <div class="clearfix">
-            <div class="fl">
-                    <a href="{{url}}"><img src="{{logo}}" alt="无"/></a>
-            </div>
-            <div class="fl">
-                <p class="name">名称：{{name}}</p>
-                <p class="">星级：{{star}}</p>
-                <p class="">评分：{{score}}</p>
-                <p class="">访问量：{{clickCount}}</p>
-                <p class="">评论数：{{commentCount}}</p>
-                <p class="">{{#beFixed}}固{{/beFixed}}{{#beRecommend}}荐{{/beRecommend}}{{#beGuarantee}}保{{/beGuarantee}}</p>
-            </div>
+<div class="category">
+    <div class="catlist">
+        <strong>当前位置</strong>
+        <div class="linkbox">
+            <a href="{{homeUrl}}" class="current"><span>首页&nbsp;»&nbsp;</span></a>
+            <a href="{{companyUrl}}"><span>公司&nbsp;»&nbsp;</span></a>
+            <a href="#"><span>{{name}}</span></a>
         </div>
+    </div>
+</div>
+<div class="clearfix com-info">
+    <div class="com-info-side">
+        <dl class="clearfix">
+            <dt>
+                <a href="{{url}}"><img src="{{logo}}" alt="无"/></a>
+            </dt>
+            <dd>
+                <p class="name">{{name}}</p>
+                <p>评分：{{score}}</p>
+                <p class="star_{{star}}"></p>
+                <p class="">{{#beFixed}}<a class="btn">固</a>{{/beFixed}}{{#beRecommend}}<a class="btn gray">荐</a>{{/beRecommend}}{{#beGuarantee}}<a class="btn">保</a>{{/beGuarantee}}</p>
+            </dd>
+        </dl>
         <p class="platform">平台：{{platform}}</p>
         <p class="license">牌照：{{#hasLicense}}有{{/hasLicense}}{{^hasLicense}}无{{/hasLicense}}</p>
+        <p class="">访问量：{{clickCount}} 评论数：{{commentCount}}</p>
         <p class="openTime">开业时间：{{openedTime}}</p>
         <p class="">简介：{{abstract}}</p>
     </div>
-    <div class="fl">
-        <div class="">
-            <p>网站快照：</p>
+    <div class="com-info-m">
+        <div class="com-info-m-t">
+            <h2>网站快照：</h2>
             <img src="{{urlPhoto}}" alt="无">
         </div>
-        <div class="">
-            <p>描述：</p>
-            <div>{{{description}}}</div>
+        <div class="bdc mb10">
+            <h2>描述：</h2>
+            <div class="p10 lh2">{{{description}}}</div>
         </div>
-        <div class="comment">
+        <div class="com-pose mb10">
+            <div class="clearfix sorts-tab">
+                 {{#commentUrls}}
+                <a href="{{url}}">{{name}}<s>({{num}})</s></a>
+                 {{/commentUrls}}
+            </div>
+            <div class="clearfix m10">
+                <form action="">
+                    <textarea id="comment_content"></textarea>
+                </form>
+                <dl>
+                    <dt>
+                        <i>总体评价：</i>
+                        <p class="star2 js_select_score">
+                            <a class="star2-1"></a><a class="star2-2"></a><a class="star2-3"></a><a class="star2-4"></a><a class="star2-5"></a>
+                            <input id="comment_totalScore" type="hidden" value="0"/>
+                        </p>
+                    </dt>
+                    <dd>
+                        <i>评价A：</i>
+                        <p class="star2 js_select_score">
+                            <a class="star2-1"></a><a class="star2-2"></a><a class="star2-3"></a><a class="star2-4"></a><a class="star2-5"></a>
+                            <input id="comment_scoreA" type="hidden" value="0"/>
+                        </p>
+                    </dd>
+                    <dd>
+                        <i>评价B：</i>
+                        <p class="star2 js_select_score">
+                            <a class="star2-1"></a><a class="star2-2"></a><a class="star2-3"></a><a class="star2-4"></a><a class="star2-5"></a>
+                            <input id="comment_scoreB" type="hidden" value="0"/>
+                        </p>
+                    </dd>
+                    <dd>
+                        <i>评价C：</i>
+                        <p class="star2 js_select_score">
+                            <a class="star2-1"></a><a class="star2-2"></a><a class="star2-3"></a><a class="star2-4"></a><a class="star2-5"></a>
+                            <input id="comment_scoreC" type="hidden" value="0"/>
+                        </p>
+                    </dd>
+                </dl>
+            </div>
+            <p class="submit"><input class="js_comment_submit" type="submit" class="btn2" value="提交评价"></p>
+        </div>
+        <div class="bdc mb10">
+            <h2>评论：</h2>
+            <ul class="rate-list">
+                {{#comments.data}}
+                <li>
+                    <p class="info">{{content}}<s>{{time}}</s></p>
+                    <a class="name">{{username}}</a>
+                </li>
+                {{/comments.data}}
+            </ul>
+        </div>
+       <!--  <div class="comment">
             <div class="clearfix">
                 {{#commentUrls}}
                 <p class="fl"><a href="{{url}}">{{name}}</a>({{num}})</p>
@@ -101,6 +164,6 @@
                     <button class="js_comment_submit">提交评论</button>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>

@@ -2,8 +2,9 @@
     <div class="catlist">
         <strong>当前位置</strong>
         <div class="linkbox">
-            <a href="##" class="current"><span>首页&nbsp;»&nbsp;</span></a>
-            <a href="##"><span>公司&nbsp;»&nbsp;</span></a>
+            <a href="{{homeUrl}}" class="current"><span>首页&nbsp;»&nbsp;</span></a>
+            <a href="{{companyUrl}}"><span>公司&nbsp;»&nbsp;</span></a>
+            <a href="#"><span>{{name}}</span></a>
         </div>
     </div>
 </div>
@@ -11,7 +12,7 @@
     <div class="com-info-side">
         <dl class="clearfix">
             <dt>
-                    <a href="{{url}}"><img src="{{logo}}" alt="无"/></a>
+                <a href="{{url}}"><img src="{{logo}}" alt="无"/></a>
             </dt>
             <dd>
                 <p class="name">{{name}}</p>
@@ -43,48 +44,50 @@
             </div>
             <div class="clearfix m10">
                 <form action="">
-                    <textarea></textarea>
+                    <textarea id="comment_content"></textarea>
                 </form>
                 <dl>
                     <dt>
                         <i>总体评价：</i>
-                        <p class="star2"><a class="star2-1"></a><a class="star2-2"></a><a class="star2-3"></a><a class="star2-4"></a><a class="star2-5"></a></p>
+                        <p class="star2 js_select_score">
+                            <a class="star2-1"></a><a class="star2-2"></a><a class="star2-3"></a><a class="star2-4"></a><a class="star2-5"></a>
+                            <input id="comment_totalScore" type="hidden" value="0"/>
+                        </p>
                     </dt>
                     <dd>
                         <i>评价A：</i>
-                        <p class="star2"><a class="star2-1"></a><a class="star2-2"></a><a class="star2-3"></a><a class="star2-4"></a><a class="star2-5"></a></p>
+                        <p class="star2 js_select_score">
+                            <a class="star2-1"></a><a class="star2-2"></a><a class="star2-3"></a><a class="star2-4"></a><a class="star2-5"></a>
+                            <input id="comment_scoreA" type="hidden" value="0"/>
+                        </p>
                     </dd>
                     <dd>
                         <i>评价B：</i>
-                        <p class="star2"><a class="star2-1"></a><a class="star2-2"></a><a class="star2-3"></a><a class="star2-4"></a><a class="star2-5"></a></p>
+                        <p class="star2 js_select_score">
+                            <a class="star2-1"></a><a class="star2-2"></a><a class="star2-3"></a><a class="star2-4"></a><a class="star2-5"></a>
+                            <input id="comment_scoreB" type="hidden" value="0"/>
+                        </p>
                     </dd>
                     <dd>
                         <i>评价C：</i>
-                        <p class="star2"><a class="star2-1"></a><a class="star2-2"></a><a class="star2-3"></a><a class="star2-4"></a><a class="star2-5"></a></p>
+                        <p class="star2 js_select_score">
+                            <a class="star2-1"></a><a class="star2-2"></a><a class="star2-3"></a><a class="star2-4"></a><a class="star2-5"></a>
+                            <input id="comment_scoreC" type="hidden" value="0"/>
+                        </p>
                     </dd>
                 </dl>
             </div>
-            <p class="submit"><input type="submit" class="btn2" value="提交评价"></p>
+            <p class="submit"><input class="js_comment_submit" type="submit" class="btn2" value="提交评价"></p>
         </div>
         <div class="bdc mb10">
             <h2>评论：</h2>
             <ul class="rate-list">
+                {{#comments.data}}
                 <li>
-                    <p class="info">评论好评论好评论好评论好评论好<s>2014.01.12</s></p>
-                    <a class="name">use</a>
+                    <p class="info">{{content}}<s>{{time}}</s></p>
+                    <a class="name">{{username}}</a>
                 </li>
-                <li>
-                    <p class="info">评论好评论好评论好评论好评论好<s>2014.01.12</s></p>
-                    <a class="name">use</a>
-                </li>
-                <li>
-                    <p class="info">评论好评论好评论好评论好评论好<s>2014.01.12</s></p>
-                    <a class="name"></a>
-                </li>
-                <li>
-                    <p class="info">评论好评论好评论好评论好评论好<s>2014.01.12</s></p>
-                    <a class="name"></a>
-                </li>
+                {{/comments.data}}
             </ul>
         </div>
        <!--  <div class="comment">
@@ -164,8 +167,3 @@
         </div> -->
     </div>
 </div>
-<script>
-    $('.star2 a').click(function() {
-        $(this).addClass('on').siblings().removeClass('on');
-    });
-</script>

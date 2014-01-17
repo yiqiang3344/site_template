@@ -15,7 +15,7 @@ class RankController extends Controller
         }
         $params = array();
         $select = 'id,logo,name,star,score,beFixed,beRecommend,beGuarantee,clickCount,commentCount,abstract';
-        $params = MCompany::getListByPage($select, $condition, $order, $params, $page, 2, false);
+        $params = MCompany::getListByPage($select, $condition, $order, $params, $page, A::PAGE_SIZE, false);
         foreach($params['data'] as &$row){
             $row['goto'] = $this->url('Company','Go',array('to'=>$row['id']));
         }
