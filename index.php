@@ -1,5 +1,4 @@
 <?php
-error_reporting(E_ALL ^ E_NOTICE);
 // change the following paths if necessary
 $yii=dirname(__FILE__).'/vendor/yiisoft/yii/framework/yiilite.php';
 $config=dirname(__FILE__).'/protected/config/main.php';
