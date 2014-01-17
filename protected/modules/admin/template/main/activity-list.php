@@ -1,43 +1,35 @@
-<div>
-    <div>
-        <span>
-            搜索：
-            <input type="text" id="search_val"/>
-            <select id="search_type">
-                <option value="title">标题</option>
-                <option value="id">id</option>
-            </select>
-            <input type="submit" id="search" value="确定"/>
-        </span>
-    </div>
-    <ul class="mlist js_activity">
-        <li class="clearfix">
-            <div class="fl w50">
-                 <input type="checkbox" class="js_cbox_all"/>
-            </div>
-            <div class="attr" id="order_id">id</div>
-            <div class="attr" id="order_title">标题</div>
-            <div class="attr" id="order_abstract">简要</div>
-            <div class="attr" id="order_img">插图</div>
-            <div class="attr" id="order_deleteFlag">已删除</div>
-        </li>
-        {{#data}}
-        <li  class="clearfix" id="info_{{id}}">
-            <div class="fl w50">
-                 <input type="checkbox" class="js_cbox" value="{{id}}"/>
-            </div>
-            <div class="attr">{{id}}</div>
-            <div class="attr" id="attr_title">{{title}}</div>
-            <div class="attr" id="attr_abstract">{{abstract}}</div>
-            <div class="attr img" id=""><img class="img" src="{{img}}" alt="无"/></div>
-            <div class="attr" id="attr_deleteFlag">{{deleteFlag}}</div>
-            <div class="fl"><a href="" id="edit_{{id}}">编辑</a></div>
-        </li>
-        {{/data}}
-    </ul>
-    <div>
-        <input type="submit" id="add" value="添加"/>
-        <input type="submit" id="delete" value="删除"/>
-    </div>
-    <div id="page"></div>
-</div>
+<h3>
+    <span>操作：<input type="submit" id="add" value="添加"/> <input type="submit" id="delete" value="删除"/></span>
+    <span style="float:right">
+         搜索：
+        <input type="text" id="search_val"/>
+        <select id="search_type">
+            <option value="name">名称</option>
+            <option value="id">id</option>
+        </select>
+        <input type="submit" id="search" value="确定"/>
+    </span>
+</h3>
+<table class="js_comment h60">
+    <tr>
+        <th width="45">全选 <input type="checkbox" class="js_cbox_all"></th>
+        <th id="order_id">id</th>
+        <th id="order_title">标题</th>
+        <th id="order_abstract">简要</th>
+        <th id="order_img">插图</th>
+        <th id="order_deleteFlag">已删除</th>
+        <th>操作</th>
+    </tr>
+    {{#data}}
+        <tr id="info_{{id}}">
+            <td class="ac"><input type="checkbox" class="js_cbox" value="{{id}}"/></td>
+            <td class="ac">{{id}}</td>
+            <td id="attr_title">{{title}}</td>
+            <td id="attr_abstract">{{abstract}}</td>
+            <td class="ac"><img src="{{img}}" alt="无"/></td>
+            <td id="attr_deleteFlag" class="ac">{{deleteFlag}}</td>
+            <td class="ac"><button id="edit_{{id}}">编辑</button></td>
+        </tr>
+    {{/data}}
+</table>
+ <div id="page"></div>

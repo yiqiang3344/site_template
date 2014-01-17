@@ -3,7 +3,7 @@
 /* 抽象模块                          */
 .w960, .head, .maincontent, .foot .in { width: 960px; margin-left: auto; margin-right: auto; }
 
-.i_cup, .m h2 i, .m1 h2 i, .m2 h2 i, .m4 h2 i, .m3 dt i { background: url(../images/i_cup.gif) no-repeat center; width: 24px; height: 40px; }
+.i_cup, .m h2 i, .m1 h2 i, .m2 h2 i, .m4 h2 i, .user_info h2 i, .m3 dt i { background: url(../images/i_cup.gif) no-repeat center; width: 24px; height: 40px; }
 
 .i_arr1, .i_arr1.up { background: url(../images/i_arr1.png); width: 13px; height: 13px; display: inline-block; vertical-align: middle; }
 
@@ -59,7 +59,7 @@
 .star2 .star2-5:hover { background-position: 0 0; }
 .star2 .star2-5.on { background-position: 0 0; }
 
-.bdc, .news, .m, .m1, .m2, .m4, .com-info .com-info-side, .com-info .com-info-m .com-info-m-t, .activity li { background: #fff; border: 1px solid #cbcbcb; }
+.bdc, .news, .m, .m1, .m2, .m4, .user_info, .com-info .com-info-side, .com-info .com-info-m .com-info-m-t, .activity li { background: #fff; border: 1px solid #cbcbcb; }
 
 .btn { background: #78d822; color: #fff; padding: 2px 6px; border-radius: 3px; }
 .btn:hover { background: #92e34a; text-decoration: none; }
@@ -71,7 +71,7 @@
 
 .head .user { text-align: right; padding: 10px 0; }
 .head .user a { padding-left: 5px; }
-.head .logo { float: left; *display: inline; width: 298px; height: 81px; background: url(../images/logo.png); }
+.head .logo { float: left; *display: inline; width: 298px; height: 81px; background: url(../img/logo.png) center no-repeat; }
 .head .search { float: right; width: 442px; margin-top: 33px; }
 .head .search input[type="text"] { float: left; *display: inline; width: 335px; height: 38px; border: 1px solid #ccc; background: #fff; outline: none; text-indent: 2em; font-size: 14px; }
 .head .search input[type="submit"] { float: right; *display: inline; background: url(../images/search.png); border: 0; width: 105px; height: 40px; cursor: pointer; border-radius: 0px; outline: none; }
@@ -111,10 +111,10 @@
 
 .maincontent { margin: 20px auto; }
 
-.m, .m1, .m2, .m4 { margin-bottom: 10px; }
-.m h2, .m1 h2, .m2 h2, .m4 h2 { background: url(../images/title.png) repeat-x; height: 39px; line-height: 39px; padding-left: 8px; border-bottom: 1px solid #cdcdcd; }
-.m h2 b, .m1 h2 b, .m2 h2 b, .m4 h2 b { font-size: 14px; font-weight: bold; color: #0f81bc; }
-.m h2 i, .m1 h2 i, .m2 h2 i, .m4 h2 i { float: left; margin-left: 5px; }
+.m, .m1, .m2, .m4, .user_info { margin-bottom: 10px; }
+.m h2, .m1 h2, .m2 h2, .m4 h2, .user_info h2 { background: url(../images/title.png) repeat-x; height: 39px; line-height: 39px; padding-left: 8px; border-bottom: 1px solid #cdcdcd; }
+.m h2 b, .m1 h2 b, .m2 h2 b, .m4 h2 b, .user_info h2 b { font-size: 14px; font-weight: bold; color: #0f81bc; }
+.m h2 i, .m1 h2 i, .m2 h2 i, .m4 h2 i, .user_info h2 i { float: left; margin-left: 5px; }
 
 .m1 ul { margin: 0 0 15px -15px; }
 .m1 li { width: 106px; text-align: center; float: left; cursor: pointer; display: inline; margin: 15px 0 0 15px; overflow: hidden; }

@@ -1,7 +1,7 @@
 #加载后执行的代码
 $ ->
   $(".js_cbox_all").click (e) ->
-    a = $(this).parents("ul").find(".js_cbox,.js_cbox_all")
+    a = $(this).parents("table").find(".js_cbox,.js_cbox_all")
     if $(this).filter(":checked").length
       $.each a, ->
         @checked = true

@@ -3,7 +3,7 @@
   $(function() {
     return $(".js_cbox_all").click(function(e) {
       var a;
-      a = $(this).parents("ul").find(".js_cbox,.js_cbox_all");
+      a = $(this).parents("table").find(".js_cbox,.js_cbox_all");
       if ($(this).filter(":checked").length) {
         $.each(a, function() {
           this.checked = true;

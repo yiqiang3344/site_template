@@ -1,20 +1,18 @@
-<div class="">
-    <div class="title">
-        <span>标题</span>
-        <input class="attr" id="title" type="text" value="{{title}}">
-    </div>
-    <div class="abstract">
-        <span>简介</span>
-        <textarea style="width:400px;height:200px;" class="attr" id="abstract">{{abstract}}</textarea>
-    </div>
-        <span>删除</span>
-        <input class="attr" id="deleteFlag" type="text" value="{{deleteFlag}}">
-    </div>
-    <div class="content">
-        <span>内容</span>
-        <textarea style="width:600px;height:400px;" class="attr" id="content">{{content}}</textarea>
-    </div>
-    <div>
-        <input id="submit" type="submit" value="提交">
-    </div>
-</div>
+<table>
+    <tr>
+        <th>标题</th>
+        <td><input class="attr" id="title" type="text" value="{{title}}"></td>
+    </tr>
+    <tr>
+        <th>简介</th>
+        <td><input class="attr" id="deleteFlag" type="text" value="{{deleteFlag}}"></td>
+    </tr>
+    <tr>
+        <th>内容</th>
+        <td><textarea style="width:600px;height:400px;" class="attr" id="content">{{content}}</textarea></td>
+    </tr>
+    <tr>
+        <th>操作</th>
+        <td><input id="submit" type="submit" value="提交"></td>
+    </tr> 
+</table>

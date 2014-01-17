@@ -82,7 +82,7 @@ $btn-blue:#78D822;
         *display: inline;
         width: 298px;
         height: 81px;
-        background: url(../images/logo.png);
+        background: url(../img/logo.png) center no-repeat;
     }
     .search{
         float: right;
@@ -373,6 +373,12 @@ $btn-blue:#78D822;
         dd{line-height: 1.6;height: 38px;overflow: hidden;}
     }
 }
+
+//登录&注册
+.user_info{
+    @extend .m;
+}
+
 //排行
 .sorts{
 

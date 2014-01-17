@@ -1,8 +1,8 @@
 <div class="user_info">
+        <h2>登陆</h2>
     <form class="js_loginForm">
-        <div>登陆</div>
         <div>用户名：<input type="text" name="username"/></div>
-        <div>密码：<input type="password" name="password"/></div>
+        <div>密&nbsp;&nbsp;&nbsp;&nbsp;码：<input type="password" name="password"/></div>
         {{#verifyUrl}}
         <div>验证码：<input type="text" name="verifyCode"/>
             <img class="js_verifyImg cp" alt="点击换图" title="点击换图" src="{{verifyUrl}}">
