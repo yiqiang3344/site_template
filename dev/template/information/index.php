@@ -1,4 +1,4 @@
-<div class="category">
+<!-- <div class="category">
 	<div class="catlist">
 		<strong>分类<s></s></strong>
 		<div class="linkbox">
@@ -9,12 +9,12 @@
 			<a href="##"><span>刷机教程</span></a>          
 		</div>
 	</div>
-</div>
+</div> -->
 <dl class="breadcrumb clearfix">
 	<dt>
 		<strong>当前位置:</strong>
-		<a href="/">首页</a>&nbsp;»&nbsp;
-		<a href="/info_news.html">资讯</a>  
+		<a href="{{homeUrl}}">首页</a>&nbsp;»&nbsp;
+		<a href="{{informationUrl}}">资讯</a>  
 	</dt>
 	<dd></dd>
 </dl>

@@ -1,12 +1,11 @@
 <div class="foot">
     <p class="in clearfix">
         <i>
-        {{#list}} {{#.}}
+        {{#list}} 
+        {{#.}}
             <a href="{{url}}">{{name}}</a>
-            <a href="{{url}}">{{name}}</a>
-            <a href="{{url}}">{{name}}</a>
-            <a href="{{url}}">{{name}}</a>
-        {{/.}} {{/list}}
+        {{/.}} 
+        {{/list}}
         </i>
          <cite>Copyright 2009-2013 Hiapk.com All rights reserved.</cite>
     </p>

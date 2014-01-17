@@ -20,10 +20,12 @@ class ActivityController extends Controller
         $condition = '';
         $params = array();
         $select = 'id,title,abstract,img';
-        $params = MActivity::getListByPage($select, $condition, $order, $params, $page, 20, false);
+        $params = MActivity::getListByPage($select, $condition, $order, $params, $page, A::PAGE_SIZE, false);
         foreach($params['data'] as &$row){
             $row['url'] = $this->url('Activity','Go',array('to'=>$row['id']));
         }
+        $params['homeUrl'] = Y::getUrl('Home','Index');
+        $params['activityUrl'] = Y::getUrl('Activity','Index');
         $bind = array(
             'params' => $params,
         );
@@ -35,6 +37,8 @@ class ActivityController extends Controller
         $id = $_GET['to'];
         #start
         $params = Y::modelsToArray(MActivity::model()->findByPk($id));
+        $params['homeUrl'] = Y::getUrl('Home','Index');
+        $params['activityUrl'] = Y::getUrl('Activity','Index');
 
         $stageName = $params['title'];
         END:

@@ -30,7 +30,7 @@ class MComment extends YActiveRecord
             array('userId, username, companyId, content, totalScore, scoreA, scoreB, scoreC', 'required'),
             array('totalScore, scoreA, scoreB, scoreC', 'numerical', 'integerOnly'=>true),
             array('content', 'length', 'min' =>1, 'max'=> 512),
-            array('content', 'checkContent',on=>'create'),
+            array('content', 'checkContent','on'=>'create'),
         );
     }
 
@@ -49,7 +49,7 @@ class MComment extends YActiveRecord
     protected function beforeSave() {
         if($this->isNewRecord) {
             //公司评论数增加
-            Company::model()->findByPk($this->companyId)->addCommentCount();
+            MCompany::model()->findByPk($this->companyId)->addCommentCount();
             $this->recordTime = Y::getTime();
         }
         return parent::beforeSave();

@@ -1,11 +1,11 @@
-<!-- <dl class="breadcrumb clearfix">
+<dl class="breadcrumb clearfix">
     <dt>
         <strong>当前位置:</strong>
-        <a href="/">首页</a>&nbsp;»&nbsp;
-        <a href="/info_news.html">活动</a>  
+        <a href="{{homeUrl}}">首页</a>&nbsp;»&nbsp;
+        <a href="{{activityUrl}}">活动</a>  
     </dt>
     <dd></dd>
-</dl> -->
+</dl>
 <ul class="activity">
     {{#data}}
     <li id="line_{{id}}">

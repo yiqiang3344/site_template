@@ -1,40 +1,63 @@
-<div class="mlines mlines1 clearfix">
-    <div class="mlines__title">推荐公司</div>
+<div class="m1">
+    <h2><i></i><b>推荐公司</b></h2>
+    <ul class="clearfix">
     {{#companys}}
-    <div class="mlines__line fl">
-        <div><a href="{{url}}"><img class="mlines__img" src="{{logo}}" alt="logo"></a></div>
-        <p class="mlines__name">{{name}}</p>
-        <p class="mlines__stars">星级{{star}}</p>
-    </div>
+        <li>
+            <a href="{{url}}"><img class="mlines__img" src="{{logo}}" alt="logo"></a>
+            <h3 class="mlines__name">{{name}}</h3>
+            <p class="star_{{star}}"></p>
+        </li>
     {{/companys}}
+    </ul>
 </div>
 
-<div class="mlines mlines2 clearfix">
-    <div class="mlines__title">精品推荐</div>
+<div class="m2">
+    <h2><i></i><b>精品推荐</b></h2>
+    <ul class="clearfix">
     {{#activities}}
-    <div class="fl mlines__line">
-        <a href="{{url}}"><img class="mlines__img" src="{{img}}" alt="插图"></a>
-        <p class="mlines__name">{{title}}</p>
-    </div>
+        <li>
+            <a href="{{url}}">
+                <img class="mlines__img" src="{{img}}" alt="插图">
+                <p class="mlines__name">{{title}}</p>
+            </a>
+        </li>
     {{/activities}}
+    </ul>
 </div>
 
-<div class="mlines mlines3 clearfix">
-    <div class="mlines__title">推荐资讯</div>
+<div class="m3 clearfix">
     {{#informations}}
-    <div class="pr fl m10">
-        <a href="{{url}}"><img class="w400 h200" src="{{img}}" alt="插图"></a>
-        <p class="pa b0 w400 ac">{{title}}</p>
-    </div>
+        <dl>
+            <dt><i></i><b>推荐资讯</b></dt>
+            <dd class="info clearfix">
+                    <img src="{{img}}" alt="插图">
+                    <div>
+                        <a href="{{url}}">{{title}}</a>
+                        <p>新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容</p>
+                    </div>
+            </dd>
+            <dd class="list clearfix">
+              <a href="{{url}}">{{title}}</a>
+              <a href="{{url}}">{{title}}</a>
+              <a href="{{url}}">{{title}}</a>
+              <a href="{{url}}">{{title}}</a>
+              <a href="{{url}}">{{title}}</a>
+              <a href="{{url}}">{{title}}</a>
+            </dd>
+        </dl>
     {{/informations}}
 </div>
 
-<div class="mlines mlines4 clearfix">
-    <div class="mlines__title">最近更新</div>
+<div class="m4">
+  <h2><i></i><b>最近更新</b></h2>
+  <ul class="clearfix">
     {{#newCompanys}}
-    <div class="mlines__line fl">
-        <div class="fl"><a href="{{url}}"><img class="mlines__img" src="{{logo}}" alt="logo"></a></div>
-        <p class="fl mlines__name">{{name}}</p>
-    </div>
+    <li>
+        <a href="{{url}}">
+            <img class="mlines__img" src="{{logo}}" alt="logo">
+            <p>{{name}}</p>
+        </a>
+    </li>
     {{/newCompanys}}
+    </ul>
 </div>

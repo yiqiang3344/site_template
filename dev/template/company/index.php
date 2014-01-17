@@ -16,11 +16,11 @@
         </h2>
         <div class="bdc">
             <h3 class="sorts-tab clearfix">
-                <a>星级<i class="i_arr2 down"></i></a>
+                <!-- <a>星级<i class="i_arr2 down"></i></a>
                 <a class="on">评分<i class="i_arr2 down"></i></a>
                 <a>访问量<i class="i_arr2 down"></i></a>
-                <a>评论量<i class="i_arr2 down"></i></a>
-                <!-- 排序：
+                <a>评论量<i class="i_arr2 down"></i></a> -->
+                排序：
                 {{#sorts}}
                 <select name="" id="order_{{attr}}">
                 <option value="">{{name}}</option>
@@ -28,7 +28,7 @@
                 <option value="asc" {{#asc}}selected{{/asc}}>{{name}}↓</option>
                 </select>
                 {{/sorts}}
-                <button class="js_order_do">查看</button>  -->
+                <button class="js_order_do">查看</button> 
             </h3>
             <ul class="com-list">
                 {{#data}}

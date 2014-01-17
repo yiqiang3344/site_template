@@ -13,6 +13,18 @@
     }
 
     function page_bind(){
+        $('.js_select_score').find('a').click(function() {
+            var score = 0,
+                me = this;
+            $(me).addClass('on').siblings().removeClass('on');
+            $.each([1,2,3,4,5],function(k,v){
+                if($(me).hasClass('star2-'+v)){
+                    score = v;
+                }
+            });
+            $(me).parent().find('input').val(score);
+        });
+        
         $('.js_comment_submit').click(function(){
             var data = {companyId:companyId};
             var has_error = false;

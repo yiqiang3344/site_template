@@ -35,7 +35,7 @@ class CompanyController extends Controller
         }
         $params = array();
         $select = 'id,logo,name,star,score,beFixed,beRecommend,beGuarantee,clickCount,commentCount,abstract';
-        $params = MCompany::getListByPage($select, $condition, $order, $params, $page, 2, false);
+        $params = MCompany::getListByPage($select, $condition, $order, $params, $page, A::PAGE_SIZE, false);
         foreach($params['data'] as &$row){
             $row['goto'] = $this->url('Company','Go',array('to'=>$row['id']));
         }
@@ -124,7 +124,7 @@ class CompanyController extends Controller
         }
         $order = 'id desc';
         $select = 'userId, username, content, totalScore, scoreA, scoreB, scoreC, recordTime';
-        $comments = MComment::getListByPage($select, $condition, $order, array(), $page, 5, false, false);
+        $comments = MComment::getListByPage($select, $condition, $order, array(), $page, A::PAGE_SIZE, false, false);
         foreach($comments['data'] as &$row){
             $row['userImg'] = '';
         }
@@ -145,6 +145,8 @@ class CompanyController extends Controller
             );
         }
         $params['commentUrls'] = $commentUrls;
+        $params['homeUrl'] = Y::getUrl('Home','Index');
+        $params['companyUrl'] = Y::getUrl('Company','Index');
 
         $stageName = $params['name'];
         END:
