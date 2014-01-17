@@ -9,7 +9,7 @@ $import = require_once(dirname(__FILE__).'/import.cfg.php');
 return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
     'name'=>'site1',
-    'language' => 'zh_cn',
+    'language' => 'dev',
 
     // preloading 'log' component
     'preload'=>array('log'),
@@ -69,10 +69,10 @@ return array(
         // uncomment the following to use a MySQL database
         'db'=>array(
             'class' => 'CDbConnection',
-            'connectionString' => 'mysql:host=localhost;dbname=v7khthzkfy_site1',
+            'connectionString' => 'mysql:host=localhost;dbname=site1',
             'emulatePrepare' => true,
-            'username' => 'v7khthzkfy_site1',
-            'password' => 'Y98tgzGRx',
+            'username' => 'site1',
+            'password' => 'site1',
             'charset' => 'utf8',
         ),
 
@@ -103,9 +103,9 @@ return array(
         // this is used in contact page
         'adminEmail'=>'webmaster@example.com',
         'dbHost'=>'localhost',
-        'dbUser'=>'v7khthzkfy_site1',
-        'dbPassword'=>'Y98tgzGRx',
-        'dbName'=>'v7khthzkfy_site1',
+        'dbUser'=>'site1',
+        'dbPassword'=>'site1',
+        'dbName'=>'site1',
         'backupDir'=>'data/backup',
         'mysqlDir'=>'/usr/local/mysql/bin'
     ),
