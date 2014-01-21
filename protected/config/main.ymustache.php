@@ -126,6 +126,5 @@ return array(
         'dbPassword'=>'{{db.passwd}}',
         'dbName'=>'{{db.name}}',
         'backupDir'=>'{{db.backupDir}}',
-        'mysqlDir'=>'{{db.mysqlDir}}'
     ),
 );

@@ -56,7 +56,7 @@ class MainController extends Controller{
         }
         $select = 'id,name,lastRebackTime,createTime';
         $params =  MBackup::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
-        $params['now'] = date('Ymdhis',Y::getTime());
+        $params['now'] = date('YmdHis',Y::getTime());
         END:
         $bind = array(
             'params' => $params,

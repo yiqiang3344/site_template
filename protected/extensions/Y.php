@@ -45,6 +45,14 @@ class Y{
             self::$_transaction = null;
         }
 
+        if(is_array($message)){
+            $l = array();
+            foreach($message as $s){
+                $l[] = $s[0];
+            }
+            $message = implode(';',$l);
+        }
+
         if($exception==S::EXCEPTION_SITE){
             if(YII_DEBUG){
                 throw new YException($message);//操作异常
