@@ -121,10 +121,6 @@ return array(
     'params'=>array(
         // this is used in contact page
         'adminEmail'=>'webmaster@example.com',
-        'dbHost'=>'{{db.host}}',
-        'dbUser'=>'{{db.user}}',
-        'dbPassword'=>'{{db.passwd}}',
-        'dbName'=>'{{db.name}}',
         'backupDir'=>'{{db.backupDir}}',
     ),
 );
