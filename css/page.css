@@ -225,12 +225,16 @@
 
 .mask { width: 100%; height: 100%; opacity: .2; filter: alpha(opacity=20); position: fixed !important; _position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 9; background-color: #000; }
 
-.modal { width: 540px; height: 300px; display: block; position: fixed !important; top: 50%; left: 50%; z-index: 10; margin-left: -270px; margin-top: -150px; _position: absolute; _top: 13%; background-color: #fff; border-radius: 6px; box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3); -webkit-background-clip: padding-box; }
+.modal { width: 540px; min-height: 300px; display: block; position: fixed !important; top: 50%; left: 50%; z-index: 10; margin-left: -270px; margin-top: -150px; _position: absolute; _top: 13%; background-color: #fff; border-radius: 6px; box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3); -webkit-background-clip: padding-box; }
 .modal h2 { padding: 9px 15px; border-bottom: 1px solid #eee; }
 .modal h2 .close { float: right; font-size: 20px; margin-top: 2px; cursor: pointer; font-weight: bold; line-height: 20px; color: #000; text-shadow: 0 1px 0 #fff; opacity: .2; filter: alpha(opacity=20); }
 .modal h2 p { line-height: 30px; }
 .modal form { padding: 20px 103px; }
-.modal form input { display: block; margin-bottom: 20px; width: 332px; color: #333; border: 1px solid #ccc; height: 35px; line-height: 35px; text-indent: 10px; }
+.modal form input[type=text], .modal form input[type=password] { display: block; margin-bottom: 20px; width: 332px; color: #333; border: 1px solid #ccc; height: 35px; line-height: 35px; text-indent: 10px; }
+.modal form input[type=text], .modal form input[type=password].merror { border-color: #c33; outline: none; background: url(../images/merror.gif) no-repeat 98% center; }
 .modal form p { overflow: hidden; }
 .modal form p .login { width: 152px; display: block; height: 33px; line-height: 33px; font-size: 14px; text-align: center; font-weight: bold; cursor: pointer; float: left; color: #fff; background: #fc6236; background: linear-gradient(top, #ff6d43 0, #fc6236 100%); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff6d43',endColorstr='#fc6236',GradientType=0); border-radius: 3px; border: 1px solid #fc6236; }
 .modal form p .reg { float: right; color: #6a6a6a; background: #ddd; width: 152px; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',endColorstr='#f7f7f7',GradientType=0); background: linear-gradient(top, white 0, #f7f7f7 100%); border-radius: 3px; border: 1px solid #ccc; display: block; height: 33px; line-height: 33px; font-size: 14px; text-align: center; font-weight: bold; cursor: pointer; }
+.modal form .verifycode { overflow: hidden; }
+.modal form .verifycode input { width: 105px; float: left; }
+.modal form .verifycode img { float: right; width: 220px; }
