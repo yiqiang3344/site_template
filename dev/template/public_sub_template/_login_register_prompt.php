@@ -16,7 +16,7 @@
     <h2><a class="close js_login_register_close">×</a><span>注册</span></h2>
     <form class="js_registerForm">
         <input type="text" name="username" placeholder="账号为6-12位数字、字母组合">
-        <input type="text" name="password" placeholder="密码为6-12位数字、字母组合">
+        <input type="password" name="password" placeholder="密码为6-12位数字、字母组合">
         <input class="js_before_verify" type="password" name="passwordConfirm" placeholder="确认密码">
         {{>verifyTemplate}}
         <div><label for="remember"><input type="checkbox" name="remember" id="remember" value="1"/>  两周内自动登录</label></div>

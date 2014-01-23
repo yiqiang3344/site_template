@@ -118,9 +118,13 @@
                         $.each(obj.errors, function(k, v) {
                             return $('.js_registerForm').find('[name=' + k + ']').addClass('merror');
                         });
-                        if(obj.code === 3 ){
-                            $(verifyTemplate.render({verifyUrl:obj.verifyUrl})).insertAfter($('.js_registerForm').find('.js_before_verify'));
+                        if(obj.code === 3){
+                            //同一ip只能注册一次提示
+                            alert('同一ip只能注册一个帐号！');
                         }
+                    }
+                    if(obj.verifyUrl){
+                        $(verifyTemplate.render({verifyUrl:obj.verifyUrl})).insertAfter($('.js_registerForm').find('.js_before_verify'));
                     }
                     return false;
                 }, this);

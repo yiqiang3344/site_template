@@ -69,10 +69,10 @@ return array(
         // uncomment the following to use a MySQL database
         'db'=>array(
             'class' => 'CDbConnection',
-            'connectionString' => 'mysql:host=localhost;dbname=site1',
+            'connectionString' => 'mysql:host=localhost;dbname=v7khthzkfy_site1',
             'emulatePrepare' => true,
-            'username' => 'site1',
-            'password' => 'site1',
+            'username' => 'v7khthzkfy_site1',
+            'password' => 'Y98tgzGRx',
             'charset' => 'utf8',
         ),
 

@@ -43,7 +43,7 @@ class MUser extends YActiveRecord
             array('passwordConfirm', 'compare', 'compareAttribute' => 'password', 'on' => 'register'),
             array('ip', 'unique', 'on' => 'register'),
             array('username', 'unique', 'on' => 'register'),
-            array('password', 'length', 'min' => 4, 'max' => 15, 'on' => 'register'),
+            array('password,username', 'length', 'min' => 6, 'max' => 12, 'on' => 'register'),
             array('password', 'authenticate', 'on' => 'login'),
             array('remember', 'boolean', 'on' => 'login'),
         );

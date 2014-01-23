@@ -79,8 +79,10 @@ class SiteController extends Controller
                 $session['login_error_time']=1;
             }
             $errors = $MUser->getErrors();
-            if(!$flag && intval($session['login_error_time'])>=S::MAX_LOGIN_ERROR_TIME){
+            if(isset($errors['ip'])){
                 $code = 3;
+            }
+            if(!$flag && intval($session['login_error_time'])>=S::MAX_LOGIN_ERROR_TIME){
                 $verifyUrl = $this->url($this->getId(),'captcha').'/v/'.mt_rand();
             }
         }
