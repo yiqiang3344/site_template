@@ -183,6 +183,7 @@ $btn-blue:#78D822;
 // 内容
 .maincontent{
     @extend .w960;
+    min-height: 500px;
     margin: 20px auto;
 }
 .m{
@@ -413,7 +414,7 @@ $btn-blue:#78D822;
     form{
         padding: 20px 103px;
         input[type=text],input[type=password]{display: block;margin-bottom: 20px;width: 332px; color: #333; border: 1px solid #ccc;height: 35px; line-height: 35px; text-indent: 10px;}
-        input[type=text],input[type=password].merror{border-color: #c33;outline:none;background: url(../images/merror.gif) no-repeat 98% center;}
+        input[type=text].merror,input[type=password].merror{border-color: #c33;outline:none;background: url(../images/merror.gif) no-repeat 98% center;}
         p{
             overflow: hidden;
             .login{width: 152px; display: block; height: 33px; line-height: 33px; font-size: 14px; text-align: center; font-weight: bold; cursor: pointer;float: left; color: #fff; background: #fc6236; background: linear-gradient(top,#ff6d43 0,#fc6236 100%); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff6d43',endColorstr='#fc6236',GradientType=0); border-radius: 3px; border: 1px solid #fc6236;}
