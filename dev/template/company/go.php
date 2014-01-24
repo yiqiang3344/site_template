@@ -18,7 +18,7 @@
                 <p class="name">{{name}}</p>
                 <p>评分：{{score}}</p>
                 <p class="star_{{star}}"></p>
-                <p class="">{{#beFixed}}<a class="btn">固</a>{{/beFixed}}{{#beRecommend}}<a class="btn gray">荐</a>{{/beRecommend}}{{#beGuarantee}}<a class="btn">保</a>{{/beGuarantee}}</p>
+                <p class=""><a class="btn {{^beFixed}}gray{{/beFixed}}">固</a><a class="btn {{^beRecommend}}gray{{/beRecommend}}">荐</a><a class="btn {{^beGuarantee}}gray{{/beGuarantee}}">保</a></p>
             </dd>
         </dl>
         <p class="platform">平台：{{platform}}</p>

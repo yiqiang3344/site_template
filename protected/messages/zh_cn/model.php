@@ -17,7 +17,7 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'one month one comment' => '',
-  'password error' => '',
-  'wrong verify code' => '',
+  'one month one comment' => '一个月只能评论一次。',
+  'password error' => '密码错误。',
+  'wrong verify code' => '验证码错误。',
 );

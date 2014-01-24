@@ -7,10 +7,10 @@ function setCacheCode(){
     $arr=array();   
     //处理指定目录
     $dirs = array(
-        img,
-        images,
-        upload,
-        upload1,
+        'img',
+        'images',
+        'upload',
+        'upload1',
     );
     foreach($dirs as $d){
         $adir = '../'.$d;

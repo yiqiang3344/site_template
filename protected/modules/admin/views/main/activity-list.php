@@ -33,7 +33,7 @@
             $(this).data('val',$(this).html());
         }).blur(function(){
             var val = $(this).html(),
-                id = $(this).parents('li').attr('id').replace('info_',''),
+                id = $(this).parents('tr').attr('id').replace('info_',''),
                 attr = this.id.replace('attr_',''),
                 me = this;
             if(val !== $(this).data('val')){

@@ -5,7 +5,7 @@ class SiteController extends Controller
     public function actionLogin(){
         #input
         #start
-        $this->layout = 'main2';
+        $this->layout = 'site';
         $params = array();
         END:
         $bind = array(

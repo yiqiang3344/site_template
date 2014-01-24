@@ -151,7 +151,7 @@ class MainController extends Controller{
             }
             $order .= implode(' , ', $l);
         }
-        $select = 'id,username,deleteFlag';
+        $select = 'id,username,ip,deleteFlag';
         $params =  MUser::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         END:
         $bind = array(

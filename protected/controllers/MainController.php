@@ -20,12 +20,30 @@ class MainController extends Controller
             'limit'=> 8,
         )));
 
-        $informations = Y::modelsToArray(MInformation::model()->findAll(array(
-            'select'=>'id,img,title,abstract',
-            'condition'=>'deleteFlag=0 and img!=""',
-            'order'=>'id desc',
-            'limit'=> 8,
-        )));
+        $informations = array();
+        foreach(MInforCategory::model()->findAll(array('order'=>'sort asc')) as $m){
+            $a = array();
+            foreach(Y::modelsToArray(MInformation::model()->findAll(array(
+                'select'=>'id,img,title,abstract',
+                'condition'=>'categoryId=:categoryId and top=1 and deleteFlag=0',
+                'order'=>'img desc,id desc',
+                'limit'=> 7,
+                'params'=> array(':categoryId'=>$m->id)
+            ))) as $row){
+                $row['url'] = $this->url('Information','Go',array('to'=>$row['id']));
+                $a[] = $row;
+            }
+            $first = array_shift($a);
+            $informations[] = array(
+                'name'=>$m->title,
+                'id'=>$first['id'],
+                'img'=>$first['img'],
+                'title'=>$first['title'],
+                'abstract'=>$first['abstract'],
+                'list'=>$a
+            );
+        }
+        // var_dump($informations);die;
 
         $newCompanys = Y::modelsToArray(MCompany::model()->findAll(array(
             'select'=>'id,logo,name,star',
@@ -42,9 +60,6 @@ class MainController extends Controller
         }
         foreach($activities as &$row){
             $row['url'] = $this->url('Activity','Go',array('to'=>$row['id']));
-        }
-        foreach($informations as &$row){
-            $row['url'] = $this->url('Information','Go',array('to'=>$row['id']));
         }
 
         $params = array(

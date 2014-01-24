@@ -7,6 +7,6 @@
         {{/.}} 
         {{/list}}
         </i>
-         <cite>Copyright 2009-2013 Hiapk.com All rights reserved.</cite>
+         <cite>Copyright 2014-2014 xiao7 All rights reserved.</cite>
     </p>
 </div>

@@ -8,7 +8,7 @@ function setCacheCode(){
     //处理指定目录
     $dirs = array(
     {{#site.imgDirList}}
-        {{.}},
+        '{{.}}',
     {{/site.imgDirList}}
     );
     foreach($dirs as $d){

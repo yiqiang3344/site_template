@@ -28,21 +28,18 @@
 <div class="m3 clearfix">
     {{#informations}}
         <dl>
-            <dt><i></i><b>推荐资讯</b></dt>
+            <dt><i></i><b>{{name}}</b></dt>
             <dd class="info clearfix">
                     <img src="{{img}}" alt="插图">
                     <div>
                         <a href="{{url}}">{{title}}</a>
-                        <p>新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容</p>
+                        <p>{{abstract}}</p>
                     </div>
             </dd>
             <dd class="list clearfix">
-              <a href="{{url}}">{{title}}</a>
-              <a href="{{url}}">{{title}}</a>
-              <a href="{{url}}">{{title}}</a>
-              <a href="{{url}}">{{title}}</a>
-              <a href="{{url}}">{{title}}</a>
-              <a href="{{url}}">{{title}}</a>
+                {{#list}}
+                <a href="{{url}}">{{title}}</a>
+                {{/list}}
             </dd>
         </dl>
     {{/informations}}

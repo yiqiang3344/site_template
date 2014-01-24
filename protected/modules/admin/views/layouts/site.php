@@ -27,9 +27,9 @@
         </script>
     </head>
     <body>
-        <div id="maindiv" class="maindiv">
-            <?php echo $content;?>
-        </div>
+            <section id="maindiv" class="m">
+                    <?php echo $content;?>
+            </section>
     </body>
 </html>
 

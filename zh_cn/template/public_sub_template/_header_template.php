@@ -1,11 +1,11 @@
 <div class="head">
     <div class="user">
         {{#user}}
-        欢迎您，<span>{{username}}</span> &nbsp;&nbsp; <span><a href="#" class="js_logout">退出</a></span>
+        欢迎您，<span>{{username}}</span> &nbsp;&nbsp; <span><a href="#" class="js_btn_logout">退出</a></span>
         {{/user}}
         {{^user}}
-        <a href="{{loginUrl}}" class="js_login">登录</a>
-        <a href="{{registerUrl}}" class="js_register">注册</a>
+        <a href="{{loginUrl}}" class="js_btn_to_login">登录</a>
+        <a href="{{registerUrl}}" class="js_btn_to_register">注册</a>
         {{/user}}
     </div>
     <div class="clearfix">

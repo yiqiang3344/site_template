@@ -50,14 +50,94 @@
             <?php echo $this->Mustache->render($this->publicSubTemplate['footerTemplate'],$this->getFooterParams()); ?>
         </div>
         <script type="text/javascript">
-        $('.js_logout').click(function() {
-            oneAjax('Site', 'AjaxLogout', {}, function(obj) {
-                if (obj.code === 1) {
-                    State.back(0);
-                }
-            }, this);
-            return false;
-        });
+            var loginRegisterTemplate = Hogan.compile(<?php echo json_encode($this->publicSubTemplate['loginRegisterPrompt']);?>);
+            var verifyTemplate = Hogan.compile(<?php echo json_encode($this->publicSubTemplate['verifyTemplate']);?>);
+            $(document).on('click','.js_btn_to_login',function(){
+                var params = {isLogin:true};
+                oneAjax('Site', 'AjaxVerify', {}, function(obj) {
+                    if (obj.code === 1) {
+                        params.verifyUrl = obj.verifyUrl;
+                    }
+                    $('.js_mask,.js_login_register_div').remove();
+                    $('#maindiv').append(loginRegisterTemplate.render(params,{verifyTemplate:verifyTemplate}));
+                }, this);
+                return false;
+            });
+            $(document).on('click','.js_btn_to_register',function(){
+                var params = {isRegister:true};
+                oneAjax('Site', 'AjaxVerify', {}, function(obj) {
+                    if (obj.code === 1) {
+                        params.verifyUrl = obj.verifyUrl;
+                    }
+                    $('.js_mask,.js_login_register_div').remove();
+                    $('#maindiv').append(loginRegisterTemplate.render(params,{verifyTemplate:verifyTemplate}));
+                }, this);
+                return false;
+            });
+            $(document).on('click','.js_login_register_close',function(){
+                $('.js_mask,.js_login_register_div').remove();
+            });
+            $(document).on('click','.js_verifyImg',function() {
+                $.ajax({
+                    url: getUrl('Site', 'captcha', {
+                        refresh: 1
+                    }),
+                    dataType: 'json',
+                    cache: false,
+                    success: function(data) {
+                        $('.js_verifyImg').attr('src', data['url']);
+                        $('body').data('captcha.hash', [data['hash1'], data['hash2']]);
+                        return false;
+                    }
+                });
+                return false;
+            });
+            $(document).on('click','.js_btn_login',function() {
+                $('.js_loginForm').find('.merror').removeClass('merror');
+                oneAjax('Site', 'AjaxLogin', $('.js_loginForm').serialize(), function(obj) {
+                    if (obj.code === 1) {
+                        State.back(0);
+                    } else if (obj.code >= 2) {
+                        $.each(obj.errors, function(k, v) {
+                            return $('.js_loginForm').find('[name=' + k + ']').addClass('merror');
+                        });
+                        if(obj.code === 3) {
+                            $(verifyTemplate.render({verifyUrl:obj.verifyUrl})).insertAfter($('.js_loginForm').find('.js_before_verify'));
+                        }
+                    }
+                    return false;
+                }, this);
+                return false;
+            });
+            $(document).on('click','.js_btn_register',function() {
+                $('.js_registerForm').find('.merror').removeClass('merror');
+                oneAjax('Site', 'AjaxRegister', $('.js_registerForm').serialize(), function(obj) {
+                    if (obj.code === 1) {
+                        State.back(0);
+                    } else if (obj.code >= 2) {
+                        $.each(obj.errors, function(k, v) {
+                            return $('.js_registerForm').find('[name=' + k + ']').addClass('merror');
+                        });
+                        if(obj.code === 3){
+                            //同一ip只能注册一次提示
+                            alert('同一ip只能注册一个帐号！');
+                        }
+                    }
+                    if(obj.verifyUrl){
+                        $(verifyTemplate.render({verifyUrl:obj.verifyUrl})).insertAfter($('.js_registerForm').find('.js_before_verify'));
+                    }
+                    return false;
+                }, this);
+                return false;
+            });
+            $(document).on('click','.js_btn_logout',function() {
+                oneAjax('Site', 'AjaxLogout', {}, function(obj) {
+                    if (obj.code === 1) {
+                        State.back(0);
+                    }
+                }, this);
+                return false;
+            });
         </script>
     </body>
 </html>
