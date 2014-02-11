@@ -3,8 +3,8 @@
 /************************************/
 $lte-ie: true !default;
 $screen_width : 960px;
-$site_bg_color : #ebebeb;
-$red : #ff0808;
+$site_bg_color : #f1f1f1;
+$red : #f1f1f1;
 $black : #000;
 $blue :  #0076d1;
 $yellow : #fde900;
@@ -36,9 +36,9 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, form, input, textarea
     padding: 0;
 }
 body{
-    font:12px/1.2 Arial, Helvetica, sans-serif;
+    font:12px/1.2 Arial,Microsoft YaHei, Helvetica, sans-serif;
     height: 100%;
-    color: #555;
+    color: #000;
 }
 table{
     border-collapse: collapse;
@@ -51,13 +51,8 @@ ol, ul, menu{
     list-style: none;
 }
 a{
-    text-decoration: none;
-    color:#0f73b3;
-    -webkit-transition: .3s color;
-    &:hover{
-        color: #f60;
-        text-decoration: underline;
-    }
+    color: #000; text-decoration: none; cursor: pointer;
+    &:hover{color:#3468F1;text-decoration:none }
 }
 img{
     border: none;
@@ -85,7 +80,7 @@ em, i{
 /*screen*/
 .wrapper{
     position: relative;
-    background: url(../images/topbg.png) no-repeat $site_bg_color;
+    background: $site_bg_color;
 }
 // @media only screen and (max-device-width:320px) and (max-device-height:480px){
 //     .wrapper{

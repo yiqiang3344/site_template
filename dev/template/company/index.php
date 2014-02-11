@@ -1,9 +1,11 @@
 <div class="company clearfix">
     <div class="com-nav">
-        <h2>大分类</h2>
-        {{#categorys}}
-        <a href="{{url}}"><i>·</i>小分类{{name}}</a>
-        {{/categorys}}
+        <h2><i></i>大分类</h2>
+        <ul>
+            {{#categorys}}
+            <li><a href="{{url}}"><i></i><span>小分类{{name}}</span></a></li>
+            {{/categorys}}
+        </ul>
     </div>
     <div class="com-m">
         <h2 class="clearfix">
