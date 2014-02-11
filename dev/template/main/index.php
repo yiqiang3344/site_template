@@ -1,5 +1,5 @@
 <div class="m1">
-    <h2><i></i><b>推荐公司</b></h2>
+    <h2><b>推荐公司</b></h2>
     <ul class="clearfix">
     {{#companys}}
         <li>
@@ -12,7 +12,7 @@
 </div>
 
 <div class="m2">
-    <h2><i></i><b>精品推荐</b></h2>
+    <h2><b>精品推荐</b></h2>
     <ul class="clearfix">
     {{#activities}}
         <li>
@@ -28,7 +28,7 @@
 <div class="m3 clearfix">
     {{#informations}}
         <dl>
-            <dt><i></i><b>推荐资讯</b></dt>
+            <dt><b>推荐资讯</b></dt>
             <dd class="info clearfix">
                     <img src="{{img}}" alt="插图">
                     <div>
@@ -49,7 +49,7 @@
 </div>
 
 <div class="m4">
-  <h2><i></i><b>最近更新</b></h2>
+  <h2><b>最近更新</b></h2>
   <ul class="clearfix">
     {{#newCompanys}}
     <li>
