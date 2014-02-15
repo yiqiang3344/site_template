@@ -14,19 +14,19 @@
         $('.maincontent').html(html);
 
         //分页
-        Pager($('#page'),'Main','AdminList',{},params);
+        Pager($('#page'),'Main','TopAdList',{},params);
 
         //搜索
         $('#search').click(function(){
             var search = $('#search_type').val()+':'+$('#search_val').val();
-            State.forward('Main','AdminList',{search:search,p:params.page});
+            State.forward('Main','TopAdList',{search:search,p:params.page});
         });
         //排序
         $('[id^=order_]').click(function(){
             var val = this.id.replace('order_',''),
                 sc = orders[val]=='ASC'?'DESC':'ASC',
                 order_str = val+':'+sc;
-            State.forward('Main','AdminList',{order:order_str,p:params.page});
+            State.forward('Main','TopAdList',{order:order_str,p:params.page});
         });
         //点击修改
         $('[id^=attr_]').attr('ContentEditable',true).focus(function(){
@@ -37,7 +37,7 @@
                 attr = this.id.replace('attr_',''),
                 me = this;
             if(val !== $(this).data('val')){
-                oneAjax('Main','AjaxEditOne',{type:'Admin',id:id,attr:attr,val:val},function(o){
+                oneAjax('Main','AjaxEditOne',{type:'Ad',id:id,attr:attr,val:val},function(o){
                     if(o.code!=1){
                         alert(o.errors[attr][0]);
                     }
@@ -45,8 +45,14 @@
             }
         });
 
+        $('[id^=edit_]').click(function(){
+            var id = this.id.replace('edit_','');
+            State.forward('Main','TopAdEdit',{id:id});
+            return false;
+        });
+
         $('#add').click(function(){
-            State.forward('Main','AdminEdit');
+            State.forward('Main','TopAdEdit');
             return false;
         });
 
@@ -56,7 +62,7 @@
                 ids.push(this.value);
             });
             ids = ids.join(',');
-            oneAjax('Main','AjaxDelete',{type:'Admin',ids:ids},function(o){
+            oneAjax('Main','AjaxDelete',{type:'Ad',ids:ids},function(o){
                 if(o.code==1){
                     State.back(0);
                 }else{

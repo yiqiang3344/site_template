@@ -10,7 +10,7 @@
         <input type="submit" id="search" value="确定"/>
     </span>
 </h3>
-<table>
+<table class="js_list">
     <tr>
         <th width="45">全选 <input type="checkbox" class="js_cbox_all"/></th>
         <th id="order_id">id</th>

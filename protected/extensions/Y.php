@@ -147,6 +147,7 @@ class Y{
         if($condition && is_string($condition)){
             $criteria=new CDbCriteria;
             $criteria->condition = $condition;
+            $criteria->params = $params;
             $include_delete || $criteria->addCondition('deleteFlag=0');
         }else{
             $criteria = $condition;
@@ -161,6 +162,7 @@ class Y{
     public static function getListByPage($model_name,$select, $condition, $order, $params, $page, $page_size, $require_all, $include_delete=false){
         $criteria=new CDbCriteria;
         $condition && ($criteria->condition = $condition);
+        $criteria->params = $params;
         $include_delete || $criteria->addCondition('deleteFlag=0');
         if ($page_size == 0) {
             return array(
@@ -171,7 +173,7 @@ class Y{
                 'page_size' => $page_size
             );
         }
-        $count = $model_name::model()->count($criteria,$params);
+        $count = $model_name::model()->count($criteria);
         $page_count = ceil($count / $page_size);
         $page = max( min($page,$page_count), 0);
         if ($page > 0) {

@@ -39,11 +39,11 @@ class MainController extends Controller
                 'id'=>$first['id'],
                 'img'=>$first['img'],
                 'title'=>$first['title'],
+                'url'=>$first['url'],
                 'abstract'=>$first['abstract'],
                 'list'=>$a
             );
         }
-        // var_dump($informations);die;
 
         $newCompanys = Y::modelsToArray(MCompany::model()->findAll(array(
             'select'=>'id,logo,name,star',

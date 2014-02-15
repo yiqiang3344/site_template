@@ -1,12 +1,7 @@
-<div class="category">
-    <div class="catlist">
-        <strong>当前位置</strong>
-        <div class="linkbox">
-            <a href="{{homeUrl}}" class="current"><span>首页&nbsp;»&nbsp;</span></a>
-            <a href="{{companyUrl}}"><span>公司&nbsp;»&nbsp;</span></a>
-            <a href="#"><span>{{name}}</span></a>
-        </div>
-    </div>
+<div class="breadcrumb bdb clearfix">
+    <a href="{{homeUrl}}" class="current">首页</a><span>&nbsp;»&nbsp;</span>
+    <a href="{{companyUrl}}">公司</a><span>&nbsp;»&nbsp;</span>
+    <a href="#"><span>{{name}}</span></a>
 </div>
 <div class="clearfix com-info">
     <div class="com-info-side">
@@ -18,22 +13,26 @@
                 <p class="name">{{name}}</p>
                 <p>评分：{{score}}</p>
                 <p class="star_{{star}}"></p>
-                <p class="">{{#beFixed}}<a class="btn">固</a>{{/beFixed}}{{#beRecommend}}<a class="btn gray">荐</a>{{/beRecommend}}{{#beGuarantee}}<a class="btn">保</a>{{/beGuarantee}}</p>
+                <p class=""><a class="btn {{^beFixed}}gray{{/beFixed}}">固</a><a class="btn {{^beRecommend}}gray{{/beRecommend}}">荐</a><a class="btn {{^beGuarantee}}gray{{/beGuarantee}}">保</a></p>
+                <p class="info-list">
+                    <span>评分：{{score}}</span>
+                    <span class="platform">平台：{{platform}}</span>
+                    <span class="license">牌照：{{#hasLicense}}有{{/hasLicense}}{{^hasLicense}}无{{/hasLicense}}</span>
+                    <span>访问量：{{clickCount}}</span>
+                    <span>评论数：{{commentCount}}</span>
+                    <span class="openTime">开业时间：{{openedTime}}</span>
+                </p>
+                <p>简介：{{abstract}}</p>
             </dd>
         </dl>
-        <p class="platform">平台：{{platform}}</p>
-        <p class="license">牌照：{{#hasLicense}}有{{/hasLicense}}{{^hasLicense}}无{{/hasLicense}}</p>
-        <p class="">访问量：{{clickCount}} 评论数：{{commentCount}}</p>
-        <p class="openTime">开业时间：{{openedTime}}</p>
-        <p class="">简介：{{abstract}}</p>
     </div>
     <div class="com-info-m">
         <div class="com-info-m-t">
             <h2>网站快照：</h2>
             <img src="{{urlPhoto}}" alt="无">
         </div>
-        <div class="bdc mb10">
-            <h2>描述：</h2>
+        <div>
+            <h2 class="bdb">描述：</h2>
             <div class="p10 lh2">{{{description}}}</div>
         </div>
         <div class="com-pose mb10">
@@ -79,8 +78,8 @@
             </div>
             <p class="submit"><input class="js_comment_submit" type="submit" class="btn2" value="提交评价"></p>
         </div>
-        <div class="bdc mb10">
-            <h2>评论：</h2>
+        <div>
+            <h2 class="bdb">评论：</h2>
             <ul class="rate-list">
                 {{#comments.data}}
                 <li>

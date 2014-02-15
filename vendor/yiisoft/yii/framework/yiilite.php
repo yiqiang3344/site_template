@@ -8345,7 +8345,7 @@ class CDbConnection extends CApplicationComponent
 	public $autoConnect=true;
 	public $charset;
 	public $emulatePrepare;
-	public $enableParamLogging=false;
+	public $enableParamLogging=true;
 	public $enableProfiling=false;
 	public $tablePrefix;
 	public $initSQLs;

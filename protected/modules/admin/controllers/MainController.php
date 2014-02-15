@@ -65,15 +65,14 @@ class MainController extends Controller{
         $this->render('backup',$bind);
     }
 
-    public function actionAdminList() {
+    public function actionSlideAdList() {
         #input
         $search = @$_GET['search'];//搜索 attr:val
         $order_str = @$_GET['order'];//排序 type1:sc1,type2:sc2
         $p = max(intval(@$_GET['p']),1);//分页
         #start
-        $this->checkSuperAdmin();
-        $this->title = 'Admin';
-        $condition = 'super=0 ';//不能修改超级管理员
+        $this->title = 'SlideAd';
+        $condition = 'category=:category ';
         if($search){
             $l = array();
             foreach(Y::xexplode(',', $search) as $v){
@@ -93,35 +92,97 @@ class MainController extends Controller{
             }
             $order .= implode(' , ', $l);
         }
-        $select = 'id,username,deleteFlag';
-        $params =  MAdmin::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
+        if(!$order){
+            $order = 'sort asc';
+        }
+        $select = 'id,sort,url,img,deleteFlag';
+        $params =  MAd::getListByPage($select, $condition, $order, array(':category'=>'slide'), $p, 10, false, true);
         END:
         $bind = array(
             'params' => $params,
             'orders' => $orders
         );
-        $this->render('admin-list',$bind);
+        $this->render('slide-ad-list',$bind);
     }
 
-    public function actionAdminEdit() {
+    public function actionSlideAdEdit() {
         #input
         $id = @$_GET['id'];
         #start
-        $this->checkSuperAdmin();
         $info = array();
         if($id){
-            $info = Y::modelsToArray(MAdmin::model()->findByPk($id));
+            $info = Y::modelsToArray(MAd::model()->findByPk($id));
         }
 
         $params = array();
-        foreach(array('id','username','password','passwordConfirm') as $v){
+        foreach(array('id','url','sort','img','deleteFlag') as $v){
             $params[$v] = @$info[$v];
         }
         END:
         $bind = array(
             'params' => $params,
         );
-        $this->render('admin-edit',$bind);
+        $this->render('slide-ad-edit',$bind);
+    }
+
+    public function actionTopAdList() {
+        #input
+        $search = @$_GET['search'];//搜索 attr:val
+        $order_str = @$_GET['order'];//排序 type1:sc1,type2:sc2
+        $p = max(intval(@$_GET['p']),1);//分页
+        #start
+        $this->title = 'topAd';
+        $condition = 'category=:category ';
+        if($search){
+            $l = array();
+            foreach(Y::xexplode(',', $search) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' like \'%'.$a[1].'%\'';
+            }
+            $condition .= 'and '.implode(' and ', $l);
+        }
+        $order = '';
+        $orders = array();
+        if($order_str){
+            $l = array();
+            foreach(Y::xexplode(',', $order_str) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' '.$a[1];
+                $orders[$a[0]] = $a[1];
+            }
+            $order .= implode(' , ', $l);
+        }
+        if(!$order){
+            $order = 'sort asc';
+        }
+        $select = 'id,sort,url,img,deleteFlag';
+        $params =  MAd::getListByPage($select, $condition, $order, array(':category'=>'top'), $p, 10, false, true);
+        END:
+        $bind = array(
+            'params' => $params,
+            'orders' => $orders
+        );
+        $this->render('top-ad-list',$bind);
+    }
+
+    public function actionTopAdEdit() {
+        #input
+        $id = @$_GET['id'];
+        #start
+        $info = array();
+        if($id){
+            $info = Y::modelsToArray(MAd::model()->findByPk($id));
+        }
+
+        $params = array();
+        foreach(array('id','url','sort','img','deleteFlag') as $v){
+            $params[$v] = @$info[$v];
+        }
+        END:
+        $bind = array(
+            'params' => $params,
+        );
+        $this->render('top-ad-edit',$bind);
     }
 
     public function actionUserList() {
@@ -656,6 +717,7 @@ class MainController extends Controller{
                 'MActivity'=>array('title','abstract','img','content','deleteFlag'),
                 'MAdmin'=>array('username','password','passwordConfirm'),
                 'MBackup'=>array('name'),
+                'MAd'=>array('url','category','deleteFlag'),
             );
 
             $m = $type::model()->findByPk($id);
@@ -686,6 +748,32 @@ class MainController extends Controller{
                         'name' => 'company_'.$k.'_'.$m->id,
                         'maxSize' => 2000, //单位KB
                         'allowFiles' => array('.gif', '.png', '.jpg')
+                    );
+                    //生成上传实例对象并完成上传
+                    $up = new Uploader($k, $config);
+
+                    $info = $up->getFileInfo();
+                    if($info['state']!='SUCCESS'){
+                        Y::rollback();
+                        $code = 3;
+                        $errors = array($k=>array($k.'上传失败!'));
+                        GOTO END;
+                    }
+                    $m->$k = $this->url($info['url']);
+                }
+                $save && $m->save();
+            }elseif($type=='MAd'){
+                $save = false;
+                foreach($_FILES as $k=>$f){
+                    if($f['name']==''){
+                        continue;
+                    }
+                    $save = true;
+                    $config = array(
+                        'savePath' => 'upload/',
+                        'name' => 'ad_'.$k.'_'.$m->id,
+                        'maxSize' => 2000, //单位KB
+                        'allowFiles' => array('.png','.jpg')
                     );
                     //生成上传实例对象并完成上传
                     $up = new Uploader($k, $config);

@@ -41,6 +41,16 @@
                             name:'logo管理'
                         },
                         {
+                            select:t=='TopAd'?1:0,
+                            url:getUrl('Main','TopAdList'),
+                            name:'顶部广告'
+                        },
+                        {
+                            select:t=='SlideAd'?1:0,
+                            url:getUrl('Main','SlideAdList'),
+                            name:'幻灯片广告'
+                        },
+                        {
                             select:t=='Link'?1:0,
                             url:getUrl('Main','LinkList'),
                             name:'导航链接'

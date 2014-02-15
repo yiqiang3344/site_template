@@ -153,3 +153,13 @@ CREATE TABLE backup(
     createTime int(10) NOT NULL COMMENT '备份时间',
     PRIMARY KEY(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='备份状态表' AUTO_INCREMENT=1 ;
+DROP TABLE IF EXISTS ad;
+CREATE TABLE ad(
+    id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    category varchar(64) NOT NULL COMMENT 'top:头部广告，slide:幻灯片',
+    url varchar(256) NOT NULL,
+    img varchar(256) NOT NULL COMMENT '',
+    sort int(10) UNSIGNED NOT NULL DEFAULT 1 COMMENT '排序',
+    deleteFlag tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+    PRIMARY KEY(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='广告表' AUTO_INCREMENT=1 ;

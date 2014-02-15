@@ -48,7 +48,7 @@ alert(o.errors[attr][0]);
 
         $('#delete').click(function(){
             var ids = [];
-            $('.js_user').find('.js_cbox:checked').each(function(){
+            $('.js_list').find('.js_cbox:checked').each(function(){
                 ids.push(this.value);
             });
             ids = ids.join(',');

@@ -170,27 +170,36 @@ class Controller extends CController {
             'username' => $user?$user->username:null,
             'navList' => array(
                 array(
+                    'on'=>$this->id=='main',
                     'name'=>'首页',
                     'url'=>$this->url('Main','Index'),
                 ),
                 array(
+                    'on'=>$this->id=='activity',
                     'name'=>'活动',
                     'url'=>$this->url('Activity','Index'),
                 ),
                 array(
+                    'on'=>$this->id=='information',
                     'name'=>'资讯',
                     'url'=>$this->url('Information','Index'),
                 ),
                 array(
+                    'on'=>$this->id=='company',
                     'name'=>'公司大全',
                     'url'=>$this->url('Company','Index'),
                 ),
                 array(
+                    'on'=>$this->id=='rank',
                     'name'=>'排行榜',
                     'url'=>$this->url('Rank','Index',array('key'=>'clickCount')),
                 ),
             ),
             'stageList'=>$this->stateList,
+            'topAd'=>$this->id!='main'?false:Y::modelsToArray(MAd::model()->find(array('condition'=>'deleteFlag=0 and category=:category','params'=>array(':category'=>'top'),'order'=>'sort asc'))),
+            'sliderBanner'=>$this->id!='main'?false:array(
+                'list'=>Y::modelsToArray(MAd::model()->findAll(array('condition'=>'deleteFlag=0 and category=:category','params'=>array(':category'=>'slide'),'order'=>'sort asc'))),
+            ),
         );
         foreach(MLink::model()->getListBySort() as $row){
             $params['navList'][] = array(

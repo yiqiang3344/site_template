@@ -1,9 +1,11 @@
 <div class="company clearfix">
     <div class="com-nav">
-        <h2>大分类</h2>
-        {{#categorys}}
-        <a href="{{url}}"><i>·</i>小分类{{name}}</a>
-        {{/categorys}}
+        <h2><i></i>大分类</h2>
+        <ul>
+            {{#categorys}}
+            <li><a href="{{url}}"><i></i><span>小分类{{name}}</span></a></li>
+            {{/categorys}}
+        </ul>
     </div>
     <div class="com-m">
         <h2 class="clearfix">
@@ -44,15 +46,15 @@
                         </div>
                         <div class="center_middle">{{abstract}}</div>
                         <div class="center_bottom">
-                            <span class="clickCount">访问次数：{{clickCount}}</span>
-                            <span class="commentCount">访问条数：{{commentCount}}</span>
+                            <span class="clickCount">访问量{{clickCount}}</span>
+                            <span class="commentCount">评论数：{{commentCount}}</span>
                         </div>
                     </div>
                     <div class="right">
                         <div class="right_top">
-                            <a class="btn beFixed {{#beFixed}}on{{/beFixed}}">固</a>
-                            <a class="btn beRecommend {{#beRecommend}}on{{/beRecommend}}">保</a>
-                            <a class="btn beGuarantee {{#beGuarantee}}on{{/beGuarantee}}">荐</a>
+                            <a class="btn beFixed {{^beFixed}}gray{{/beFixed}}">固</a>
+                            <a class="btn beRecommend {{^beRecommend}}gray{{/beRecommend}}">荐</a>
+                            <a class="btn beGuarantee {{^beGuarantee}}gray{{/beGuarantee}}">保</a>
                         </div>
                         <div class="right_bottom">
                             <a class="goto btn2" href="{{goto}}">进入</a>
