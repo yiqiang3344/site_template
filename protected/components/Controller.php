@@ -197,9 +197,7 @@ class Controller extends CController {
             ),
             'stageList'=>$this->stateList,
             'topAd'=>$this->id!='main'?false:Y::modelsToArray(MAd::model()->find(array('condition'=>'deleteFlag=0 and category=:category','params'=>array(':category'=>'top'),'order'=>'sort asc'))),
-            'sliderBanner'=>$this->id!='main'?false:array(
-                'list'=>Y::modelsToArray(MAd::model()->findAll(array('condition'=>'deleteFlag=0 and category=:category','params'=>array(':category'=>'slide'),'order'=>'sort asc'))),
-            ),
+            'sliderBanner'=> $this->id=='main' && ($list = Y::modelsToArray(MAd::model()->findAll(array('condition'=>'deleteFlag=0 and category=:category','params'=>array(':category'=>'slide'),'order'=>'sort asc')))) ? array('list'=>$list ) : false
         );
         foreach(MLink::model()->getListBySort() as $row){
             $params['navList'][] = array(

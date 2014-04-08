@@ -15,6 +15,7 @@ class Y{
             foreach($p as $k=>$v){
                 $l[] = urlencode ( $k ) . "=" . urlencode ( $v );
             }
+            $ret .= '.html';
             $p && ($ret .= '?'.implode('&', $l));
         }else{
             //非开发环境中的css和js都是压缩过的,开发环境中则不压缩
