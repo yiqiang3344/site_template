@@ -12,18 +12,18 @@
     <target name="config" description="Replace config files">
         <copy todir="${project.basedir}" overwrite="true">
             <fileset dir="${project.basedir}">
-                <include pattern="**/*.ymustache.php" />
+                <include pattern="**/*.php.mustache" />
             </fileset>
-            <mapper type="glob" from="*.ymustache.php" to="*.php" />
+            <mapper type="glob" from="*.php.mustache" to="*.php" />
             <filterchain>
                 <filterreader classpath="build/bin" classname="MustacheRender" />
             </filterchain>
         </copy>
         <copy todir="${project.basedir}" overwrite="true">
             <fileset dir="${project.basedir}">
-                <include pattern="**/*.ymustache.js" />
+                <include pattern="build/bin/*.js.mustache" />
             </fileset>
-            <mapper type="glob" from="*.ymustache.js" to="*.js" />
+            <mapper type="glob" from="*.js.mustache" to="*.js" />
             <filterchain>
                 <filterreader classpath="build/bin" classname="MustacheRender" />
             </filterchain>
@@ -156,8 +156,8 @@
         <!-- 删除所有mustache文件 -->
         <delete>
             <fileset dir="${product.dir}">
-                <include name="**/*.ymustache.php" />
-                <include name="**/*.ymustache.js" />
+                <include name="**/*.php.mustache" />
+                <include name="build/bin/*.js.mustache" />
             </fileset>
         </delete>
     </target>
