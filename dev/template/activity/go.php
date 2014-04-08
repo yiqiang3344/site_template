@@ -10,6 +10,7 @@
     </dl>
     <div class="news-info">
         <h2>{{title}}</h2>
+        <p class="ar">{{dateTime}}</p>
         <p>{{abstract}}</p>
         <div>{{{content}}}</div>
     </div>

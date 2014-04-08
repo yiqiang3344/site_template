@@ -3,20 +3,18 @@ class ActivityController extends Controller
 {
     public function actionIndex(){
         #input
-        $order_str = @$_GET['order'];//排序 type1:sc1,type2:sc2
+        $order_str = @$_GET['order'] ? $_GET['order'] : 'recordTime:desc,img:desc';//排序 type1:sc1,type2:sc2
         $page = max(intval(@$_GET['p']),1);//分页
         #start
         $order = '';
-        $orders = array('recordTime'=>'desc','img'=>'desc');
-        if($order_str){
-            $l = array();
-            foreach(Y::xexplode(',', $order_str) as $v){
-                $a = explode(':', $v);
-                $l[] = $a[0].' '.$a[1];
-                $orders[$a[0]] = $a[1];
-            }
-            $order .= implode(' , ', $l);
+        $orders = $l = array();
+        foreach(Y::xexplode(',', $order_str) as $v){
+            $a = explode(':', $v);
+            $l[] = $a[0].' '.$a[1];
+            $orders[$a[0]] = $a[1];
         }
+        $order .= implode(' , ', $l);
+        
         $condition = '';
         $params = array();
         $select = 'id,title,abstract,img';
@@ -39,6 +37,7 @@ class ActivityController extends Controller
         $params = Y::modelsToArray(MActivity::model()->findByPk($id));
         $params['homeUrl'] = Y::getUrl('Home','Index');
         $params['activityUrl'] = Y::getUrl('Activity','Index');
+        $params['dateTime'] = date('Y-m-d',$params['recordTime']);
 
         $stageName = $params['title'];
         END:

@@ -9,7 +9,7 @@ $import = require_once(dirname(__FILE__).'/import.cfg.php');
 return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
     'name'=>'site1',
-    'language' => 'zh_cn',
+    'language' => 'dev',
 
     // preloading 'log' component
     'preload'=>array('log'),

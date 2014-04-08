@@ -7,8 +7,8 @@
 		{{#data}}
 		<li id="line_{{id}}">
 			<a href="{{url}}" class="goto ard-btn">查看详情</a>
-			<dl>
-				<dt><a href="{{url}}" class="goto">{{title}}</a></dt>
+			<dl class="clearfix">
+				<dt><a href="{{url}}" class="goto">{{title}}</a><i class="gray_pale fr">{{dateTime}}</i></dt>
 				<dd>{{abstract}}</dd>
 			</dl>
 		</li>
