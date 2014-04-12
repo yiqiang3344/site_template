@@ -8,7 +8,7 @@
         <a href="{{url}}" class="goto"><img src="{{img}}" alt="无"/></a>
         <dl>
             <dt><a href="{{url}}" class="goto">{{title}}</a></dt>
-            <dd>{{abstract}}</dd>
+            <dd>{{#isEnd}}<div class="red_deep wall ac">（已结束）</div>{{/isEnd}}{{^isEnd}}{{abstract}}{{/isEnd}}</dd>
         </dl>
     </li>
     {{/data}}

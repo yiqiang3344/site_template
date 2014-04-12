@@ -17,6 +17,7 @@
         <th id="order_title">标题</th>
         <th id="order_abstract">简要</th>
         <th id="order_img">插图</th>
+        <th id="order_IsEnd">已结束</th>
         <th id="order_deleteFlag">已删除</th>
         <th>操作</th>
     </tr>
@@ -27,6 +28,7 @@
             <td id="attr_title">{{title}}</td>
             <td id="attr_abstract">{{abstract}}</td>
             <td class="ac"><img src="{{img}}" alt="无"/></td>
+            <td id="attr_isEnd" class="ac">{{isEnd}}</td>
             <td id="attr_deleteFlag" class="ac">{{deleteFlag}}</td>
             <td class="ac"><button id="edit_{{id}}">编辑</button></td>
         </tr>

@@ -9,7 +9,7 @@ class MainController extends Controller
             'select'=>'id,logo,name,star',
             'condition'=>'deleteFlag=0 and beRecommend=1',
             'order'=>'weight desc',
-            'limit'=> 24,
+            'limit'=> 40,
         )));
 
 
@@ -49,7 +49,7 @@ class MainController extends Controller
             'select'=>'id,logo,name,star',
             'condition'=>'deleteFlag=0',
             'order'=>'id desc',
-            'limit'=> 30,
+            'limit'=> 50,
         )));
 
         foreach($companys as &$row){

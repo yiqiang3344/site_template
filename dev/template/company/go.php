@@ -7,11 +7,10 @@
     <div class="com-info-side">
         <dl class="clearfix">
             <dt>
-                <a href="{{url}}"><img src="{{logo}}" alt="无"/></a>
+                <a href="{{url}}" target="_blank"><img src="{{logo}}" alt="无"/></a>
             </dt>
             <dd>
-                <p class="name">{{name}}</p>
-                <p>评分：{{score}}</p>
+                <a href="{{url}}" target="_blank"><p class="name">{{name}}</p></a>
                 <p class="star_{{star}}"></p>
                 <p class=""><a class="btn {{^beFixed}}gray{{/beFixed}}">固</a><a class="btn {{^beRecommend}}gray{{/beRecommend}}">荐</a><a class="btn {{^beGuarantee}}gray{{/beGuarantee}}">保</a></p>
                 <p class="info-list">
@@ -54,21 +53,21 @@
                         </p>
                     </dt>
                     <dd>
-                        <i>评价A：</i>
+                        <i>存款速度：</i>
                         <p class="star2 js_select_score">
                             <a class="star2-1"></a><a class="star2-2"></a><a class="star2-3"></a><a class="star2-4"></a><a class="star2-5"></a>
                             <input id="comment_scoreA" type="hidden" value="0"/>
                         </p>
                     </dd>
                     <dd>
-                        <i>评价B：</i>
+                        <i>提款速度：</i>
                         <p class="star2 js_select_score">
                             <a class="star2-1"></a><a class="star2-2"></a><a class="star2-3"></a><a class="star2-4"></a><a class="star2-5"></a>
                             <input id="comment_scoreB" type="hidden" value="0"/>
                         </p>
                     </dd>
                     <dd>
-                        <i>评价C：</i>
+                        <i>服务态度：</i>
                         <p class="star2 js_select_score">
                             <a class="star2-1"></a><a class="star2-2"></a><a class="star2-3"></a><a class="star2-4"></a><a class="star2-5"></a>
                             <input id="comment_scoreC" type="hidden" value="0"/>
@@ -83,86 +82,20 @@
             <ul class="rate-list">
                 {{#comments.data}}
                 <li>
-                    <p class="info">{{content}}<s>{{time}}</s></p>
-                    <a class="name">{{username}}</a>
+                    <p class="info">
+                        <a class="name">{{username}}</a>
+                        <span class="star2">
+                            <a class="star2-{{star}} on"></a>
+                        </span>
+                        <span>存款速度({{aStr}})</span>
+                        <span>提款速度({{bStr}})</span>
+                        <span>服务态度({{cStr}})</span>
+                        <span class="time">{{dateTime}}</span>
+                    </p>
+                    <p class="info">{{content}}</p>
                 </li>
                 {{/comments.data}}
             </ul>
         </div>
-       <!--  <div class="comment">
-            <div class="clearfix">
-                {{#commentUrls}}
-                <p class="fl"><a href="{{url}}">{{name}}</a>({{num}})</p>
-                {{/commentUrls}}
-            </div>
-            <ul class="mlist_comment clearfix">
-                {{#comments.data}}
-                <li class="clearfix">
-                    <div class="fl">
-                        <div><img src="{{userImg}}" alt="用户头像"></div>
-                        <p>{{username}}</p>
-                    </div>
-                    <div class="fl">
-                        <div class="clearfix">
-                            <div class="fl">总评分：{{totalScore}}</div>
-                            <div class="fl">评分A：{{scoreA}}</div>
-                            <div class="fl">评分B：{{scoreB}}</div>
-                            <div class="fl">评分C：{{scoreC}}</div>
-                        </div>
-                        <div>{{content}}</div>
-                    </div>
-                </li>
-                {{/comments.data}}
-            </ul>
-            <div id="pager"></div>
-            <div class="add_comment">
-                <div>
-                    总体评价：
-                    <select id="comment_totalScore">
-                        <option value="">请选择</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
-                </div>
-                <div>
-                    <div>
-                        评分A：
-                        <select id="comment_scoreA">
-                            <option value="">请选择</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                        </select>
-                    </div>
-                    <div>
-                        评分B：
-                        <select id="comment_scoreB">
-                            <option value="">请选择</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                        </select>
-                    </div>
-                    <div>
-                        评分C：
-                        <select id="comment_scoreC">
-                            <option value="">请选择</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <textarea id="comment_content" cols="30" rows="10"></textarea>
-                </div>
-                <div>
-                    <button class="js_comment_submit">提交评论</button>
-                </div>
-            </div>
-        </div> -->
     </div>
 </div>

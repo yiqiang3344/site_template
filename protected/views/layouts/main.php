@@ -8,15 +8,16 @@
         <link href="<?php echo $this->url("css/page.css");?>" rel="stylesheet" type="text/css" media="screen" />
         <script type="text/javascript" src="<?php echo $this->url("js/jquery.js");?>"></script>
         <script type="text/javascript">
-            var CONTROLLER=<?php echo json_encode($this->getId());?>;
-            var BASEURL=<?php echo json_encode(Yii::app()->getBaseUrl());?>;
-            var BASEURI=<?php echo json_encode(Yii::app()->getBaseUrl());?>;
-            var LANG=<?php echo json_encode(Yii::app()->language);?>;
-            var STIME=<?php echo Y::getTime();?>;
-            var CTIME=new Date().getTime();
-            var TEST_SERVER_FLAG=<?php echo YII_DEBUG;?>;
-            var VERSION=<?php echo json_encode(A::VERSION);?>;
-            var UD = <?php echo json_encode($this->getUD());?>;
+            var CONTROLLER=<?php echo json_encode($this->getId());?>
+            ,   BASEURL=<?php echo json_encode(Yii::app()->getBaseUrl());?>
+            ,   BASEURI=<?php echo json_encode(Yii::app()->getBaseUrl());?>
+            ,   LANG=<?php echo json_encode(Yii::app()->language);?>
+            ,   STIME=<?php echo Y::getTime();?>
+            ,   CTIME=new Date().getTime()
+            ,   TEST_SERVER_FLAG=<?php echo YII_DEBUG;?>
+            ,   VERSION=<?php echo json_encode(A::VERSION);?>
+            ,   UD = <?php echo json_encode($this->getUD());?>
+            ;
         </script>
         <?php if(Yii::app()->language=='dev'):?>
         <script type="text/javascript" src="<?php echo $this->url("js/tools.js");?>"></script>
@@ -134,6 +135,23 @@
                 oneAjax('Site', 'AjaxLogout', {}, function(obj) {
                     if (obj.code === 1) {
                         State.back(0);
+                    }
+                }, this);
+                return false;
+            });
+
+            //访问量增加
+            var ClickedMap = {};
+            $(document).on('click','[id^=js_add_clickCount_]',function() {
+                var id = this.id.replace('js_add_clickCount_',''),
+                    url = $(this).attr('href');
+                if(ClickedMap[id]){
+                    return true;
+                }
+                ClickedMap[id] = true;
+                oneAjax('Company', 'AjaxAddClickCount', {id:id}, function(obj) {
+                    if (obj.code === 1) {
+                        State.forwardToUrl(url);
                     }
                 }, this);
                 return false;

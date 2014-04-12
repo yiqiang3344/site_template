@@ -88,7 +88,6 @@ $btn-blue:#78D822;
         *display: inline;
         width: 298px;
         height: 81px;
-        background: url(../img/logo.png) center no-repeat;
         margin-bottom: 5px;
     }
     .search{
@@ -246,7 +245,7 @@ $btn-blue:#78D822;
     li{float: left;*display: inline; margin:15px 0 0 20px; }
     a{
         display: block;width: 170px;overflow: hidden;
-        img{width: 60px;height: 60px;float: left;}
+        img{width: 40px;height: 40px;float: left;}
         p{float: left;font-size: 14px;padding:22px 0 0 10px;}
     }
 }
@@ -287,10 +286,10 @@ $btn-blue:#78D822;
             &:hover{background-color:#f8f8f8;}
             .left{
                 float: left;padding:10px;
-                img{width: 48px;height: 48px;}
+                img{width: 70px;height: 70px;}
             }
             .center{
-                float: left;width: 600px;line-height: 1.5;
+                float: left;width: 550px;line-height: 1.5;
                 .center_top{
                     height: 32px;line-height: 32px;
                     i{margin:0 5px;vertical-align: middle}
@@ -314,7 +313,10 @@ $btn-blue:#78D822;
             }
             dd{
                 float: left;width: 835px;line-height: 1.4;
-                .name{color: #342e27; font-size: 24px; font-weight: bold;padding-bottom: 5px}
+                .name{
+                    color: #342e27; font-size: 24px; font-weight: bold;padding-bottom: 5px;
+                    &:hover{text-decoration:underline;color:#08c}
+                }
                 .info-list{
                     padding-top: 5px;
                     span{display: inline-block;margin-right: 20px}
@@ -352,10 +354,14 @@ $btn-blue:#78D822;
     li{
         margin: 10px;border-bottom:1px solid #F1F0F0;overflow: hidden;line-height: 1.3;padding:10px;
         .info{
-            float: left;width: 540px;
-            s{text-decoration:none;display: block;color:#ccc;font-weight: 400;}
+            height: 25px;line-height: 25px;
+            .name{
+                color:#08c;width: 100px;float: left;font-size: 20px;
+                &:hover{text-decoration:underline;}
+            }
+            span{float: left;margin-right: 20px;color:#999;}
+            .time{text-decoration:none;display: block;color:#ccc;font-weight: 400;float: right;}
         }
-        .name{float: right;text-align: right;}
         &:last-child{border-bottom: none;}
     }
 }

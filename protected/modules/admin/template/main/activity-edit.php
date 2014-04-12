@@ -5,11 +5,19 @@
     </tr>
     <tr>
         <th>简介</th>
-        <td><input class="attr" id="deleteFlag" type="text" value="{{deleteFlag}}"></td>
+        <td><input class="attr" id="abstract" type="text" value="{{abstract}}"></td>
     </tr>
     <tr>
         <th>内容</th>
         <td><textarea style="width:600px;height:400px;" class="attr" id="content">{{content}}</textarea></td>
+    </tr>
+    <tr>
+        <th>已结束</th>
+        <td><input class="attr" id="isEnd" type="text" value="{{isEnd}}"></td>
+    </tr>
+    <tr>
+        <th>已删除</th>
+        <td><input class="attr" id="deleteFlag" type="text" value="{{deleteFlag}}"></td>
     </tr>
     <tr>
         <th>操作</th>

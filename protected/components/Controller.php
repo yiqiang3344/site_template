@@ -162,7 +162,7 @@ class Controller extends CController {
     public function getHeaderParams(){
         $user = $this->getUser();
         $params = array(
-            'logo' => $this->url('img/logo.png'),
+            'logoUrl' => MSystemSet::model()->find()->logo,
             'searchUrl' => $this->url('Search','Index'),
             'loginUrl' => $this->url('Site','Login'),
             'registerUrl' => $this->url('Site','Register'),

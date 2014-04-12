@@ -4,7 +4,7 @@
 $lte-ie: true !default;
 $screen_width : 960px;
 $site_bg_color : #f1f1f1;
-$red : #f1f1f1;
+$red : #FF0000;
 $black : #000;
 $blue :  #0076d1;
 $yellow : #fde900;
@@ -295,11 +295,11 @@ em, i{
         .#{$v}_#{$d} {
             $vv : color($v);
             @if $d=="pale"{
-                color: lighten($vv, 20%);
+                color: lighten($vv, 30%);
             }@else if $d=="middle"{
-                color: lighten($vv, 50%);
+                color: lighten($vv, 20%);
             }@else{
-                color: lighten($vv, 100%);
+                color: lighten($vv, 0%);
             }
         }
     }

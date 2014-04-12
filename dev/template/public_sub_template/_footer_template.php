@@ -1,6 +1,6 @@
 <div class="foot-link">
     <div class="in clearfix">
-        <h4>友情链接</h4>
+        <h4></h4>
         <i>
         {{#list}} 
         {{#.}}
@@ -8,5 +8,5 @@
         {{/.}} 
         {{/list}}
         </i>
-         <cite>Copyright 2014-2014 xiao7 All rights reserved.</cite>
+         <cite class="mt10">Copyright 2014-2014 xiao7 All rights reserved.</cite>
     </p>

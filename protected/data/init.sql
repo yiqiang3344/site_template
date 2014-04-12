@@ -7,6 +7,15 @@ CREATE TABLE `YiiSession` (
   KEY `expire` (`expire`)  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;  
 
+DROP TABLE IF EXISTS systemSet;
+CREATE TABLE systemSet (
+    `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '',
+    `logo` varchar(256) NOT NULL COMMENT 'logo url',
+    `updateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '',
+    `recordTime` int(10) UNSIGNED NOT NULL COMMENT '',
+    PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='' AUTO_INCREMENT=1 ;
+
 DROP TABLE IF EXISTS user;
 CREATE TABLE user (
     `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '',
@@ -112,6 +121,7 @@ CREATE TABLE activity (
     `abstract` varchar(256) NOT NULL DEFAULT '' COMMENT '',
     `img` varchar(128) NOT NULL DEFAULT '' COMMENT '插图',
     `content` text NOT NULL COMMENT '',
+    `isEnd` tinyint(1) UNSIGNED NOT NULL COMMENT '状态:0进行中，1结束',
     `updateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '',
     `deleteFlag` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '',
     `recordTime` int(10) UNSIGNED NOT NULL COMMENT '',

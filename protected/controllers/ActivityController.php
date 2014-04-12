@@ -17,7 +17,7 @@ class ActivityController extends Controller
         
         $condition = '';
         $params = array();
-        $select = 'id,title,abstract,img';
+        $select = 'id,title,abstract,isEnd,img';
         $params = MActivity::getListByPage($select, $condition, $order, $params, $page, A::PAGE_SIZE, false);
         foreach($params['data'] as &$row){
             $row['url'] = $this->url('Activity','Go',array('to'=>$row['id']));

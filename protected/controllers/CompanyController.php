@@ -106,10 +106,11 @@ class CompanyController extends Controller
         $search = @$_GET['search'];//搜索 [属性]-[值]_...
         $page = max(intval(@$_GET['p']),1);//分页
         #start
-        if(!$id){
+        if(!$id || !($company=MCompany::model()->findByPk($id))){
             Y::end('illegal Access.');
         }
-        $params = Y::modelsToArray(MCompany::model()->findByPk($id));
+
+        $params = Y::modelsToArray($company);
 
         $condition = 'companyId='.$id;
         $searchs = array();
@@ -125,8 +126,18 @@ class CompanyController extends Controller
         $order = 'id desc';
         $select = 'userId, username, content, totalScore, scoreA, scoreB, scoreC, recordTime';
         $comments = MComment::getListByPage($select, $condition, $order, array(), $page, A::PAGE_SIZE, false, false);
+        $scoreToStrMap = array(
+            1=>'较差',
+            2=>'一般',
+            3=>'不错',
+            4=>'良好',
+            5=>'很好',
+        );
         foreach($comments['data'] as &$row){
-            $row['userImg'] = '';
+            $row['aStr'] = $scoreToStrMap[$row['scoreA']];
+            $row['bStr'] = $scoreToStrMap[$row['scoreB']];
+            $row['cStr'] = $scoreToStrMap[$row['scoreC']];
+            $row['dateTime'] = date('Y-m-d',$row['recordTime']);
         }
         $params['comments'] = $comments;
 
@@ -188,6 +199,23 @@ class CompanyController extends Controller
             $errors = array(array('请先登陆。'));
         }
 
+        END:
+        $bind = array(
+            'code' => $code,
+            'errors' => $errors
+        );
+        $this->render($bind);
+    }
+
+    public function actionAjaxAddClickCount(){
+        #input
+        $id = $_POST['id'];
+        #start
+        //访问数加1
+        $id && MCompany::model()->updateCounters(array('clickCount'=>1),'id=:id',array(':id'=>$id));
+
+        $code = 1;
+        $errors = array();
         END:
         $bind = array(
             'code' => $code,

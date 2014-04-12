@@ -3,7 +3,7 @@
     <ul class="clearfix">
     {{#companys}}
         <li>
-            <a href="{{url}}"><img class="mlines__img" src="{{logo}}" alt="logo"></a>
+            <a id="js_add_clickCount_{{id}}" href="{{url}}"><img class="mlines__img" src="{{logo}}" alt="logo"></a>
             <h3 class="mlines__name">{{name}}</h3>
             <p class="star_{{star}}"></p>
         </li>
@@ -50,7 +50,7 @@
   <ul class="clearfix">
     {{#newCompanys}}
     <li>
-        <a href="{{url}}">
+        <a id="js_add_clickCount_{{id}}" href="{{url}}">
             <img class="mlines__img" src="{{logo}}" alt="logo">
             <p>{{name}}</p>
         </a>

@@ -8,7 +8,7 @@ class MainController extends Controller{
         $this->title = 'Index';
 
         $params = array(
-            'logo_url'=>$this->url('img/logo.png'),
+            'logo_url'=> ($set = MSystemSet::model()->find()) ? $set->logo : '',
             'links' => MLink::getListBySort(),
             'contacts' => MContact::getListBySort(),
         );
@@ -183,6 +183,65 @@ class MainController extends Controller{
             'params' => $params,
         );
         $this->render('top-ad-edit',$bind);
+    }
+
+    public function actionAdminList() {
+        #input
+        $search = @$_GET['search'];//搜索 attr:val
+        $order_str = @$_GET['order'];//排序 type1:sc1,type2:sc2
+        $p = max(intval(@$_GET['p']),1);//分页
+        #start
+        $this->checkSuperAdmin();
+        $this->title = 'Admin';
+        $condition = 'super=0 ';//不能修改超级管理员
+        if($search){
+            $l = array();
+            foreach(Y::xexplode(',', $search) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' like \'%'.$a[1].'%\'';
+            }
+            $condition .= 'and '.implode(' and ', $l);
+        }
+        $order = '';
+        $orders = array();
+        if($order_str){
+            $l = array();
+            foreach(Y::xexplode(',', $order_str) as $v){
+                $a = explode(':', $v);
+                $l[] = $a[0].' '.$a[1];
+                $orders[$a[0]] = $a[1];
+            }
+            $order .= implode(' , ', $l);
+        }
+        $select = 'id,username,deleteFlag';
+        $params =  MAdmin::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
+        END:
+        $bind = array(
+            'params' => $params,
+            'orders' => $orders
+        );
+        $this->render('admin-list',$bind);
+    }
+
+    public function actionAdminEdit() {
+        #input
+        $id = @$_GET['id'];
+        #start
+        $this->checkSuperAdmin();
+        $info = array();
+        if($id){
+            $info = Y::modelsToArray(MAdmin::model()->findByPk($id));
+        }
+
+        $params = array();
+        foreach(array('id','username','password','passwordConfirm') as $v){
+            $params[$v] = @$info[$v];
+        }
+        END:
+        $bind = array(
+            'params' => $params,
+        );
+        $this->render('admin-edit',$bind);
     }
 
     public function actionUserList() {
@@ -420,7 +479,7 @@ class MainController extends Controller{
             }
             $order .= implode(' , ', $l);
         }
-        $select = 'id,title,abstract,img,deleteFlag';
+        $select = 'id,title,abstract,img,isEnd,deleteFlag';
         $params =  MActivity::getListByPage($select, $condition, $order, array(), $p, 10, false, true);
         END:
         $bind = array(
@@ -440,7 +499,7 @@ class MainController extends Controller{
         }
 
         $params = array();
-        foreach(array('id','title','abstract','img','content','deleteFlag') as $v){
+        foreach(array('id','title','abstract','img','isEnd','content','deleteFlag') as $v){
             $params[$v] = @$info[$v];
         }
         END:
@@ -714,7 +773,7 @@ class MainController extends Controller{
                 'MCompany'=>array('category','name','nameFirstLetter','weight','star','score','beFixed','beRecommend','beGuarantee','clickCount','commentCount','platform','hasLicense','openedTime','url','abstract','description','deleteFlag'),
                 'MInformation'=>array('categoryId','top','title','abstract','img','content','deleteFlag'),
                 'MInforCategory'=>array('name','title','deleteFlag'),
-                'MActivity'=>array('title','abstract','img','content','deleteFlag'),
+                'MActivity'=>array('title','abstract','img','isEnd','content','deleteFlag'),
                 'MAdmin'=>array('username','password','passwordConfirm'),
                 'MBackup'=>array('name'),
                 'MAd'=>array('url','category','deleteFlag'),
@@ -834,7 +893,6 @@ class MainController extends Controller{
             $config['savePath'] = 'img/';
             $config['name'] = 'logo';
             $config['setDir'] = true;
-            $config['allowFiles'] = array('.png');
         }
 
         //生成上传实例对象并完成上传
@@ -846,6 +904,14 @@ class MainController extends Controller{
         $error = $info['state'];
         if($error!='SUCCESS'){
             $code = 2;
+        }else{
+            if(!($m = MSystemSet::model()->find())){
+                $m = new MSystemSet;
+            }
+            $m->logo = $this->url($info['url']);
+            if(!$m->save()){
+                $code = 3;//保存失败
+            }
         }
 
         $this->render(array(

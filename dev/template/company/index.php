@@ -35,7 +35,7 @@
             <ul class="com-list">
                 {{#data}}
                 <li id="info_{{id}}">
-                    <a class="left" href="{{goto}}">
+                    <a id="js_add_clickCount_{{id}}" class="left" href="{{goto}}">
                         <img class="logo" src="{{logo}}" alt="无">
                     </a>
                     <div class="center">

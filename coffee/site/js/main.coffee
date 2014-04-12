@@ -325,6 +325,9 @@ window.YCache = (uniqueN)->
 # )()
 window.State = {}
 (->
+  State.forwardToUrl = (url) ->
+    document.location.href = url
+
   State.forward = (c, a, p) ->
     document.location.href = getUrl(c, a, p)
 

@@ -230,6 +230,9 @@
   window.State = {};
 
   (function() {
+    State.forwardToUrl = function(url) {
+      return document.location.href = url;
+    };
     State.forward = function(c, a, p) {
       return document.location.href = getUrl(c, a, p);
     };

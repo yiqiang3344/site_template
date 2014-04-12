@@ -3,6 +3,7 @@ class InformationController extends Controller
 {
     public function actionIndex(){
         #input
+        $categoryId = @$_GET['categoryId'];
         $order_str = @$_GET['order'] ? $_GET['order'] : 'recordTime:desc,img:desc';//排序 type1:sc1,type2:sc2
         $page = max(intval(@$_GET['p']),1);//分页
         #start
@@ -15,8 +16,9 @@ class InformationController extends Controller
         }
         $order .= implode(' , ', $l);
 
-        $condition = '';
-        $params = array();
+        $condition = $categoryId ? 'categoryId=:categoryId' : '';
+        $params = $categoryId ? array('categoryId'=>$categoryId) : array();
+
         $select = 'id,title,recordTime,abstract,img';
         $params = MInformation::getListByPage($select, $condition, $order, $params, $page, A::PAGE_SIZE, false);
         foreach($params['data'] as &$row){
@@ -25,6 +27,16 @@ class InformationController extends Controller
         }
         $params['homeUrl'] = Y::getUrl('Home','Index');
         $params['informationUrl'] = Y::getUrl('Information','Index');
+
+        $categoryList = array();
+        foreach(MInforCategory::model()->findAll() as $m){
+            $categoryList[] = array(
+                'url' => $this->url('Information','Index',array('categoryId'=>$m->id)),
+                'name' => $m->name
+            );
+        }
+        $params['categoryList'] = $categoryList;
+
         $bind = array(
             'params' => $params,
         );
