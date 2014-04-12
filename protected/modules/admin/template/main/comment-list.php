@@ -23,9 +23,11 @@
         <th id="order_scoreB">评分B</th>
         <th id="order_scoreC">评分C</th>
         <th id="order_deleteFlag">已删除</th>
+        <th id="">操作</th>
     </tr>
     {{#data}}
         <tr id="info_{{id}}">
+            <td class="ac"><input type="checkbox" class="js_cbox" value="{{id}}"/></td>
             <td class="ac">{{id}}</td>
             <td class="ac" id="">{{companyId}}</td>
             <td class="ac" id="">{{userId}}</td>

@@ -127,6 +127,7 @@ class CompanyController extends Controller
         $select = 'userId, username, content, totalScore, scoreA, scoreB, scoreC, recordTime';
         $comments = MComment::getListByPage($select, $condition, $order, array(), $page, A::PAGE_SIZE, false, false);
         $scoreToStrMap = array(
+            0=>'较差',
             1=>'较差',
             2=>'一般',
             3=>'不错',
@@ -139,6 +140,7 @@ class CompanyController extends Controller
             $row['cStr'] = $scoreToStrMap[$row['scoreC']];
             $row['dateTime'] = date('Y-m-d',$row['recordTime']);
         }
+
         $params['comments'] = $comments;
 
         $commentUrls = array(

@@ -14,7 +14,7 @@
         {{/user}}
     </div>
     <div class="clearfix w960">
-        <a class="logo"></a>
+        <a class="logo" style="background: url({{logoUrl}}) center no-repeat"></a>
         <form  class="search clearfix" action="{{searchUrl}}" method="get">
             <input name="search" type="text"/>
             <input type="submit" value="搜索"/>
